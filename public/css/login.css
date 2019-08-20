@@ -1,0 +1,28 @@
+#login form div .btn{
+	width: 100%;
+	margin: .25em;
+}
+
+#login form div{
+	width: inherit;
+}
+
+#login form{
+	width: inherit;
+}
+
+#login{
+	width: 500px;
+	max-width: 500px;
+	margin: auto;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+}
+
+.btn-donar{
+	margin-top: 5px;
+	border-radius: 3px;
+	background: #42b72a !important;
+	width: 250px;
+}
