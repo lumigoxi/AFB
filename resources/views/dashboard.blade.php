@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Dashboard</title>
-	<link rel="stylesheet" href="">
-</head>
-<body>
-	<a href="{{ Route('miembros') }}">Miembros</a>
-</body>
-</html>
+@extends('base')
+@section('content')
+<section id="Enlaces">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<a href="{{ route('miembros.index') }}" class="btn btn-primary">Miembros</a>		
+			</div>
+		</div>
+	</div>
+</section>
+@endsection
