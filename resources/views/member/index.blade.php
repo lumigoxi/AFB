@@ -3,14 +3,14 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-			<div class="col d-flex justify-content-between">
-				<h2>Listado de miembros</h2>
-				<a href="{{ route('home') }}" class="btn btn-outline-secondary ">Inicio</a>
+			<div class="col">
+				<h2 class="mb-0">Listado de miembros</h2>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col">
 				<hr>
+				<a href="{{ route('home') }}" class="btn btn-secondary ">Regresar</a>
 				<a href="{{ Route('miembros.create') }}" class="btn btn-success">Crear nuevo Miembro</a>
 				<hr>
 				<table class="table table-striped">

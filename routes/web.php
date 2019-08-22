@@ -13,10 +13,10 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('/');
 
 Route::resource('miembros', 'memberController');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
