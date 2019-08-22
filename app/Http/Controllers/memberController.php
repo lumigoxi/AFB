@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Http\Controllers;
 
-use App\member;
+use app\member;
 use Illuminate\Http\Request;
 
 class memberController extends Controller
@@ -54,7 +54,7 @@ class memberController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\member  $member
+     * @param  \app\member  $member
      * @return \Illuminate\Http\Response
      */
     public function show(member $member)
@@ -65,7 +65,7 @@ class memberController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\member  $member
+     * @param  \app\member  $member
      * @return \Illuminate\Http\Response
      */
     public function edit(member $member)
@@ -77,7 +77,7 @@ class memberController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\member  $member
+     * @param  \app\member  $member
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, member $member)
@@ -88,7 +88,7 @@ class memberController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\member  $member
+     * @param  \app\member  $member
      * @return \Illuminate\Http\Response
      */
     public function destroy(member $member)
