@@ -15,8 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 })->name('/');
 
-Route::resource('miembros', 'memberController');
-
 Auth::routes();
 
 Route::get('home', 'HomeController@index')->name('home');
+Route::resource('miembros', 'memberController');
+Route::group(['prefix'=> '/'], function(){
+	Route::get('/historias', 'frontController@storyView');
+	Route::get('adoptar', 'frontController@adoptView');
+	Route::get('actividades', 'frontController@activityView');
+});
