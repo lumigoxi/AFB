@@ -10,10 +10,10 @@
 			</div>
 			<div class="row">
 				<div class="col-md-6 col-sm-8 mx-auto">
-					<form action="{{ Route('miembros.store') }}" method="post" class="px-3">
+					<form action="{{ Route('historias.store') }}" method="post" class="px-3">
 						@csrf
 						<div class="row">
-							<div class="col-md-7 col-sm-12">
+						<div class="col-md-7 col-sm-12">
 							<label for="userName">Nombre de usuario</label>
 							<input class="form-control form-control-sm" type="text" name="userName" id="userName">
 						</div>
