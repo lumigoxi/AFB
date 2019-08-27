@@ -12,7 +12,7 @@
 </head>
   <body>
       <div class="wrapper">
-          <nav class="navbar navbar-expand-lg navbar-light text-center">
+          <nav class="navbar navbar-expand-lg navbar-light text-center bg-white">
           @include('layouts.navbar')
           </nav>
           <main id="content">

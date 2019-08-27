@@ -17,12 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('dashboard', 'HomeController@index')->name('dashboard');
 Route::resource('miembros', 'memberController');
 Route::group(['prefix'=> '/'], function(){
 	Route::get('/historias', 'frontController@storyView');
 	Route::get('adoptar', 'frontController@adoptView');
 	Route::get('actividades', 'frontController@activityView');
 });
-
-Route::view('base', 'dashboard.dashBase');
