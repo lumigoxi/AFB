@@ -55,6 +55,9 @@
 	margin-top: 15px;
 
 }
+.wrapper nav{
+	background: white;
+}
 
 nav{
 	max-width: 1200px;
