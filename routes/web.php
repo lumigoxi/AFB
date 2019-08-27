@@ -24,3 +24,5 @@ Route::group(['prefix'=> '/'], function(){
 	Route::get('adoptar', 'frontController@adoptView');
 	Route::get('actividades', 'frontController@activityView');
 });
+
+Route::view('base', 'dashboard.dashBase');
