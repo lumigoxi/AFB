@@ -15,10 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('/');
 
-Auth::routes();
+Auth::routes(['register'=>false]);
 
 Route::get('dashboard', 'HomeController@index')->name('dashboard');
-Route::resource('miembros', 'memberController');
+Route::resource('miembros', 'memberController')->except(['create', 'edit', 'show']);
 Route::group(['prefix'=> '/'], function(){
 	Route::get('/historias', 'frontController@storyView');
 	Route::get('adoptar', 'frontController@adoptView');

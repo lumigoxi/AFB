@@ -2,7 +2,7 @@
 
 namespace app\Http\Controllers;
 
-use app\member;
+use app\User;
 use Illuminate\Http\Request;
 
 class memberController extends Controller
@@ -15,9 +15,9 @@ class memberController extends Controller
     public function index()
     {
         //
-        $member = new member();
-        $member = $member::all();
-        $response = json_decode($member);
+        $user = new User();
+        $user = $user::all();
+        $response = json_decode($user);
 
         return view('member.index',[
             'data'=>$response
@@ -44,11 +44,15 @@ class memberController extends Controller
     public function store(Request $request)
     {
         //
-        $response = $request->only('userName', 'name',
-        'lastName', 'password', 'idRole');
-        member::create($response);
-
-        return redirect('miembros');
+        $response = $request->only('name', 'email',
+        'password');
+        if ($response['password'] === $request['password_confirmation']) {
+            $response['password'] = bcrypt($response['password']);
+         User::create($response);
+        return redirect('miembros');   # code...
+        } else{
+            return redirect('dashboard')->with('Las contraseñas no coinciden');
+        }
     }
 
     /**
