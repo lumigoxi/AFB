@@ -19,6 +19,7 @@ Auth::routes(['register'=>false]);
 
 Route::get('dashboard', 'HomeController@index')->name('dashboard');
 Route::resource('miembros', 'memberController')->except(['create', 'edit', 'show']);
+Route::get('miembros/getAllUser', 'memberController@getAll');
 Route::group(['prefix'=> '/'], function(){
 	Route::get('/historias', 'frontController@storyView');
 	Route::get('adoptar', 'frontController@adoptView');

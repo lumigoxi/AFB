@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class memberController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,25 +18,15 @@ class memberController extends Controller
      */
     public function index()
     {
-        //
-        $user = new User();
-        $user = $user::all();
-        $response = json_decode($user);
-
-        return view('member.index',[
-            'data'=>$response
-        ]);
+        
+      return view('member.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        return view('member.create');
+    public function getAll(){
+            return datatables()->eloquent(User::query())
+            ->addColumn('btn', 'member.actions')
+            ->rawColumns(['btn'])
+            ->toJson();
     }
 
     /**
@@ -44,15 +38,17 @@ class memberController extends Controller
     public function store(Request $request)
     {
         //
-        $response = $request->only('name', 'email',
-        'password');
-        if ($response['password'] === $request['password_confirmation']) {
-            $response['password'] = bcrypt($response['password']);
+       
+         $response = $request->validate([
+            'name' => 'required|max:50|min:7',
+            'email' => 'required|unique:users|max:50|min:7',
+            'password' => 'required|min:7'
+        ]);
+        
          User::create($response);
-        return redirect('miembros');   # code...
-        } else{
-            return redirect('dashboard')->with('Las contraseñas no coinciden');
-        }
+
+         return redirect('miembros');
+       
     }
 
     /**
