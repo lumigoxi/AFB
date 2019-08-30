@@ -16,7 +16,6 @@ class RoleController extends Controller
     {
         //
         return "njsdjhd";
-        return 
     }
 
     /**

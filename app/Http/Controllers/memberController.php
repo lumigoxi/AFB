@@ -44,7 +44,7 @@ class memberController extends Controller
             'email' => 'required|unique:users|max:50|min:7',
             'password' => 'required|min:7'
         ]);
-        
+        $response['password'] = bcrypt($response['password']);
          User::create($response);
 
          return redirect('miembros');
@@ -57,7 +57,7 @@ class memberController extends Controller
      * @param  \app\member  $member
      * @return \Illuminate\Http\Response
      */
-    public function show(member $member)
+    public function show(User $member)
     {
         //
     }
@@ -68,7 +68,7 @@ class memberController extends Controller
      * @param  \app\member  $member
      * @return \Illuminate\Http\Response
      */
-    public function edit(member $member)
+    public function edit(User $member)
     {
         //
     }
@@ -91,8 +91,22 @@ class memberController extends Controller
      * @param  \app\member  $member
      * @return \Illuminate\Http\Response
      */
-    public function destroy(member $member)
+    public function destroy(Request $request, $id)
     {
         //
+
+        
+        
+        
+
+        return;
+    }
+
+    public function deleteMember(Request $request, $id){
+        if ($request->ajax()) {
+            $user = User::find($id);
+        $user->delete();
+        return; 
+        }
     }
 }

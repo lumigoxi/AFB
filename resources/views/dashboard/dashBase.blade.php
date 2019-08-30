@@ -28,7 +28,9 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/datatables/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/utilidades.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css') }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -163,48 +165,9 @@
 {{-- <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('bower_components/admin-lte/dist/js/demo.js') }}"></script>
 </body> --}}
-
-<script>
-  $(document).ready(function() {
-    $('#memberTable').DataTable({
-      "serverSide": true,
-      "ajax": "{{ url('miembros/getAllUser') }}",
-      "columns": [
-      {data: 'id'},
-      {data: 'name'},
-      {data: 'email'},
-      {data: 'created_at'},
-      {data: 'btn'},
-      ],
-      "language":{
-        "info": "Mostrando _START_ al _END_ de _TOTAL_ registros",
-        "search": "Buscar",
-        "oPaginate": {
-        "sFirst":    "Primero",
-        "sLast":     "Último",
-        "sNext":     "Siguiente",
-        "sPrevious": "Anterior"
-    },
-    "sProcessing":     "Procesando...",
-    "sLengthMenu":     "Mostrar _MENU_ registros",
-    "sZeroRecords":    "No se encontraron resultados",
-    "sEmptyTable":     "Ningún dato disponible en esta tabla",
-    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-    "sInfoPostFix":    "",
-    "sSearch":         "Buscar:",
-    "sUrl":            "",
-    "sInfoThousands":  ",",
-    "sLoadingRecords": "Cargando...",
-    "oAria": {
-        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-    }
-      }
-    });
-} );
-
+<script src="{{ URL::asset('bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.js') }}">
 </script>
+@yield('scripts');
 
+</body>
 </html>

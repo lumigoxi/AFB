@@ -44,6 +44,7 @@
     </table>
         @include('member.create')
         @include('member.delete')
+        @include('member.edit')
 			</div>
 		</div>
 	</div>
@@ -53,4 +54,89 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+@endsection
+
+@section('scripts')
+<script>
+  //FUNCIOON CARGAR TABLA
+  function showTable(){
+    $('#memberTable').DataTable({
+      "serverSide": true,
+      "ajax": "{{ url('miembros/getAllUser') }}",
+      "columns": [
+      {data: 'id'},
+      {data: 'name'},
+      {data: 'email'},
+      {data: 'created_at'},
+      {data: 'btn'},
+      ],
+      "language":{
+        "info": "Mostrando _START_ al _END_ de _TOTAL_ registros",
+        "search": "Buscar",
+        "oPaginate": {
+        "sFirst":    "Primero",
+        "sLast":     "Último",
+        "sNext":     "Siguiente",
+        "sPrevious": "Anterior"
+                  },
+    "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Buscar:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+                }
+                            });
+  }
+
+  //CARGAMOS LA TABLA CUANDO LA PAGINA HAYA SIDO CARGADA
+  $(document).ready(function() {
+    showTable();
+} );
+
+
+
+    //ELIMINAR MIEMBRO | NO HACE FALTA CARGAR LA TABLA  
+    $('body').on("click", "#memberTable .borrarMiembro",function(e){
+      e.preventDefault();
+      swal({
+  title: "¿Seguro de eliminar al miembro?",
+  text: "Una vez eliminado no se podra revertir el cambio",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("El miembro se ha eliminado exitosamente", {
+      icon: "success",
+    });
+       let row = $(this).parents('tr');
+      let form = $(this).parents('form');
+      let url = form.attr('action');
+      $.post(url, form.serialize(), function(){
+        row.fadeOut();
+      })
+  } else {
+    swal("Sucedio un erro, revisar si el usuario tiene antecedentes");
+  }
+});
+    });
+
+     $('body').on("click", "#memberTable .btn-editar",function(e){
+        e.preventDefault();
+        
+     });
+
+</script>
 @endsection
