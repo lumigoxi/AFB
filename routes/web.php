@@ -26,3 +26,4 @@ Route::group(['prefix'=> '/'], function(){
 	Route::get('adoptar', 'frontController@adoptView');
 	Route::get('actividades', 'frontController@activityView');
 });
+Route::resource('/dashboard/historias', 'StoryController')->except(['create', 'edit', 'show']);

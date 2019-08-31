@@ -73,7 +73,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/tables/data.html" class="nav-link">
+                <a href="{{ Route('historias.index') }}" class="nav-link">
                   <i class="nav-icon fa fa-history"></i>
                   <p>Historias</p>
                 </a>
