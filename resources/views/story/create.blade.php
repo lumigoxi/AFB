@@ -13,12 +13,12 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-3 col-form-label text-md-right"></label>
+                            <label for="titulo" class="col-md-3 col-form-label text-md-right">Titulo</label>
 
                             <div class="col-md-8">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="titulo" type="text" class="form-control @error('title') is-invalid @enderror" name="name" value="{{ old('title') }}" required autocomplete="titulo" autofocus>
 
-                                @error('name')
+                                @error('title')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -27,12 +27,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-3 col-form-label text-md-right">Correo</label>
+                            <label for="Descripcion" class="col-md-3 col-form-label text-md-right">Descripion</label>
 
                             <div class="col-md-8">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="Descripcion" type="email" class="form-control @error('description') is-invalid @enderror" name="text" value="{{ old('desciption') }}" required autocomplete="description">
 
-                                @error('email')
+                                @error('desciption')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -41,24 +41,16 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-3 col-form-label text-md-right">Contraseña</label>
+                            <label for="img" class="col-md-3 col-form-label text-md-right">Imagen</label>
 
                             <div class="col-md-8">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="img" type="password" class="form-control @error('img') is-invalid @enderror" name="img" required>
 
-                                @error('password')
+                                @error('img')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-3 col-form-label text-md-right">Confirmar contraseña</label>
-
-                            <div class="col-md-8 pt-1">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
                             <div class="modal-footer d-flex">

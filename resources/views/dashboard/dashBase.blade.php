@@ -85,7 +85,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/tables/jsgrid.html" class="nav-link">
+                <a href="{{ Route('actividades.index') }}" class="nav-link">
                   <i class="nav-icon fa fa-calendar-alt"></i>
                   <p>Actividades</p>
                 </a>

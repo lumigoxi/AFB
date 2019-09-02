@@ -15,6 +15,9 @@ class AddColumnsInStories extends Migration
     {
         Schema::table('stories', function (Blueprint $table) {
             //
+        	$table->string('title');
+        	$table->text('description');
+        	$table->string('img');
         });
     }
 
@@ -27,6 +30,9 @@ class AddColumnsInStories extends Migration
     {
         Schema::table('stories', function (Blueprint $table) {
             //
+        	$table->dropColumn('title');
+        	$table->dropColumn('description');
+        	$table->dropColumn('img');
         });
     }
 }

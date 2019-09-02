@@ -27,3 +27,7 @@ Route::group(['prefix'=> '/'], function(){
 	Route::get('actividades', 'frontController@activityView');
 });
 Route::resource('/dashboard/historias', 'StoryController')->except(['create', 'edit', 'show']);
+
+
+Route::get('actividades/getAllActivitys', 'ActivityController@getAll');
+Route::resource('/dashboard/actividades', 'ActivityController')->except(['create', 'edit', 'show']);
