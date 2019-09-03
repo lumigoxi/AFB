@@ -29,7 +29,7 @@
 			<div class="col">
 				<hr>
 				<a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>
-				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#create-user">Agregar nueva actividad</a>
+				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#create-activity">Agregar nueva actividad</a>
 				<hr>
         <table id="activityTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>
@@ -37,15 +37,15 @@
                 <th scope="col">#</th>
                 <th scope="col">Creado por</th>
                 <th scope="col">Actividad</th>
-                <th scope="col">Descripción</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
     </table>
-        @include('member.create')
+        @include('activity.create')
         @include('member.delete')
         @include('member.edit')
+        @include('activity.more')
 			</div>
 		</div>
 	</div>
@@ -66,13 +66,17 @@
       "serverSide": true,
       "ajax": "{{ url('actividades/getAllActivitys') }}",
       "columns": [
-      {data: 'id', name: 'id'},
-      {data: 'name', name: 'name'},
-      {data: 'activity', name: 'activity'},
-      {data: 'decription', name: 'decription'},
-      {data: 'date', name: 'date'},
-      {data: 'btn', name: 'btn', orderable: false, searchable: false},
+      {data: "id"},
+      {data: 'name'},
+      {data: 'activity'},
+      {data: 'date'},
+      {data: 'btn'}
       ],
+      responsive: {
+        decription: {
+            type: 'column'
+        }
+    },
       "language":{
         "info": "Mostrando _START_ al _END_ de _TOTAL_ registros",
         "search": "Buscar",
@@ -107,39 +111,10 @@
     showTable();
 } );
 
-
-
-    //ELIMINAR MIEMBRO | NO HACE FALTA CARGAR LA TABLA  
-    $('body').on("click", "#memberTable .borrarMiembro",function(e){
-      e.preventDefault();
-      swal({
-  title: "¿Seguro de eliminar al miembro?",
-  text: "Una vez eliminado no se podra revertir el cambio",
-  icon: "warning",
-  buttons: true,
-  dangerMode: true,
-})
-.then((willDelete) => {
-  if (willDelete) {
-    swal("El miembro se ha eliminado exitosamente", {
-      icon: "success",
-    });
-       let row = $(this).parents('tr');
-      let form = $(this).parents('form');
-      let url = form.attr('action');
-      $.post(url, form.serialize(), function(){
-        row.fadeOut();
-      })
-  } else {
-    swal("Sucedio un erro, revisar si el usuario tiene antecedentes");
-  }
-});
-    });
-
-     $('body').on("click", "#memberTable .btn-editar",function(e){
-        e.preventDefault();
-        alert('dnkasnd');
-     });
-
+  $('body').on("click", "#activityTable .seeActivity",function(e){
+    e.preventDefault();
+    let value = $(this).attr('data-id');
+     
+  });
 </script>
 @endsection

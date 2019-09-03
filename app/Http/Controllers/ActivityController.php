@@ -3,9 +3,7 @@
 namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\User;
 use app\Activity;
-use yajra\Datatables\Datatables;
 
 
 
@@ -29,22 +27,15 @@ class ActivityController extends Controller
 
 
     public function getAll(){
+
         $activities = Activity::ActivityUser();
+         
 
-         return DataTables::of($activities)
-                         ->addColumn('btn', 'activity.actions')
-                         ->rawColumns(['btn'])
-                         ->toJson();
-    }
+            return datatables()->of($activities)
+            ->addColumn('btn', 'activity.actions')
+            ->rawColumns(['btn'])
+            ->toJson();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**

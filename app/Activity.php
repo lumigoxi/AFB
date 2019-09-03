@@ -14,6 +14,8 @@ class Activity extends Model
 	}
 
 	public static function ActivityUser(){
+
+        
         return DB::table('activities')
                                     ->join('users', 'users.id', '=', 'activities.idUser')
                                     ->select('activities.*', 'users.name')
