@@ -11,12 +11,12 @@
       <div class="modal-body">
           <form method="POST" action="{{ route('actividades.store') }}">
                         @csrf
-
+                        <input type="hidden" value="{{ auth()->user()->id }}" name="idUser">
                         <div class="form-group row">
                             <label for="titulo" class="col-md-3 col-form-label text-md-right">titulo</label>
 
                             <div class="col-md-8">
-                                <input id="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" name="titulo" value="{{ old('titulo') }}" required autocomplete="name" autofocus>
+                                <input id="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" name="activity" value="{{ old('titulo') }}" required autocomplete="name" autofocus>
 
                                 @error('titulo')
                                     <span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
                         <div class="form-group row">
                             <label for="description" class="col-md-3 col-form-label text-md-right">Descripción</label>
                             <div class="col-md-8">
-                                <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required>
+                                <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="decription" value="{{ old('description') }}" required>
                                 </textarea>
                                 @error('description')
                                     <span class="invalid-feedback" role="alert">
@@ -40,12 +40,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-3 col-form-label text-md-right">Contraseña</label>
+                            <label for="date" class="col-md-3 col-form-label text-md-right">Fecha</label>
 
                             <div class="col-md-8">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" required>
 
-                                @error('password')
+                                @error('date')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -9,6 +9,20 @@ class Activity extends Model
 {
     //
 
+ protected $fillable = [
+        'activity', 'decription', 'date', 'idUser',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+         'remember_token',
+    ];
+
+    
 	public function user(){
 		return $this->belongsTo(User::class, 'idUser');
 	}

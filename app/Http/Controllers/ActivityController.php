@@ -47,7 +47,15 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         //
-    }
+         $response = $request->validate([
+            'activity' => 'required',
+            'decription' => 'required',
+            'date' => 'required',
+            'idUser'=>'required'
+        ]);
+        
+         Activity::create($response);
+         return redirect('dashboard/actividades');    }
 
     /**
      * Display the specified resource.
@@ -57,7 +65,7 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        //
+        return Activity::findOrFail($id);
     }
 
     /**

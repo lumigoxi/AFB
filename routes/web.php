@@ -30,4 +30,4 @@ Route::resource('/dashboard/historias', 'StoryController')->except(['create', 'e
 
 
 Route::get('actividades/getAllActivitys', 'ActivityController@getAll');
-Route::resource('/dashboard/actividades', 'ActivityController')->except(['create', 'edit', 'show']);
+Route::resource('/dashboard/actividades', 'ActivityController')->except(['create', 'edit']);

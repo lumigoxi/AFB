@@ -109,12 +109,24 @@
   //CARGAMOS LA TABLA CUANDO LA PAGINA HAYA SIDO CARGADA
   $(document).ready(function() {
     showTable();
+    $('[data-toggle="tooltip"]').tooltip(); 
+    $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+
 } );
 
   $('body').on("click", "#activityTable .seeActivity",function(e){
     e.preventDefault();
-    let value = $(this).attr('data-id');
-     
+      let row = $(this).parents('tr');
+      let form = $(this).parents('form');
+      let url = form.attr('action');
+      $.get(url, form.serialize(), function(data){
+        let title = document.getElementById('seeTitle');
+        let description = document.getElementById('seeDescription');
+        title.innerHTML=data['activity'];
+        description.innerHTML = data['decription'];
+      })
   });
 </script>
 @endsection
