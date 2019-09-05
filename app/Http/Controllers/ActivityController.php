@@ -3,6 +3,7 @@
 namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use app\Activity;
 
 
@@ -29,8 +30,6 @@ class ActivityController extends Controller
     public function getAll(){
 
         $activities = Activity::ActivityUser();
-         
-
             return datatables()->of($activities)
             ->addColumn('btn', 'activity.actions')
             ->rawColumns(['btn'])
@@ -50,12 +49,15 @@ class ActivityController extends Controller
          $response = $request->validate([
             'activity' => 'required',
             'decription' => 'required',
-            'date' => 'required',
-            'idUser'=>'required'
+            'date' => 'required'
         ]);
         
-         Activity::create($response);
-         return redirect('dashboard/actividades');    }
+         $id = array("idUser"=>Auth::id());
+         $newA = array_merge($response, $id);
+        
+         Activity::create($newA);
+         return redirect('dashboard/actividades');   
+          }
 
     /**
      * Display the specified resource.

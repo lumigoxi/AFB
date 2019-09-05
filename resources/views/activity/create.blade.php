@@ -11,7 +11,6 @@
       <div class="modal-body">
           <form method="POST" action="{{ route('actividades.store') }}">
                         @csrf
-                        <input type="hidden" value="{{ auth()->user()->id }}" name="idUser">
                         <div class="form-group row">
                             <label for="titulo" class="col-md-3 col-form-label text-md-right">titulo</label>
 

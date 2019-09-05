@@ -72,11 +72,8 @@
       {data: 'date'},
       {data: 'btn'}
       ],
-      responsive: {
-        decription: {
-            type: 'column'
-        }
-    },
+     'order': [[0, 'desc']]
+     ,
       "language":{
         "info": "Mostrando _START_ al _END_ de _TOTAL_ registros",
         "search": "Buscar",

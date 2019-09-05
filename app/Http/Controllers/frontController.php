@@ -3,6 +3,7 @@
 namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
+use app\Activity;
 
 class frontController extends Controller
 {
@@ -16,6 +17,8 @@ class frontController extends Controller
     }
 
     public function activityView(){
-    	return view('front.activity');
+
+    	$activities = Activity::orderBy('date', 'desc')->get();
+    	return view('front.activity')->with('activities', $activities);
     }
 }

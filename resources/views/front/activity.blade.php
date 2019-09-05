@@ -12,7 +12,9 @@
 </section>
 <section id="actividades">
     <div class="container mt-5">
-      <div class="row">
+      
+      @foreach ($activities as $activity)
+        <div class="row">
         <div class="col-md-12">
           <div class="card border-success mb-3">
             <div class="row no-gutters">
@@ -21,10 +23,10 @@
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">Titulo actividad 1</h5>
-                  <p class="card-text">Informacion sobre la actividad</p>
+                  <h5 class="card-title">{{ $activity->activity }}</h5>
+                  <p class="card-text">{{ $activity->decription }}</p>
                   <p class="card-text">Lugar: lugar x</p>
-                  <p class="card-text">fecha: fecha x</p>
+                  <p class="card-text">fecha: {{ $activity->date }}</p>
                   <p class="card-text">Cactegoria: Categoria de la actividad </p>
                   <a href="#" class="btn btn-success bt-donar">saber más...</a>
                 </div>
@@ -32,70 +34,9 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card border-success mb-3">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="img/activity-2.jpg" class="card-img" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Titulo actividad 2</h5>
-                  <p class="card-text">Informacion sobre la actividad</p>
-                  <p class="card-text">Lugar: lugar x</p>
-                  <p class="card-text">fecha: fecha x</p>
-                  <p class="card-text">Cactegoria: Categoria de la actividad </p>
-                  <a href="#" class="btn btn-success bt-donar">saber más...</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card border-success mb-3">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="img/activity-3.jpg" class="card-img" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Titulo actividad 3</h5>
-                  <p class="card-text">Informacion sobre la actividad</p>
-                  <p class="card-text">Lugar: lugar x</p>
-                  <p class="card-text">fecha: fecha x</p>
-                  <p class="card-text">Cactegoria: Categoria de la actividad </p>
-                  <a href="#" class="btn btn-success bt-donar">saber más...</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card border-success mb-3">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="img/activity-2.jpg" class="card-img" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Titulo actividad 4</h5>
-                  <p class="card-text">Informacion sobre la actividad</p>
-                  <p class="card-text">Lugar: lugar x</p>
-                  <p class="card-text">fecha: fecha x</p>
-                  <p class="card-text">Cactegoria: Categoria de la actividad </p>
-                  <a href="#" class="btn btn-success bt-donar">saber más...</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div>  
+      @endforeach
+          
     </div>
   </section>
 
