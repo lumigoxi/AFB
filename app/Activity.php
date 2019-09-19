@@ -13,15 +13,6 @@ class Activity extends Model
         'activity', 'decription', 'date', 'idUser',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-         'remember_token',
-    ];
-
     
 	public function user(){
 		return $this->belongsTo(User::class, 'idUser');
@@ -34,5 +25,9 @@ class Activity extends Model
                                     ->select('activities.*', 'users.name')
                                     ->orderBy('activities.date', 'desc')
                                     ->get();
+    }
+
+    public function sponsors(){
+        return $this->belongsToMany(Sponsor::class, SponsorActivity::class);
     }
 }

@@ -31,9 +31,5 @@ class CreateActivitiesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('activities');
-        $table->dropColumn('idUser');
-        $table->dropColumn('activity');
-        $table->dropColumn('description');
-        $table->dropColumn('date');
     }
 }
