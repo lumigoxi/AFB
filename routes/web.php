@@ -1,13 +1,13 @@
 <?php
 
+
 //route for landing page
-Route::get('/', function () {
-    return view('welcome');
-})->name('/');
+Route::get('/', 'frontController@index')->name('/');
 
 //register route disabled because can't a person register own  
 Auth::routes(['register'=>false]);
 
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 //Rputes for dashboard
 Route::resource('miembros', 'memberController')->except(['create', 'edit', 'show']);
 Route::get('miembros/getAllUser', 'memberController@getAll');
@@ -19,19 +19,13 @@ Route::group(['prefix'=> '/'], function(){
 	Route::get('actividades', 'frontController@activityView');
 });
 
-
-Route::get('dashboard', 'HomeController@index')->name('dashboard');
-
-
 //Route type resource for CRUD 
+Route::resource('/dashboard/landing', 'LandingController')->except(['create', 'edit']);
 Route::resource('/dashboard/historias', 'StoryController')->except(['create', 'edit', 'show']);
 Route::get('actividades/getAllActivitys', 'ActivityController@getAll');
 Route::resource('/dashboard/actividades', 'ActivityController')->except(['create', 'edit']);
 Route::get('rescue/getAllRescues', 'RescueController@getAll');
 Route::resource('/dashboard/rescates', 'RescueController')->except(['create', 'edit']);
-Route::resource('dashboard/', 'Controller')->except(['create']);
-
-
 Route::resource('dashboard/Patrocinadores', 'SponsorController')->except(['create']);
 Route::resource('dashboard/Pagos-Patrocinador', 'SponsorActivityController')->except(['create']);
 Route::resource('dashboard/Cobros', 'InputPayController')->except(['create']);

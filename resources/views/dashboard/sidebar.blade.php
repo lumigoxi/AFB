@@ -13,6 +13,12 @@
       </a>
       <ul class="nav nav-treeview">
         <li class="nav-item">
+          <a href="{{ Route('landing.index') }}" class="nav-link">
+            <i class="nav-icon fa fa-globe"></i>
+            <p>LandigPage</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="{{ Route('miembros.index') }}" class="nav-link">
             <i class="nav-icon fa fa-users"></i>
             <p>Miembros</p>

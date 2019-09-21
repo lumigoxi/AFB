@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>AMIGO FIEL</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -116,6 +116,7 @@
 </body> --}}
 <script src="{{ URL::asset('bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.js') }}">
 </script>
+<script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
 @yield('scripts');
 
 </body>

@@ -20,10 +20,9 @@
           <div class="col-md-7 offset-md-5 text-center text-md-right">
             <h1>Asociación Amigo Fiel</h1>
             <h4>
-              <p><span class="focus">Amigo Fiel</span> es una asociacion<span class="focus"> sin fines de lucro</span> que trabaja por el pro bienestar de los animales callejeros. Nos mantenemos a flote medianteque <span class=focus>donaciones</span> de personas caritativas.</p><span class="focus">
-              ¿Nos ayudas a ayudar?
-            </span>
-            </h4>
+             @foreach($calls as $call)
+               {!! $call->call_to_action  !!} 
+             @endforeach
             <button class="btn-success btn-donar" type="button">Donar</button>
           </div>
         </div>

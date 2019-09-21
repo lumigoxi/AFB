@@ -41,7 +41,7 @@
                             <a class="nav-link" 
                            @if(Auth::check())
                             href="{{ route('dashboard') }}" 
-                          @else
+                                @else
                             href="{{ route('login') }}" 
                           @endif
                             >Iniciar Sesión</a>
