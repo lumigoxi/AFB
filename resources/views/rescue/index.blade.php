@@ -34,11 +34,11 @@
         <table id="rescueTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>
             <tr>
-                <th scope="col">Fecha</th>
-                <th scope="col">Rason</th>
+                <th scope="col">#</th>
+                <th scope="col">Razon</th>
                 <th scope="col">Prioridad</th>
                 <th scope="col">Estado</th>
-                <th scope="col">Registrado por</th>
+                <th scope="col">Registrado</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -63,12 +63,36 @@
       "serverSide": true,
       "ajax": "{{ url('rescue/getAllRescues') }}",
       "columns": [
-      {data: 'created_at'},
-      {data: 'reason'},
-      {data: 'priority'},
-      {data: 'status'},
-      {data: 'name'},
-      {data: 'btn'}
+      {data: 'DT_RowIndex', width: '5%'},
+      {data: 'reason', width: '50%'},
+      {data: 'priority', width: '5%', render: function(data, type, row){
+        if (data == 1) {
+          return `<div class="text-center"> 
+          <a href="#" class="badge badge-danger">Alta</a>
+          </div>`
+        }else if(data == 2){
+          return `<div class="text-center"> 
+          <a href="#" class="badge badge-warning">Media</a>
+          </div>`
+        }else{
+          return `<div class="text-center"> 
+          <a href="#" class="badge badge-secondary">Baja</a>
+          </div>`
+        }
+      }},
+      {data: 'status', width: '5%', mRender: function(data, type, row){
+        if (data == 0) {
+          return `<div class="text-center"> 
+          <a href="#" class="badge badge-success">Listo</a>
+          </div>`
+        }else if(data == 1){
+          return `<div class="text-center"> 
+          <a href="#" class="badge badge-danger">Pendiente</a>
+          </div>`
+        }
+      }},
+      {data: 'created_at', width: '15%'},
+      {data: 'btn', width: '20%', orderable: false}
       ],
      'order': [[0, 'desc']]
      ,
@@ -105,7 +129,7 @@
   $(document).ready(function() {
     showTable();
     $('[data-toggle="tooltip"]').tooltip(); 
-
+    
 } );
 </script>
 @endsection

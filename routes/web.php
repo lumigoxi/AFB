@@ -9,8 +9,8 @@ Auth::routes(['register'=>false]);
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 //Rputes for dashboard
-Route::resource('miembros', 'memberController')->except(['create', 'edit', 'show']);
 Route::get('miembros/getAllUser', 'memberController@getAll');
+Route::resource('miembros', 'memberController')->except(['create', 'edit']);
 Route::delete('miembros/eliminar-miembro/{id}', 'memberController@deleteMember')->name('deleteMember');
 //Routes for web site. 
 Route::group(['prefix'=> '/'], function(){
@@ -21,6 +21,7 @@ Route::group(['prefix'=> '/'], function(){
 
 //Route type resource for CRUD 
 Route::resource('/dashboard/landing', 'LandingController')->except(['create', 'edit']);
+Route::resource('/dashboard/mision-vision', 'misionVisionController');
 Route::resource('/dashboard/historias', 'StoryController')->except(['create', 'edit', 'show']);
 Route::get('actividades/getAllActivitys', 'ActivityController@getAll');
 Route::resource('/dashboard/actividades', 'ActivityController')->except(['create', 'edit']);
@@ -40,4 +41,5 @@ Route::resource('dashboard/Hospedaje', 'LodgingController')->except(['create']);
 Route::resource('dashboard/Voluntarios', 'VoluntaryController')->except(['create']);
 Route::resource('dashboard/Tratamientos', 'TreatmentController')->except(['create']);
 Route::resource('dashboard/Veterinarios', 'vetController')->except(['create']);
+Route::resource('dahsboard/cms-miembros', 'cmsMemberController')->except(['create']);
 

@@ -15,11 +15,17 @@
         <li class="nav-item">
           <a href="{{ Route('landing.index') }}" class="nav-link">
             <i class="nav-icon fa fa-globe"></i>
-            <p>LandigPage</p>
+            <p>Call to Action</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ Route('miembros.index') }}" class="nav-link">
+          <a href="{{ route('mision-vision.index') }}" class="nav-link">
+            <i class="nav-icon fas fa-bookmark"></i>
+            <p>Misión y Visión</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ Route('cms-miembros.index') }}" class="nav-link">
             <i class="nav-icon fa fa-users"></i>
             <p>Miembros</p>
           </a>

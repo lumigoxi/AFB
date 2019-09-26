@@ -6,12 +6,13 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Lista de miembros</h1>
+            <h1 class="m-0 text-dark">Call to action</h1>
           </div><!-- /.col -->
           <div class="col-sm-6 py-auto">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-              <li class="breadcrumb-item active">Miembros</li>
+              <li class="breadcrumb-item">Langing</li>
+              <li class="breadcrumb-item active">Call to action</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -28,19 +29,12 @@
 		<div class="row">
 			<div class="col">
 				<hr>
-				<a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>
-				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#create-user">Crear nuevo Miembro</a>
+				<a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>                                            <a href="{{ route('/') }}" class="btn  btn-info" target="_blank">Ver Landing</a>
 				<hr>
         {!! Form::open(['route'=>['landing.update', 1], 'method'=> 'POST']) !!}
-            {!! Form::textarea('call_to_action', null, ['id' => 'editor1', 'rows' => 10, 'cols' => 80, 'class' => 'ckeditor']) !!}
-            <div class="form-group">
-               <label for="mision">Mision</label>
-                <input type="text" class="form-control" id="mision" value="{{ $landing->mission }}">
-          </div>
-          <div class="form-group">
-               <label for="vision">Vision</label>
-                <input type="text" class="form-control" id="vision" value="{{ $landing->vision }}">
-          </div>
+              <div class="form-group">  
+              {!! Form::textarea('call_to_action', null, ['id' => 'editor1', 'rows' => 10, 'cols' => 80, 'class' => 'ckeditor']) !!}
+              </div>
             <button type="submit" class="btn btn-success" id="submitLandig">Guardar</button>
         {!! form::close() !!} 
 			</div>
@@ -61,6 +55,20 @@
         CKEDITOR.config.allowedContent = true;
 </script>
 <script>
+
+  function update_ckEditor(){
+    $.ajax({
+      type: 'GET',
+      url: '{{ route('landing.show', 1)}}',
+      success: function(result){
+          CKEDITOR.instances.editor1.setData(result.call_to_action);
+      }
+    })
+  }
+  $(document).ready(function(){
+      update_ckEditor()
+  })
+
   $('body').on("click", "#submitLandig",function(e){
     e.preventDefault();
     let form = $(this).parents('form');
@@ -79,7 +87,6 @@
 
            success:function(data){
               swal("Actualizado!", "El call to action fue actualizado", "success");
-              CKEDITOR.instances.editor1.setData('');
            }
 
         });

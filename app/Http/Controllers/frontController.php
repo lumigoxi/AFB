@@ -5,13 +5,18 @@ namespace app\Http\Controllers;
 use Illuminate\Http\Request;
 use app\Activity;
 use app\Landing;
+use app\User;
 
 class frontController extends Controller
 {
     
     public function index(){
         $calls = Landing::all();
-        return view('welcome')->with('calls', $calls);
+        $users = User::where('visible', 1)->get();
+        return view('welcome',[
+            'calls' => $calls,
+            'users' => $users
+        ]);
     }
 
     public function storyView(){
@@ -25,7 +30,6 @@ class frontController extends Controller
     public function activityView(){
 
     	$activities = Activity::orderBy('date', 'desc')->get();
-        dd($activities);
     	return view('front.activity')->with('activities', $activities);
     }
 }

@@ -2,11 +2,15 @@
 
 namespace app\Http\Controllers;
 
-use app\Rescue;
 use Illuminate\Http\Request;
+use app\Landing;
 
-class RescueController extends Controller
+class misionVisionController extends Controller
 {
+
+     public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,8 @@ class RescueController extends Controller
      */
     public function index()
     {
-        return view('rescue.index');
+        //
+        return view('Landing.misionVision');
     }
 
     /**
@@ -41,21 +46,22 @@ class RescueController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \app\Rescue  $rescue
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Rescue $rescue)
+    public function show($id)
     {
         //
+        return Landing::getMisionVision();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \app\Rescue  $rescue
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rescue $rescue)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +70,10 @@ class RescueController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \app\Rescue  $rescue
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rescue $rescue)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,21 +81,11 @@ class RescueController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \app\Rescue  $rescue
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rescue $rescue)
+    public function destroy($id)
     {
         //
-    }
-
-    public function getAll(){
-        
-         $rescues = Rescue::RescueInfo();
-            return datatables()->of($rescues)
-            ->addColumn('btn', 'activity.actions')
-            ->addIndexColumn()
-            ->rawColumns(['btn'])
-            ->toJson();
     }
 }

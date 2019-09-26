@@ -40,7 +40,7 @@
           <div class="card ml-auto mr-auto">
             <div class="card-body">
               <h5 class="card-title text-uppercase">misión</h5>
-              <p class="card-text">Rescatar y brindar una mejor calidad de vida para todos los animalitos callejores de Quetzaltengo, creemos que la mejor forma de lograr eso es concientizar a las personas para esterilizar a sus mascotas y reducir la sobre poblacion de ellas.</p>
+              <p class="card-text">{{ $calls[0]['mission']}}</p>
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@
           <div class="card ml-auto mr-auto">
             <div class="card-body">
               <h5 class="card-title text-uppercase">visión</h5>
-              <p class="card-text">Expandirnos a nivel nacional, ser una asociacion fuerte y concisa, armarnos de mas y mas colaboradores para crecer estructuralemente y administrativamente para asi lograr tener un alcance mas amplio y ayudar mas peluditos que lo necesitan.</p>
+              <p class="card-text">{{ $calls[0]['vision'] }}</p>
             </div>
           </div>
         </div>
@@ -70,33 +70,18 @@
         </div>
       </div>
       <div class="row text-center">
-        <div class="col-md-4">
-          <div class="card ml-auto mr-auto">
-            
-            <div class="card-body">
-              <h5 class="card-title text-uppercase">Greysi Martinez</h5>
-              <p class="card-text">Representante legal de la organizacione, he trabajado desde el año 2008 por el mejoramiento de la calidad de vida de los animales recatados.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card ml-auto mr-auto">
-              
-            <div class="card-body">
-              <h5 class="card-title text-uppercase">Aaron Gonzales</h5>
-              <p class="card-text">De los miembros mas antiguos de la asociacion, juntos con los demas miebros nos encargamos de rescatar a los animales que lo necesitan, velando por recuperacion y reintegracion a una nueva familia.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
+       
+        @foreach($users as $user)
+          <div class="col-md-4">
           <div class="card ml-auto mr-auto">
              
             <div class="card-body">
-              <h5 class="card-title text-uppercase">Miguel Xiap</h5>
-              <p class="card-text">Joven estudiante de la Universidad Mariano Galvez, he ayudado desde marzo del 2019 en el desarrollo de esta plataforma.</p>
+              <h5 class="card-title text-uppercase">{{ $user->name }}</h5>
+              <p class="card-text pt-2">{{ $user->description }}</p>
             </div>
           </div>
         </div>
+        @endforeach
       </div>
     </div>
   </section>

@@ -62,7 +62,12 @@
   function showTable(){
     $('#memberTable').DataTable({
       "serverSide": true,
-      "ajax": "{{ url('miembros/getAllUser') }}",
+     "ajax": {
+            "url": "{{ url('miembros/getAllUser') }}",
+            "data": { 
+            "request_url": "tps"
+        }
+        },
       "columns": [
       {data: 'id'},
       {data: 'name'},
@@ -127,8 +132,6 @@
       $.post(url, form.serialize(), function(){
         row.fadeOut();
       })
-  } else {
-    swal("Sucedio un erro, revisar si el usuario tiene antecedentes");
   }
 });
     });

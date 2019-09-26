@@ -22,11 +22,19 @@ class memberController extends Controller
       return view('member.index');
     }
 
-    public function getAll(){
+    public function getAll(Request $request){
+
+        if($request->request_url == "cms"){
             return datatables()->eloquent(User::query())
             ->addColumn('btn', 'member.actions')
             ->rawColumns(['btn'])
             ->toJson();
+        }else if ($request->request_url == "tps") {
+            return datatables()->eloquent(User::query())
+            ->addColumn('btn', 'member.actions-full')
+            ->rawColumns(['btn'])
+            ->toJson();
+        }
     }
 
     /**
@@ -57,9 +65,10 @@ class memberController extends Controller
      * @param  \app\member  $member
      * @return \Illuminate\Http\Response
      */
-    public function show(User $member)
+    public function show($id)
     {
         //
+        return User::findOrFail($id);
     }
 
     /**

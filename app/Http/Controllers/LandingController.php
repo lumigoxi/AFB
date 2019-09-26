@@ -7,6 +7,10 @@ use app\Landing;
 
 class LandingController extends Controller
 {
+
+     public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,7 @@ class LandingController extends Controller
     public function index()
     {
         //
-        return view('Landing.index')->with('landing', Landing::find(1));
+        return view('Landing.index');
     }
 
     /**
@@ -53,7 +57,7 @@ class LandingController extends Controller
      */
     public function show($id)
     {
-        //
+        return Landing::find($id);
     }
 
     /**
@@ -76,11 +80,25 @@ class LandingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $request->validate([
-            'call_to_action' => 'required'
-        ]);
+        if ($request['call_to_action']){
+          $response = $request->validate([
+             'call_to_action' => 'required'
+         ]);
 
-        $landing = Landing::whereId($id)->update($response);
+         Landing::whereId($id)->update($response);
+         return 'ok';
+        }else if($request['mission'] || $request['vision']){
+            $response = $request->validate([
+                'mission' => 'required | min:25',
+                'vision' => 'required | min:25'
+            ]);
+
+            Landing::whereId($id)->update($response);
+            return 'ok';
+        }else{
+            return 'error';
+        }
+       
     }
 
     /**
@@ -93,4 +111,17 @@ class LandingController extends Controller
     {
         //
     }
+
+   
 }
+
+
+// if($request['call_to_action']){
+//              $response = $request->validate([
+//             'call_to_action' => 'required'
+//         ]);
+
+//         $landing = Landing::whereId($id)->update($response);
+//        }else if($request['mission'] && $request['vision']){
+//             dd('Respuesta cd')
+//        }
