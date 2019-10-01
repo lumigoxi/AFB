@@ -89,9 +89,19 @@ class memberController extends Controller
      * @param  \app\member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, member $member)
+    public function update(Request $request, $id)
     {
         //
+        $response = $request->validate([
+            'visible' => 'required|boolean'
+        ]);
+        if ($response['visible'] == 0) {
+            return User::whereId($id)->update(['visible'=>1]);
+        }else if($response['visible']==1){
+            return User::whereId($id)->update(['visible'=>0]);
+        }else{
+            return 0;
+        }
     }
 
     /**
@@ -103,10 +113,6 @@ class memberController extends Controller
     public function destroy(Request $request, $id)
     {
         //
-
-        
-        
-        
 
         return;
     }

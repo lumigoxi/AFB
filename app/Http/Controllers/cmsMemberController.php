@@ -3,6 +3,7 @@
 namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
+use app\User;
 
 class cmsMemberController extends Controller
 {
@@ -47,6 +48,7 @@ class cmsMemberController extends Controller
     public function show($id)
     {
         //
+        return User::findOrFail($id);
     }
 
     /**
@@ -70,6 +72,11 @@ class cmsMemberController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $Response = $request->validate([
+            'description' => 'required | min:20'
+        ]);
+        return User::whereId($id)->update($Response);
     }
 
     /**

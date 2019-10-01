@@ -40,8 +40,7 @@
                       </thead>
                     </table>
                     @include('member.create')
-                    @include('member.delete')
-                    @include('member.edit')
+                    @include('landing.member.edit')
                     @include('member.more')
                   </div>
                 </div>
@@ -71,11 +70,11 @@
         {data: 'visible', mRender:function(data, type, row){
             if (data == 1) {
                 return `<div class="text-center">
-                    <a href="#" class="badge badge-success btn-listar">Listado</a>
+                    <a href="#" class="badge badge-success btn-listar"  data-visible="`+data+`">Listado</a>
                 </div>`;
             }else{
                 return `<div class="text-center">
-                    <a href="#" class="badge badge-danger btn-listar">No listado</a>
+                    <a href="#" class="badge badge-danger btn-listar" data-visible="`+data+`">No listado</a>
                 </div>`;
             }
         }},
@@ -113,34 +112,47 @@
         $(document).ready(function() {
         showTable();
         } );
-        //ELIMINAR MIEMBRO | NO HACE FALTA CARGAR LA TABLA
-        $('body').on("click", "#memberTable .borrarMiembro",function(e){
-        e.preventDefault();
-        swal({
-        title: "¿Seguro de eliminar al miembro?",
-        text: "Una vez eliminado no se podra revertir el cambio",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
+
+
+
+        
+
+        //logica para consultar descripcion actual
+        $('body').on('click', '#memberTable .btn-editar', function(e){
+            let idMember = $(this).attr('data-member')
+            let request_url = '{{ route('cms-miembros.show', ':idMember') }}'
+            request_url = request_url.replace(':idMember', idMember)
+            $.ajax({
+                type: 'get',
+                url: request_url, 
+                success: function(data){
+                    $('#description').val(data.description)
+                    $('#form-edit-cms-member').attr('data-member', data.id)
+                }
+            })
         })
-        .then((willDelete) => {
-        if (willDelete) {
-        swal("El miembro se ha eliminado exitosamente", {
-        icon: "success",
-        });
-        let row = $(this).parents('tr');
-        let form = $(this).parents('form');
-        let url = form.attr('action');
-        $.post(url, form.serialize(), function(){
-        row.fadeOut();
+
+        //logica para actualizar miembro
+    $('#form-edit-cms-member').on('submit', function(e){
+        e.preventDefault()
+        let idMember = $(this).attr('data-member')
+        let url = '{{ route('cms-miembros.update', ':idMember') }}'
+        url = url.replace(':idMember', idMember)
+        $.ajax({
+            type: 'put',
+            url: url,
+            data: $(this).serialize(),
+            success: function(data){
+                $('#editModal').modal('toggle')
+                if (data == 1) {
+                    swal('Exitiso', 'Se ha actualizado la descripción', 'success')
+                }else{
+                    swal('Error', 'Algo salió mal', 'error')
+                }
+            }
         })
-        }
-        });
-        });
-        $('body').on("click", "#memberTable .btn-editar",function(e){
-        e.preventDefault();
-        alert('dnkasnd');
-        });
+    })
+
 
          $('body').on("click", "#memberTable .seeMember",function(e){
     e.preventDefault();
@@ -158,11 +170,38 @@
          $('body').on("click", "#memberTable .btn-listar", function(e){
 
             //ESTE SELECTOR APUNTA AL ID DEL MIEMBRO
-            let idMember = $(this).parent().parent().siblings('td').children('form:first-child').children('a').attr('data-member')
-            
+            let tag_currently = $(this)
+            const idMember = $(this).parent().parent().siblings('td').children('form:first-child').children('a').attr('data-member')
+            let base_url = "{{ url('miembros') }}"
+            let request_url = base_url.concat("/",idMember)
+            let token = '{{ csrf_token() }}'
+            let visible = $(this).attr('data-visible')
+            visible = parseInt(visible)
+            let data = {visible: visible, _token:token}
             $.ajax({
                 type: 'put',
-                url: '{{ route('miembros.update', '$idMember') }}'
+                url: request_url,
+                data: data,
+                success: function(data){
+                    if (data) {
+                        if (visible == 0) {
+                            tag_currently.attr('data-visible', 1)
+                            tag_currently.removeClass('badge-danger')
+                            tag_currently.addClass('badge-success')
+                            tag_currently.text('Listado')
+                            swal("Actualizado!", "EL usuario ha sido listado", "success")
+                        }else if(visible == 1){
+                            tag_currently.attr('data-visible', 0)
+                            tag_currently.removeClass('badge-success')
+                            tag_currently.addClass('badge-danger')
+                            tag_currently.text('No listado')
+                            swal("Actualizado!", "EL usuario no ha sido listado", "success")
+
+                        }
+                    }else{
+                        swal("Error", "Algo ha salido mal", "error")
+                    }
+                }
             })
 
          })
