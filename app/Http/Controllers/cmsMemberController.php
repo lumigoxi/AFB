@@ -72,11 +72,25 @@ class cmsMemberController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-        $Response = $request->validate([
+        if ($request['visible'] != '' ) {
+        $response = $request->validate([
+            'visible' => 'required|boolean'
+        ]);
+        if ($response['visible'] == 0) {
+            return User::whereId($id)->update(['visible'=>1]);
+        }else if($response['visible']==1){
+            return User::whereId($id)->update(['visible'=>0]);
+        }else{
+            return 0;
+        }    # code...
+        }else if($request['description'] != ''){
+            $Response = $request->validate([
             'description' => 'required | min:20'
         ]);
+        if ($Response['description']) {
         return User::whereId($id)->update($Response);
+        }
+        }
     }
 
     /**

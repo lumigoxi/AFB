@@ -44,9 +44,10 @@ class RescueController extends Controller
      * @param  \app\Rescue  $rescue
      * @return \Illuminate\Http\Response
      */
-    public function show(Rescue $rescue)
+    public function show($id)
     {
         //
+        return Rescue::findOrFail($id);
     }
 
     /**
@@ -67,9 +68,16 @@ class RescueController extends Controller
      * @param  \app\Rescue  $rescue
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rescue $rescue)
+    public function update(Request $request, $id)
     {
         //
+        if ($request['type_update'] == 'priority') {
+            $Response = $request->validate([
+                'priority' => 'required|digits_between:0,2'
+            ]);
+
+            return Rescue::whereId($id)->update($Response) ? 1 : 0;
+        }
     }
 
     /**
@@ -86,8 +94,24 @@ class RescueController extends Controller
     public function getAll(){
         
          $rescues = Rescue::RescueInfo();
+         foreach ($rescues as $rescue) {
+             if ($rescue->priority == 0) {
+                 $rescue->priority = 'Alta';
+             }else if($rescue->priority == 1){
+                $rescue->priority = 'Media';
+             }else{
+                $rescue->priority = 'Baja';
+             }
+             if ($rescue->status == 0) {
+                $rescue->status = 'Listo';
+             }else if ($rescue->status == 1 ) {
+                 $rescue->status = 'En curso';
+             }else{
+                $rescue->status = 'Pendiente';
+             }
+         }
             return datatables()->of($rescues)
-            ->addColumn('btn', 'activity.actions')
+            ->addColumn('btn', 'rescue.actions')
             ->addIndexColumn()
             ->rawColumns(['btn'])
             ->toJson();

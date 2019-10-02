@@ -68,13 +68,13 @@
         {data: 'id'},
         {data: 'name'},
         {data: 'visible', mRender:function(data, type, row){
-            if (data == 1) {
+            if (data == 'Listado') {
                 return `<div class="text-center">
-                    <a href="#" class="badge badge-success btn-listar"  data-visible="`+data+`">Listado</a>
+                    <a href="#" class="badge badge-success btn-listar"  data-visible="1">`+data+`</a>
                 </div>`;
             }else{
                 return `<div class="text-center">
-                    <a href="#" class="badge badge-danger btn-listar" data-visible="`+data+`">No listado</a>
+                    <a href="#" class="badge badge-danger btn-listar" data-visible="0">`+data+`</a>
                 </div>`;
             }
         }},
@@ -172,8 +172,8 @@
             //ESTE SELECTOR APUNTA AL ID DEL MIEMBRO
             let tag_currently = $(this)
             const idMember = $(this).parent().parent().siblings('td').children('form:first-child').children('a').attr('data-member')
-            let base_url = "{{ url('miembros') }}"
-            let request_url = base_url.concat("/",idMember)
+            let request_url = "{{ route('cms-miembros.update', ':idMember') }}"
+            request_url = request_url.replace(':idMember', idMember)
             let token = '{{ csrf_token() }}'
             let visible = $(this).attr('data-visible')
             visible = parseInt(visible)

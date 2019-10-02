@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-          <form method="POST" action="{{ route('actividades.store') }}">
+          <form method="POST" action="{{ route('actividades.store') }}" id="form-store-activity">
                         @csrf
                         <div class="form-group row">
                             <label for="titulo" class="col-md-3 col-form-label text-md-right">titulo</label>
@@ -42,7 +42,7 @@
                             <label for="date" class="col-md-3 col-form-label text-md-right">Fecha</label>
 
                             <div class="col-md-8">
-                                <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" required>
+                                <input id="date" type="datetime-local" class="form-control @error('date') is-invalid @enderror" name="date" required>
 
                                 @error('date')
                                     <span class="invalid-feedback" role="alert">

@@ -25,12 +25,30 @@ class memberController extends Controller
     public function getAll(Request $request){
 
         if($request->request_url == "cms"){
-            return datatables()->eloquent(User::query())
+
+             $members = User::all();
+            foreach ($members as $member) {
+                if ($member->visible == 1) {
+                    $member->visible = 'Listado';
+                }else{
+                    $member->visible = 'No Listado';
+                }
+            }
+            return datatables()->of($members)
             ->addColumn('btn', 'member.actions')
             ->rawColumns(['btn'])
             ->toJson();
         }else if ($request->request_url == "tps") {
-            return datatables()->eloquent(User::query())
+            $members = User::all();
+
+            foreach ($members as $member) {
+                if ($member->status == 1) {
+                    $member->status = 'Activo';
+                }else{
+                    $member->status = 'Inactivo';
+                }
+            }
+            return datatables()->of($members)
             ->addColumn('btn', 'member.actions-full')
             ->rawColumns(['btn'])
             ->toJson();
@@ -91,16 +109,15 @@ class memberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $response = $request->validate([
-            'visible' => 'required|boolean'
-        ]);
-        if ($response['visible'] == 0) {
-            return User::whereId($id)->update(['visible'=>1]);
-        }else if($response['visible']==1){
-            return User::whereId($id)->update(['visible'=>0]);
-        }else{
-            return 0;
+        if ($request['request_url']=='tps') {
+            $Response = $request->validate([
+                'status' => 'required|digits_between:0,1'
+            ]);
+            if ($Response['status'] == 0) {
+                return User::whereId($id)->update(['status' => 1] ) ? 1 : 0;
+            }else{
+                return User::whereId($id)->update(['status' => 0]) ? 1 : 0;
+            }
         }
     }
 

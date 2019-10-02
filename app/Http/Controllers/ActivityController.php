@@ -30,6 +30,11 @@ class ActivityController extends Controller
     public function getAll(){
 
         $activities = Activity::ActivityUser();
+
+        
+        foreach ($activities as $activity) {
+             $activity->date =  date("d-m-Y h:i", strtotime($activity->date));
+        }
             return datatables()->of($activities)
             ->addColumn('btn', 'activity.actions')
             ->rawColumns(['btn'])
@@ -55,8 +60,8 @@ class ActivityController extends Controller
          $id = array("idUser"=>Auth::id());
          $newA = array_merge($response, $id);
         
-         Activity::create($newA);
-         return redirect('dashboard/actividades');   
+         return Activity::create($newA) ? 1 : 0;
+           
           }
 
     /**
@@ -67,7 +72,9 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        return Activity::findOrFail($id);
+        $activity = Activity::findOrFail($id);
+        $activity->date = date("Y-m-d\Th:i", strtotime($activity->date));
+        return $activity;
     }
 
     /**
@@ -91,6 +98,13 @@ class ActivityController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $Response = $request->validate([
+            'activity' => 'required',
+            'decription' => 'required',
+            'date' => 'required|date|after:today'
+        ]);
+
+        return Activity::whereId($id)->update($Response);
     }
 
     /**
@@ -102,5 +116,6 @@ class ActivityController extends Controller
     public function destroy($id)
     {
         //
+        return Activity::find($id)->delete() ? 1 : 0;
     }
 }

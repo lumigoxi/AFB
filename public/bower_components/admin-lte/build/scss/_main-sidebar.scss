@@ -58,9 +58,10 @@
 
 // Sidebar navigation menu
 .nav-sidebar {
+
   // All levels
   .nav-item {
-    > .nav-link {
+    >.nav-link {
       margin-bottom: .2rem;
 
       .right {
@@ -69,7 +70,7 @@
     }
   }
 
-  .nav-link > p > .right {
+  .nav-link>p>.right {
     position: absolute;
     right: 1rem;
     top: 12px;
@@ -80,11 +81,11 @@
   }
 
   .menu-open {
-    > .nav-treeview {
+    >.nav-treeview {
       display: block;
     }
 
-    > .nav-link {
+    >.nav-link {
       i.right {
         @include rotate(-90deg);
       }
@@ -92,7 +93,7 @@
   }
 
   // First Level
-  > .nav-item {
+  >.nav-item {
     margin-bottom: 0;
 
     .nav-icon {
@@ -122,9 +123,9 @@
     list-style: none;
     padding: 0;
 
-    > .nav-item {
-      > .nav-link {
-        > .nav-icon {
+    >.nav-item {
+      >.nav-link {
+        >.nav-icon {
           width: $sidebar-nav-icon-width;
         }
       }
@@ -175,6 +176,7 @@
       @include media-breakpoint-up(sm) {
         display: none;
       }
+
       @include media-breakpoint-down(sm) {
         display: block;
       }
@@ -215,9 +217,11 @@
   }
 
   // Sidebar Menu. First level links
-  .nav-sidebar > .nav-item {
+  .nav-sidebar>.nav-item {
+
     // links
-    > .nav-link {
+    >.nav-link {
+
       // border-left: 3px solid transparent;
       &:active,
       &:focus {
@@ -226,13 +230,13 @@
     }
 
     // Hover and active states
-    &.menu-open > .nav-link,
-    &:hover > .nav-link {
+    &.menu-open>.nav-link,
+    &:hover>.nav-link {
       background-color: $sidebar-light-hover-bg;
       color: $sidebar-light-hover-color;
     }
 
-    > .nav-link.active {
+    >.nav-link.active {
       color: $sidebar-light-active-color;
 
       @if $enable-shadows {
@@ -241,7 +245,7 @@
     }
 
     // First Level Submenu
-    > .nav-treeview {
+    >.nav-treeview {
       background: $sidebar-light-submenu-bg;
     }
   }
@@ -265,12 +269,13 @@
 
   // All submenus
   .nav-treeview {
-    > .nav-item {
-      > .nav-link {
+    >.nav-item {
+      >.nav-link {
         color: $sidebar-light-submenu-color;
       }
 
-      > .nav-link.active {
+      >.nav-link.active {
+
         &,
         &:hover {
           background-color: $sidebar-light-submenu-active-bg;
@@ -278,7 +283,7 @@
         }
       }
 
-      > .nav-link:hover {
+      >.nav-link:hover {
         background-color: $sidebar-light-submenu-hover-bg;
       }
     }
@@ -318,9 +323,11 @@
   }
 
   // Sidebar Menu. First level links
-  .nav-sidebar > .nav-item {
+  .nav-sidebar>.nav-item {
+
     // links
-    > .nav-link {
+    >.nav-link {
+
       // border-left: 3px solid transparent;
       &:active {
         color: $sidebar-dark-color;
@@ -328,14 +335,14 @@
     }
 
     // Hover and active states
-    &.menu-open > .nav-link,
-    &:hover > .nav-link,
-    & > .nav-link:focus  {
+    &.menu-open>.nav-link,
+    &:hover>.nav-link,
+    &>.nav-link:focus {
       background-color: $sidebar-dark-hover-bg;
       color: $sidebar-dark-hover-color;
     }
 
-    > .nav-link.active {
+    >.nav-link.active {
       color: $sidebar-dark-hover-color;
 
       @if $enable-shadows {
@@ -344,7 +351,7 @@
     }
 
     // First Level Submenu
-    > .nav-treeview {
+    >.nav-treeview {
       background: $sidebar-dark-submenu-bg;
     }
   }
@@ -369,8 +376,8 @@
 
   // All submenus
   .nav-treeview {
-    > .nav-item {
-      > .nav-link {
+    >.nav-item {
+      >.nav-link {
         color: $sidebar-dark-submenu-color;
 
         &:hover,
@@ -380,7 +387,8 @@
         }
       }
 
-      > .nav-link.active {
+      >.nav-link.active {
+
         &,
         &:hover,
         &:focus {
@@ -393,17 +401,20 @@
 }
 
 // Sidebar variants
-@each $name, $color in $theme-colors {
+@each $name,
+$color in $theme-colors {
+
   .sidebar-dark-#{$name},
   .sidebar-light-#{$name} {
     @include sidebar-color($color)
   }
 }
 
-@each $name, $color in $colors {
+@each $name,
+$color in $colors {
+
   .sidebar-dark-#{$name},
   .sidebar-light-#{$name} {
     @include sidebar-color($color)
   }
 }
-

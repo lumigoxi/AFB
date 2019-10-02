@@ -1,5 +1,5 @@
-{!! Form::open(['route'=>['actividades.show', $id], 'method'=> 'GET']) !!}
-<a href="#" class="btn btn-info btn-sm seeActivity" data-toggle="modal" data-toggle="tooltip" title="Ver" data-placement="top" data-target="#see-more-activity"><i class="fa fa-eye"></i></a>
+{!! Form::open(['route'=>['rescates.show', $id], 'method'=> 'GET']) !!}
+<a href="#" class="btn btn-info btn-sm seeRescue" data-toggle="modal" data-toggle="tooltip" title="Ver" data-placement="top" data-target="#see-more-rescue" data-rescue="{{ $id }}"><i class="fa fa-eye"></i></a>
 {!! Form::close() !!}	
 
 

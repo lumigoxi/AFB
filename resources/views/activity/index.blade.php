@@ -43,8 +43,7 @@
         </thead>
     </table>
         @include('activity.create')
-        @include('member.delete')
-        @include('member.edit')
+        @include('activity.edit')
         @include('activity.more')
 			</div>
 		</div>
@@ -103,14 +102,39 @@
                             });
   }
 
+$('#form-store-activity').on('submit', function(e){
+  e.preventDefault()
+  let url = $(this).attr('action')
+  $.ajax({
+    url: url,
+    type: 'post',
+    data: $(this).serialize(),
+    success: function(data){
+      $('#create-activity').modal('toggle')
+      $ ('#activityTable').DataTable().ajax.reload();
+      if (data == 1) {
+        swal({
+          title: 'Exitiso',
+          text: 'La actividad ha sido registrada',
+          icon: 'success',
+          timer: 3000
+        })
+      }else{
+        swal({
+          title: 'Error',
+          text: 'Algo ha salido mal',
+          icon: 'error',
+          timer: 2500
+        })
+      }
+    }
+  })
+})
+
   //CARGAMOS LA TABLA CUANDO LA PAGINA HAYA SIDO CARGADA
   $(document).ready(function() {
     showTable();
     $('[data-toggle="tooltip"]').tooltip(); 
-    $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
-
 } );
 
   $('body').on("click", "#activityTable .seeActivity",function(e){
@@ -125,5 +149,83 @@
         description.innerHTML = data['decription'];
       })
   });
+
+
+//logica para obtener una actividad
+$('body').on('click', '#activityTable .btn-editar', function(e){
+  e.preventDefault()
+  let row = $(this).parents('tr')
+  let form = $(this).parents('form')
+  let url = form.attr('action')
+  $.ajax({
+    type: 'get',
+    url: url,
+    data: form.serialize,
+    success: function(data){
+      $('#activity').val(data.activity)
+      $('#form-edit-activity #description').val(data.decription)
+      document.querySelector("#form-edit-activity #date").value = data.date
+      $('#form-edit-activity').attr('data-activity', data.id)
+    }
+  })
+})
+
+
+$('#form-edit-activity').on('submit', function(e){
+  e.preventDefault()
+  let idActivity = $(this).attr('data-activity')
+  let url = '{{ route('actividades.update', ':idActivity') }}'
+  url = url.replace(':idActivity', idActivity)
+  $.ajax({
+    type: 'put',
+    url: url,
+    data: $(this).serialize(),
+    success: function(data){
+      $('#editModal').modal('toggle')
+      if (data==1) {
+        swal({
+          title:'Exitoso', 
+          text: 'La actividad ha sido actualizada', 
+          icon: 'success',
+          timer: 2500
+        })
+        $ ('#activityTable').DataTable().ajax.reload();
+      }else{
+        swal('Error', 'Algo no salió mal', 'error')
+      }
+    }
+  })
+})
+
+
+$('body').on('click', '#activityTable .btn-borrar', function(e){ 
+  let form = $(this).parent('form')
+  let url = form.attr('action')
+  e.preventDefault()
+  swal({
+    title: "¿Seguro de eliminar la actividad?",
+    text: "Una vez eliminado no se podra revertir el cambio",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willDelete) => {
+    if (willDelete) {
+
+      $.ajax({
+          url: url,
+          data: form.serialize(),
+          type: 'post',
+          success: function(data){
+              $('#activityTable').DataTable().ajax.reload();
+          }
+      })
+      swal("La actividad fue elimnada" ,{
+        icon: 'success',
+        timer: 3000
+      })
+    }
+  })
+  })
+
 </script>
 @endsection

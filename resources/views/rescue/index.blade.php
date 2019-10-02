@@ -43,6 +43,7 @@
             </tr>
         </thead>
     </table>
+    @include('rescue.more')
 			</div>
 		</div>
 	</div>
@@ -66,34 +67,51 @@
       {data: 'DT_RowIndex', width: '5%'},
       {data: 'reason', width: '50%'},
       {data: 'priority', width: '5%', render: function(data, type, row){
-        if (data == 1) {
-          return `<div class="text-center"> 
-          <a href="#" class="badge badge-danger">Alta</a>
+        if (data == 'Alta') {
+          return `<div class="dropdown">
+              <button class="btn btn-success btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  `+data+`
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item btn-priority" href="#" data-priority="0">Alta</a>
+                <a class="dropdown-item btn-priority" href="#" data-prority="1">Media</a>
+                <a class="dropdown-item btn-priority" href="#" data-priority="2">Baja</a>
+              </div>
           </div>`
-        }else if(data == 2){
+        }else if(data == 'Media'){
           return `<div class="text-center"> 
-          <a href="#" class="badge badge-warning">Media</a>
+          <a href="#" class="badge badge-warning">`+data+`</a>
           </div>`
         }else{
           return `<div class="text-center"> 
-          <a href="#" class="badge badge-secondary">Baja</a>
+          <a href="#" class="badge badge-secondary">`+data+`</a>
           </div>`
         }
       }},
       {data: 'status', width: '5%', mRender: function(data, type, row){
-        if (data == 0) {
+        if (data == 'Listo') {
           return `<div class="text-center"> 
-          <a href="#" class="badge badge-success">Listo</a>
+          <a href="#" class="badge badge-success">`+data+`</a>
           </div>`
-        }else if(data == 1){
+        }else if(data == 'Pendiente'){
           return `<div class="text-center"> 
-          <a href="#" class="badge badge-danger">Pendiente</a>
+          <a href="#" class="badge badge-danger">`+data+`</a>
+          </div>`
+        }else{
+          return `<div class="text-center"> 
+          <a href="#" class="badge badge-info">`+data+`</a>
           </div>`
         }
       }},
       {data: 'created_at', width: '15%'},
       {data: 'btn', width: '20%', orderable: false}
       ],
+      createdRow: function( row, data, dataIndex ) {
+        // Set the data-status attribute, and add a class
+        $( row ).find('td:eq(2)')
+            .attr('data-rescue', data.id)
+            .addClass('asset-context box');
+    },
      'order': [[0, 'desc']]
      ,
       "language":{
@@ -131,5 +149,43 @@
     $('[data-toggle="tooltip"]').tooltip(); 
     
 } );
+
+
+  $('body').on('click', '#rescueTable .seeRescue', function(e){
+    
+    let form = $(this).parent('form')
+    $.ajax({
+      url: form.attr('action'),
+      type: 'get',
+      success: function(data){
+        let title = document.getElementById('see-reason-rescue');
+        let description = document.getElementById('see-description-rescue');
+        title.innerHTML=data['reason'];
+        description.innerHTML = data['description'];
+      }
+    })
+  })
+
+  $('body').on('click', '#rescueTable .btn-priority', function(e){
+    e.preventDefault()
+    let idRescue = $(this).parent().parent().parent().attr('data-rescue')
+    console.log(idRescue)
+     let request_url = "{{ route('rescates.update', ':idRescue') }}"
+      request_url = request_url.replace(':idRescue', idRescue)
+      let priority = $(this).attr('data-priority')
+
+      $.ajax({
+          url: request_url,
+          type: 'put',
+          data: {
+            priority: priority,
+            type_update: 'priority',
+            _token: '{{ csrf_token() }}'
+          },
+          success: function(data){
+            console.log(data)
+          }
+      })
+  })
 </script>
 @endsection
