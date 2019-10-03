@@ -8,6 +8,13 @@
         </button>
       </div>
       <div class="modal-body">
+        <label for="see-located_at-rescue">Lugar:</label>
+        <p id="see-located_at-rescue"></p>
+        <hr>
+        <label for="see-user-rescue">Encargado:</label>
+        <p id="see-user-rescue"></p>
+        <hr>
+        <label for="see-description-srecue">Descripción:</label>
         <p id="see-description-rescue"></p>
       </div>
     </div>

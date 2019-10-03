@@ -2,8 +2,10 @@
 
 namespace app\Http\Controllers;
 
-use app\Rescue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use app\Rescue;
+use app\User;
 
 class RescueController extends Controller
 {
@@ -36,6 +38,14 @@ class RescueController extends Controller
     public function store(Request $request)
     {
         //
+        $Response = $request->validate([
+            'reason'=>'required',
+            'located_at'=>'required',
+            'description' => 'nullable'
+        ]);
+        $id = array("idUser"=>Auth::id());
+        $newA = array_merge($Response, $id);
+        return Rescue::create($newA) ? 1 : 0;
     }
 
     /**
@@ -47,7 +57,9 @@ class RescueController extends Controller
     public function show($id)
     {
         //
-        return Rescue::findOrFail($id);
+        $rescue = Rescue::findOrFail($id);
+        $user = $rescue->user;
+        return $rescue;
     }
 
     /**
@@ -56,9 +68,15 @@ class RescueController extends Controller
      * @param  \app\Rescue  $rescue
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rescue $rescue)
+    public function edit($request)
     {
         //
+        $user =User::select('name', 'email', 'id')
+                ->where('name', 'LIKE', "%{$request}%")
+                ->orWhere('email', 'LIKE', "%{$request}%")
+                ->take(1)
+                ->get();    
+        return $user;
     }
 
     /**
@@ -75,9 +93,23 @@ class RescueController extends Controller
             $Response = $request->validate([
                 'priority' => 'required|digits_between:0,2'
             ]);
+            return Rescue::whereId($id)->update($Response) ? 1 : 0;
+        }else if($request['type_update'] == 'status'){
+          $Response = $request->validate([
+                'status' => 'required|digits_between:0,2'
+            ]);  
+          return Rescue::whereId($id)->update($Response) ? 1 :0;
+        }else if($request['type_update']== 'all'){
+            $Response = $request->validate([
+                'user_id' => 'required',
+                'description' => 'required',
+                'reason' => 'required',
+                'located_at' => 'required'
+            ]);
 
             return Rescue::whereId($id)->update($Response) ? 1 : 0;
         }
+
     }
 
     /**
@@ -86,9 +118,10 @@ class RescueController extends Controller
      * @param  \app\Rescue  $rescue
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rescue $rescue)
+    public function destroy($id)
     {
         //
+        return Rescue::find($id)->delete() ? 1 : 0;
     }
 
     public function getAll(){
@@ -99,17 +132,25 @@ class RescueController extends Controller
                  $rescue->priority = 'Alta';
              }else if($rescue->priority == 1){
                 $rescue->priority = 'Media';
-             }else{
+             }else if($rescue->priority == 2){
                 $rescue->priority = 'Baja';
+             }else{
+                $rescue->priority = 'Sin Prioridad';
              }
              if ($rescue->status == 0) {
                 $rescue->status = 'Listo';
              }else if ($rescue->status == 1 ) {
                  $rescue->status = 'En curso';
-             }else{
+             }else if($rescue->status == 2){
                 $rescue->status = 'Pendiente';
+             }else{
+                $rescue->status = 'Sin Estado';
              }
+
+             //$rescue->other = User::findOrFail($rescue->user_id);
          }
+
+          
             return datatables()->of($rescues)
             ->addColumn('btn', 'rescue.actions')
             ->addIndexColumn()

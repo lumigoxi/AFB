@@ -43,8 +43,6 @@
         </thead>
     </table>
         @include('story.create')
-        @include('member.delete')
-        @include('member.edit')
 			</div>
 		</div>
 	</div>

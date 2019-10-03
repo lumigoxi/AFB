@@ -15,6 +15,7 @@ class PetController extends Controller
     public function index()
     {
         //
+        return view('pet.index');
     }
 
     /**
@@ -81,5 +82,22 @@ class PetController extends Controller
     public function destroy(Pet $pet)
     {
         //
+    }
+
+    public function getAll(){
+
+        $pets = Pet::all();
+        foreach ($pets as $pet) {
+            if ($pet->status == 0) {
+                $pet->status = 'Adoptado';
+            }else{
+                $pet->status= 'Disponible';
+            }
+        }
+        return  datatables()->of($pets)
+            ->addColumn('btn', 'pet.actions')
+            ->addIndexColumn()
+            ->rawColumns(['btn'])
+            ->toJson();
     }
 }

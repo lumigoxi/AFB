@@ -66,7 +66,6 @@
             <i class="nav-icon far fa-calendar-alt"></i>
             <p>
               Miembros
-              <span class="badge badge-info right">2</span>
             </p>
           </a>
         </li>
@@ -78,7 +77,14 @@
             </p>
           </a>
         </li>
-        
+        <li class="nav-item">
+          <a href="{{ route('Mascotas.index') }}" class="nav-link">
+            <i class="nav-icon fa fa-ambulance "></i>
+            <p>
+              Mascotas
+            </p>
+          </a>
+        </li>
       </ul>
     </li>
   </ul>

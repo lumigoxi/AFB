@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Lista de rescates</h1>
+            <h1 class="m-0 text-dark">Mascotas</h1>
           </div><!-- /.col -->
           <div class="col-sm-6 py-auto">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-              <li class="breadcrumb-item active">Rescates</li>
+              <li class="breadcrumb-item active">Mascotas</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -29,16 +29,15 @@
 			<div class="col">
 				<hr>
 				<a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>
-				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#create-rescue">Registrar rescate</a>
+				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#create-rescue">Registrar Mascota</a>
 				<hr>
         <table id="rescueTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Razon</th>
-                <th scope="col">Prioridad</th>
+                <th scope="col">Mascota</th>
+                <th scope="col">Albergue</th>
                 <th scope="col">Estado</th>
-                <th scope="col">Registrado</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -59,93 +58,29 @@
 
 @section('scripts')
 <script>
-  const option_priority = `<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item btn-priority" href="#" data-priority="0">Alta</a>
-                <a class="dropdown-item btn-priority" href="#" data-priority="1">Media</a>
-                <a class="dropdown-item btn-priority" href="#" data-priority="2">Baja</a>
-              </div>
-          </div>`;
-          const option_status = `<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item btn-status" data-status="0" href="#">Listo</a>
-    <a class="dropdown-item btn-status" data-status="1" href="#">En curso</a>
-    <a class="dropdown-item btn-status" data-status="2" href="#">Pendiente</a>
-  </div>
-</div>`
    //FUNCIOON CARGAR TABLA
   function showTable(){
     $('#rescueTable').DataTable({
       "processing": true,
       "serverSide": true,
-      "ajax": "{{ url('rescue/getAllRescues') }}",
+      "ajax": "{{ url('dashboard/Mascotas/getAllPet') }}",
       "columns": [
       {data: 'DT_RowIndex', width: '5%'},
-      {data: 'reason', width: '50%'},
-      {data: 'priority', width: '5%', render: function(data, type, row){
-        if (data == 'Alta') {
-          return `<div class="dropdown">
-              <button class="btn btn-danger btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  `+data+`
-              </button>
-              `+option_priority
-        }else if(data == 'Media'){
-          return `<div class="dropdown">
-              <button class="btn btn-warning btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  `+data+`
-              </button>
-              `+option_priority
-        }else if(data ==  'Baja'){
-          return `<div class="dropdown">
-              <button class="btn btn-secondary btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  `+data+`
-              </button>
-              `+option_priority
-        }else{
-           return `<div class="dropdown">
-              <button class="btn btn-ligth btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  `+data+`
-              </button>
-              `+option_priority
-        }
+      {data: 'name'},
+      {data: 'located_at'},
+      {data: 'status', mRender: function(data){
+        if (data == 'Disponible') {
+                return `<div class="text-center">
+                    <span class="badge badge-success btn-status"  data-status="1">`+data+`</span>
+                </div>`;
+            }else{
+                return `<div class="text-center">
+                    <span class="badge badge-info btn-status" data-status="0">`+data+`</span>
+                </div>`;
+            }
       }},
-      {data: 'status', width: '5%', mRender: function(data, type, row){
-        if (data == 'Listo') {
-          return `<div class="dropdown">
-  <button class=" btn btn-success btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    `+data+`
-  </button>
-  `+option_status
-        }else if(data == 'Pendiente'){
-          return `<div class="dropdown">
-  <button class=" btn btn-danger btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    `+data+`
-  </button>
-  `+option_status
-        }else if(data == 'En curso'){
-          return `<div class="dropdown">
-  <button class=" btn btn-info btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    `+data+`
-  </button>
-  `+option_status
-        }else{
-          return `<div class="dropdown">
-  <button class=" btn btn-ligth btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    `+data+`
-  </button>
-  `+option_status
-        }
-      }},
-      {data: 'created_at', width: '15%'},
-      {data: 'btn', width: '20%', orderable: false}
+      {data: 'btn'}
       ],
-      createdRow: function( row, data, dataIndex ) {
-        // agregar el attr date-rescue al td de la fila
-        $( row ).find('td:eq(2)')
-            .attr('data-rescue', data.id)
-            .addClass('asset-context box');
-        $( row ).find('td:eq(3)')
-            .attr('data-rescue', data.id)
-            .addClass('asset-context box');
-    },
      'order': [[0, 'desc']]
      ,
       "language":{
@@ -185,7 +120,7 @@
 } );
 
 
-  $('body').on('click', '#rescueTable .seeRescue', function(e){
+  $('body').on('click', '#rescueTable .seePet', function(e){
     
     let form = $(this).parent('form')
     $.ajax({
@@ -247,41 +182,7 @@
       })
   })
 
-//logica camvbiar status del rescate
-  $('body').on('click', '#rescueTable .btn-status', function(e){
-    e.preventDefault()
-    let idRescue = $(this).parent().parent().parent().attr('data-rescue')
-    let url = '{{ route('rescates.update', ':idRescue') }}'.replace(':idRescue', idRescue)
-    let status = $(this).attr('data-status')
 
-    $.ajax({
-        url: url,
-        type: 'put',
-        data: {
-          status: status,
-          type_update: 'status',
-          _token: '{{ csrf_token() }}'
-        },
-        success: function(data){
-          if (data == 1) {
-              swal({
-                title: 'Exitoso',
-                text: 'Se ha actualizado',
-                icon: 'success',
-                timer: 3000
-              })
-              $ ('#rescueTable').DataTable().ajax.reload();
-          }else{
-            swal({
-                title: 'Error',
-                text: 'Algo ha salido mal',
-                icon: 'error',
-                timer: 2500
-            })
-          }
-        }
-    })
-  })
 
   $('body').on('click', '#rescueTable .btn-editar', function(e){
     e.preventDefault()

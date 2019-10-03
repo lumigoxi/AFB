@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Lista de rescates</h1>
+            <h1 class="m-0 text-dark">Tratamientos</h1>
           </div><!-- /.col -->
           <div class="col-sm-6 py-auto">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-              <li class="breadcrumb-item active">Rescates</li>
+              <li class="breadcrumb-item active">Tratamientos</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -29,14 +29,14 @@
 			<div class="col">
 				<hr>
 				<a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>
-				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#create-rescue">Registrar rescate</a>
+				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#create-rescue">Registrar tratamiento</a>
 				<hr>
         <table id="rescueTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Razon</th>
-                <th scope="col">Prioridad</th>
+                <th scope="col">Mascota</th>
+                <th scope="col">Tratamiento</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Registrado</th>
                 <th scope="col">Acciones</th>

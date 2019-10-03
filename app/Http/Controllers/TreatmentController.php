@@ -15,6 +15,7 @@ class TreatmentController extends Controller
     public function index()
     {
         //
+        return view('treatment.index');
     }
 
     /**
