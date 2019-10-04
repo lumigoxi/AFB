@@ -31,6 +31,9 @@
   <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/utilidades.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css') }}">
+
+  @yield('style')
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

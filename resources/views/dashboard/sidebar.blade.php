@@ -79,7 +79,7 @@
         </li>
         <li class="nav-item">
           <a href="{{ route('Mascotas.index') }}" class="nav-link">
-            <i class="nav-icon fa fa-ambulance "></i>
+            <i class="nav-icon fas fa-dog"></i>
             <p>
               Mascotas
             </p>

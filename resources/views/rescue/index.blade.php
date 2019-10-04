@@ -34,7 +34,7 @@
         <table id="rescueTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Encargado</th>
                 <th scope="col">Razon</th>
                 <th scope="col">Prioridad</th>
                 <th scope="col">Estado</th>
@@ -46,6 +46,7 @@
     @include('rescue.edit')
     @include('rescue.more')
     @include('rescue.create')
+    @include('rescue.add-pet')
 			</div>
 		</div>
 	</div>
@@ -78,7 +79,7 @@
       "serverSide": true,
       "ajax": "{{ url('rescue/getAllRescues') }}",
       "columns": [
-      {data: 'DT_RowIndex', width: '5%'},
+      {data: 'name'},
       {data: 'reason', width: '50%'},
       {data: 'priority', width: '5%', render: function(data, type, row){
         if (data == 'Alta') {
@@ -188,6 +189,7 @@
   $('body').on('click', '#rescueTable .seeRescue', function(e){
     
     let form = $(this).parent('form')
+    let resultPets = $('#result-pets').empty()
     $.ajax({
       url: form.attr('action'),
       type: 'get',
@@ -205,6 +207,10 @@
         }else{
             user.innerHTML = '--Sin encargado--'
         }
+            $.each(data['pets'], function(key, value){
+              $('#result-pets')
+              .append('<p class="ml-3">'+value.name+'</p>')
+            })
       }
     })
   })
@@ -363,6 +369,7 @@
               icon: 'success',
               timer: 3000
             })
+          $ ('#rescueTable').DataTable().ajax.reload();
           }else{
             swal({
               title: 'Error',
@@ -430,6 +437,46 @@
           }
         }
       })
+  })
+
+
+  //set id rescue to new pet
+  $('body').on('click', '#rescueTable .btn-add-pet', function(e){
+    e.preventDefault()
+    let idRescue = $(this).attr('data-rescue')
+    $('#form-register-pet').attr('data-rescue', idRescue)
+  })
+
+
+  $('#form-register-pet').on('submit', function(e){
+    e.preventDefault()
+    let idRescue = $(this).attr('data-rescue')
+    let data = $(this).serialize()
+    let url = '{{ route('Mascotas.store') }}'
+
+      $.ajax({
+        url: url,
+          type:'post',
+          data: data+"&rescue_id="+idRescue+"&store_origin=rescue",
+          success: function(data){
+              if(data == 1){
+                  swal({
+                    title: 'Exitoso',
+                    text: 'Se ha registrado correctamente',
+                    icon: 'success',
+                    timer: 3000
+                  })
+                $ ('#rescueTable').DataTable().ajax.reload();
+              }else{
+                  swal({
+                    title: 'Error',
+                    text: 'Algo salio mal',
+                    icon: 'error',
+                    timer: 2500
+                  })
+              }
+          }
+      }) 
   })
 </script>
 @endsection

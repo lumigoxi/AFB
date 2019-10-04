@@ -43,9 +43,7 @@ class RescueController extends Controller
             'located_at'=>'required',
             'description' => 'nullable'
         ]);
-        $id = array("idUser"=>Auth::id());
-        $newA = array_merge($Response, $id);
-        return Rescue::create($newA) ? 1 : 0;
+        return Rescue::create($Response) ? 1 : 0;
     }
 
     /**
@@ -59,6 +57,7 @@ class RescueController extends Controller
         //
         $rescue = Rescue::findOrFail($id);
         $user = $rescue->user;
+        $pets = $rescue->pets;
         return $rescue;
     }
 
@@ -121,13 +120,16 @@ class RescueController extends Controller
     public function destroy($id)
     {
         //
-        return Rescue::find($id)->delete() ? 1 : 0;
+        return Rescue::deleteRescue($id) ? 1 : 0;
     }
 
     public function getAll(){
         
          $rescues = Rescue::RescueInfo();
          foreach ($rescues as $rescue) {
+            if ($rescue->name == null) {
+                $rescue->name = '--No establecido--';
+            }
              if ($rescue->priority == 0) {
                  $rescue->priority = 'Alta';
              }else if($rescue->priority == 1){
