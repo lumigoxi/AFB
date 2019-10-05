@@ -30,22 +30,24 @@
 			<div class="col">
 				<hr>
 				<a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>
+        <a href="#" class="btn btn-info btn-edit-page" data-toggle="modal" data-target="#edit-page">Editar Descripción de la página</a>
 				<hr>
         <table id="petTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>
             <tr>
-                <th scope="col">#</th>
+              <th scope="col">#</th>
                 <th scope="col">Mascota</th>
                 <th scope="col">Raza</th>
                 <th scope="col">Albergue</th>
-                <th scope="col">Estado</th>
+                <th scope="col">Publicar</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
     </table>
-    @include('pet.more')
+    @include('Landing.pet.more')
     @include('pet.add-picture')
-    @include('pet.edit')
+    @include('Landing.pet.edit')
+    @include('Landing.pet.edit-page')
 			</div>
 		</div>
 	</div>
@@ -62,29 +64,38 @@
 <script>
 
 
-  
+    
    //FUNCIOON CARGAR TABLA
   function showTable(){
     $('#petTable').DataTable({
-      "processing": true,
       "serverSide": true,
-      "ajax": {
+       "ajax": {
             "url": "{{ url('pet/getAllPet') }}",
             "data": {
-              "request_url": "tps"
+              "request_url": "cms"
             }
         },
       "columns": [
-      {data: 'DT_RowIndex', width: '5%'},
+      {data: 'DT_RowIndex'},
       {data: 'name'},
       {data: 'breed'},
       {data: 'located_at'},
-      {data: 'statusOption'},
+      {data: 'visible', mRender: function(data){
+        if (data == 'Publicado') {
+                return `<div class="text-center">
+                    <a href="#" class="badge badge-success btn-listar"  data-visible="1">`+data+`</a>
+                </div>`;
+            }else{
+                return `<div class="text-center">
+                    <a href="#" class="badge badge-danger btn-listar" data-visible="0">`+data+`</a>
+                </div>`;
+            }
+      }},
       {data: 'btn'}
       ],
       createdRow: function( row, data, dataIndex ) {
         // agregar el attr date-rescue al td de la fila
-        $( row ).find('td:eq(0)')
+        $( row ).find('td:eq(4)')
             .attr('data-pet', data.id)
             .addClass('asset-context box');
     },
@@ -136,7 +147,9 @@
       data: form.serialize(),
       success: function(data){
         let title = document.getElementById('see-name-pet');
+        let description = document.getElementById('see-description-pet');
         title.innerHTML=data['name'];
+        description.innerHTML = data['description'];
       }
     })
   })
@@ -153,12 +166,8 @@
           url: url,
           type: 'get',
           success: function(data){
-                 $('form #input-search-rescue').val(data['rescue']['reason'])
-                      $('#result-rescue').val(data['rescue']['located_at']) 
-                      $('#name').val(data['name'])
-                      $('#breed').val(data['breed'])
-                      $('#city').val(data['city'])
-                      $('#located_at').val(data['located_at'])
+                 $('form #input-search-pet').val(data['name'])
+                      $('#description').val(data['description'])
                       $('#form-edit-pet').attr('data-pet', data['id'])
           }
       })
@@ -171,7 +180,7 @@
     e.preventDefault()
     let idPet = $(this).attr('data-pet')
     let form = $(this)
-    let url = '{{ route('Mascotas.update', ':idPet') }}'.replace(':idPet', idPet)
+    let url = '{{ route('cms-mascotas.update', ':idPet') }}'.replace(':idPet', idPet)
     $.ajax({
         url: url,
         type: 'put',
@@ -229,6 +238,50 @@ $('body').on('click', '#petTable .btn-add-picture', function(e){
 })
 
 
+
+
+
+$('body').on('click', '#petTable .btn-listar', function(e){
+    e.preventDefault()
+    let tag_currently = $(this)
+    let current_visible = $(this).attr('data-visible')
+    let idPet = $(this).parent().parent().attr('data-pet')
+
+    let url = '{{ route('cms-mascotas.update', ':idPet') }}'.replace(':idPet', idPet)
+    let data = {
+      visible: current_visible,
+      _token: '{{ csrf_token() }}',
+      type_update: 'visible'
+    }
+
+    $.ajax({
+        url: url,
+        type: 'put',
+        data: data,
+        success: function(data){
+            if (data == 1) {
+              if (current_visible == 0) {
+                 tag_currently.attr('data-visible', 1)
+                  tag_currently.removeClass('badge-danger')
+                  tag_currently.addClass('badge-success')
+                  tag_currently.text('Publicado')
+                  swal("Actualizado!", "La mascota ha sido publicada", "success")
+              }else{
+                tag_currently.attr('data-visible', 0)
+                tag_currently.removeClass('badge-success')
+                tag_currently.addClass('badge-danger')
+                tag_currently.text('No publicado')
+                swal("Actualizado!", "Se ha despublicado la mascota", "success")
+              }
+            }else{
+              swal("Error", "Algo salió mal", "error")
+            }
+        }
+    })
+
+})
+
+
 $('#form-add-picture').on('submit', function(e){
 
           e.preventDefault()
@@ -266,39 +319,51 @@ $('#form-add-picture').on('submit', function(e){
 
 
 
-//logica cambiar prioridad del rescate
-  $('body').on('click', '#petTable .btn-status', function(e){
+$('.btn-edit-page').on('click', function(e){
     e.preventDefault()
-    let idPet = $(this).parent().attr('data-pet')
-     let request_url = "{{ route('Mascotas.update', ':idPet') }}"
-      request_url = request_url.replace(':idPet', idPet)
-      let status = $(this).attr('data-status')
-      status = parseInt(status, 10)
+    url = '{{ route('pages.show', ':idPage') }}'.replace(':idPage', 1)
+    $.ajax({
+        type: 'get',
+        url: url,
+        success: function(data){
+          let page = document.getElementById('see-name-page')
+          let description = document.getElementById('see-text-page')
+          $('#see-text-page').val(data['text'])
+          $('#see-title-page').val(data['title'])
+          page.innerHTML = data['page']
+          $('#form-edit-page').attr('data-page', data['id'])
+        }
+    })
+})
+
+
+ $('#form-edit-page').on('submit',function(e){
+      e.preventDefault()
+      let idPage = $(this).attr('data-page')
+      let url = '{{ route('pages.update', ':idPage') }}'.replace(':idPage', idPage)
+      let form = $(this).serialize()
+
       $.ajax({
-          url: request_url,
+          url: url,
+          data: form,
           type: 'put',
-          data: {
-            status: status,
-            type_update: 'status',
-            _token: '{{ csrf_token() }}'
-          },
           success: function(data){
+            $('#edit-page').modal('toggle')
             if (data == 1) {
               swal({
-                title: 'Extiso',
-                text: 'Se ha actualizado',
+                title: 'Exitoso',
+                text: 'Se ha acutualizado al pagina',
                 icon: 'success',
                 timer: 3000
               })
-              $ ('#petTable').DataTable().ajax.reload();
             }else{
               swal({
                 title: 'Error',
-                text: 'Algo no ha salido bien',
+                text: 'Algo salió mal',
                 icon: 'error',
                 timer: 2500
               })
-            }          
+            }
           }
       })
   })

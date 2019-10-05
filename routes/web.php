@@ -1,8 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
+
+
 
 //route for landing page
 Route::get('/', 'frontController@index')->name('/');
+Route::resource('pages', 'AllPageController')->only(['update', 'show']);
 
 //register route disabled because can't a person register own  
 Auth::routes(['register'=>false]);
@@ -34,8 +38,10 @@ Route::resource('dashboard/Caja', 'CashController')->except(['create']);
 Route::resource('dashboard/Donaciones', 'DonationController')->except(['create']);
 Route::resource('dashboard/Peticion-Adopcion', 'RequestRescueController')->except(['create']);
 Route::resource('dashboard/Pagos', 'OutputPayController')->except(['create']);
-Route::get('dashboard/Mascotas/getAllPet', 'PetController@getAll');
+Route::get('pet/getAllPet', 'PetController@getAll');
+Route::resource('dashboard/cms-mascotas', 'cmsPetController')->except(['create']);
 Route::resource('dashboard/Mascotas', 'PetController')->except(['create']);
+Route::resource('dashboard/Fotos-Mascota', 'PetPictureController')->except(['create']);
 Route::resource('dashboard/Solicitud-Adopcion', 'RequestRescueController')->except(['create']);
 Route::resource('dashboard/Amigos', 'PersonController')->except(['create']);
 Route::resource('dashboard/Hospedaje', 'LodgingController')->except(['create']);

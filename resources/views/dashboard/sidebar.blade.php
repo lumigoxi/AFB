@@ -37,7 +37,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="pages/tables/jsgrid.html" class="nav-link">
+          <a href="{{ Route('cms-mascotas.index') }}" class="nav-link">
             <i class="nav-icon fa fa-dog"></i>
             <p>Adoptcion</p>
           </a>

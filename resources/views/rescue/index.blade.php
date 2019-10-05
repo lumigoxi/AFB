@@ -459,6 +459,7 @@
           type:'post',
           data: data+"&rescue_id="+idRescue+"&store_origin=rescue",
           success: function(data){
+            $('#modal-add-pet').modal('toggle')
               if(data == 1){
                   swal({
                     title: 'Exitoso',
@@ -466,6 +467,8 @@
                     icon: 'success',
                     timer: 3000
                   })
+                $('#name').val('')
+                $('#breed').val('')
                 $ ('#rescueTable').DataTable().ajax.reload();
               }else{
                   swal({

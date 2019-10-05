@@ -20,6 +20,85 @@ class PetController extends Controller
         return view('pet.index');
     }
 
+
+
+    public function getAll(Request $request){
+        if ($request->request_url == "cms") {
+            $pets = Pet::getOnlyAvaible();
+        foreach ($pets as $pet) {
+
+            if ($pet->visible == 0) {
+                $pet->visible = 'No publicado';
+            }else{
+                $pet->visible = 'Publicado';
+            }
+
+            if ($pet->located_at == null) {
+                $pet->located_at = '--No definido--';
+            }else{
+                if ($pet->city != '') {
+
+                    $pet->located_at .=  ' | '.$pet->city;
+                }else{
+                    $pet->located_at;
+                }
+            }
+
+
+            if ($pet->breed == null) {
+                $pet->breed = '--Sin definir--';
+            }
+        }
+        return  datatables()->of($pets)
+            ->addColumn('btn', 'pet.actions-cms')
+            ->addIndexColumn()
+            ->rawColumns(['btn'])
+            ->toJson();
+
+
+
+
+
+        }else if($request->request_url == "tps"){
+            $pets = Pet::all();
+        foreach ($pets as $pet) {
+
+
+            if ($pet->status == 0) {
+                $pet->status = '--Sin definir--';
+            }else if($pet->status == 1){
+                $pet->status = 'En tratamiento';
+            }else if($pet->status){
+                $pet->status = 'Recuperado';
+            }
+
+
+            if ($pet->located_at == null) {
+                $pet->located_at = '--No definido--';
+            }else{
+                if ($pet->city != '') {
+
+                    $pet->located_at .=  ' | '.$pet->city;
+                }else{
+                    $pet->located_at;
+                }
+            }
+
+
+            if ($pet->breed == null) {
+                $pet->breed = '--Sin definir--';
+            }
+        }
+        return  datatables()->of($pets)
+            ->addColumn('btn', 'pet.actions')
+            ->addIndexColumn()
+             ->addColumn('statusOption', 'pet.status')
+            ->rawColumns(['btn', 'statusOption'])
+            ->toJson();
+        }
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -44,7 +123,7 @@ class PetController extends Controller
             $request->request->add(['id' => $request['rescue_id']]);
             $Response = $request->validate([
                 'name' => 'required',
-                'breed' => 'required|nullable',
+                'breed' => 'nullable',
                 'id' => 'required|exists:rescues', 
                 'rescue_id' => 'required'
             ]);
@@ -108,13 +187,20 @@ class PetController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $Response = $request->validate([
+        if ($request['type_update'] == 'all') {
+            $Response = $request->validate([
             'name' => 'required',
-            'breed' => 'required|nullable',
-            'city' => 'required|nullable',
-            'located_at' => 'required|nullable'
+            'breed' => 'nullable',
+            'city' => 'nullable',
+            'located_at' => 'nullable'
         ]);
         return Pet::whereId($id)->update($Response) ? 1:0;
+        }else if($request['type_update'] == 'status'){
+            $respose = $request->validate([
+                'status' => 'required'
+            ]);
+            return Pet::whereId($id)->update($respose) ? 1 : 0;
+        }
     }
 
     /**
@@ -123,35 +209,11 @@ class PetController extends Controller
      * @param  \app\Pet  $pet
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pet $pet)
+    public function destroy($id)
     {
         //
+        return Pet::whereId($id)->delete() ? 1 : 0;
     }
 
-    public function getAll(){
-
-        $pets = Pet::all();
-        foreach ($pets as $pet) {
-            if ($pet->status == 0) {
-                $pet->status = 'Adoptado';
-            }else{
-                $pet->status= 'Disponible';
-            }
-            if ($pet->located_at == null) {
-                $pet->located_at = '--No definido--';
-            }else{
-                if ($pet->city != '') {
-
-                    $pet->located_at .=  ' | '.$pet->city;
-                }else{
-                    $pet->located_at;
-                }
-            }
-        }
-        return  datatables()->of($pets)
-            ->addColumn('btn', 'pet.actions')
-            ->addIndexColumn()
-            ->rawColumns(['btn'])
-            ->toJson();
-    }
+    
 }

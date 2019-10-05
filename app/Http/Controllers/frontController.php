@@ -4,7 +4,9 @@ namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
 use app\Activity;
+use app\AllPage;
 use app\Landing;
+use app\Pet;
 use app\User;
 
 class frontController extends Controller
@@ -24,7 +26,9 @@ class frontController extends Controller
     }
 
     public function adoptView(){
-    	return view('front.adopt');
+        $pets = Pet::getAll();
+        $page = AllPage::find(1);
+    	return view('front.adopt')->with(['pets'=> $pets, 'page'=>$page]);
     }
 
     public function activityView(){
