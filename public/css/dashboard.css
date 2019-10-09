@@ -1,3 +1,21 @@
-table form{
-	display: inline;
+table form {
+    display: inline;
+}
+
+.carousel-caption {
+    margin-right: 100px;
+    right: 55%;
+    margin-left: 130px;
+}
+
+.carousel-option {
+    position: absolute;
+    bottom: 40px;
+    z-index: 1;
+    margin-left: 255px;
+    color: white;
+}
+
+a .carousel-option:hover {
+    color: #0056b3;
 }

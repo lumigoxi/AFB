@@ -32,7 +32,7 @@
                             <a class="nav-link" href="/actividades">Actividades</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contactanos</a>
+                            <a class="nav-link" href="/contactanos">Contactanos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link donar" href="#">Donar</a>

@@ -15,26 +15,21 @@
                             <label for="titulo" class="col-md-3 col-form-label text-md-right">titulo</label>
 
                             <div class="col-md-8">
-                                <input id="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" name="activity" value="{{ old('titulo') }}" required autocomplete="name" autofocus>
-
-                                @error('titulo')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="titulo" type="text" class="form-control"  name="activity" required autocomplete="name" autofocus>
                             </div>
                         </div>
+                         <div class="form-group row">
+                            <label for="lugar" class="col-md-3 col-form-label text-md-right">Lugar</label>
 
+                            <div class="col-md-8">
+                                <input id="lugar" type="text" class="form-control"  name="located_at" required autocomplete="name" autofocus>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="description" class="col-md-3 col-form-label text-md-right">Descripción</label>
                             <div class="col-md-8">
-                                <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="decription" value="{{ old('description') }}" required>
+                                <textarea id="description" type="text" class="form-control" name="decription"  required>
                                 </textarea>
-                                @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
 
@@ -42,13 +37,7 @@
                             <label for="date" class="col-md-3 col-form-label text-md-right">Fecha</label>
 
                             <div class="col-md-8">
-                                <input id="date" type="datetime-local" class="form-control @error('date') is-invalid @enderror" name="date" required>
-
-                                @error('date')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="date" type="datetime-local" class="form-control" name="date" required>
                             </div>
                         </div>
                             <div class="modal-footer d-flex">

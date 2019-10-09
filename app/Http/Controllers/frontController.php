@@ -32,8 +32,17 @@ class frontController extends Controller
     }
 
     public function activityView(){
+        $page = AllPage::find(2);
+    	$activities = Activity::getForFront();
+        foreach ($activities as $activity) {
+            $activity->date = date("d-m-Y h:i", strtotime($activity->date));
+        }
+    	return view('front.activity')->with(['activities'=> $activities,
+                                                'page' => $page]);
+    }
 
-    	$activities = Activity::orderBy('date', 'desc')->get();
-    	return view('front.activity')->with('activities', $activities);
+
+    public function contactView(){
+        return view('front.contact');
     }
 }

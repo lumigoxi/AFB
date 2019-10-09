@@ -28,8 +28,8 @@
 		<div class="row">
 			<div class="col">
 				<hr>
-				<a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>
-				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#create-rescue">Registrar rescate</a>
+				<a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">Regresar</a>
+				<a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#create-rescue">Registrar rescate</a>
 				<hr>
         <table id="rescueTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>

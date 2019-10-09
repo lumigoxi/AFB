@@ -3,10 +3,10 @@
 <section id="text-info">
   <div class="container">
     <h2 class="mt-4">
-      <span>Listado de actividades</span>
+      <span>{{ $page->title }}</span>
     </h2>
     <p class="mt-1">
-    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem quas explicabo quisquam odio laborum molestiae beatae dolore eligendi, nesciunt itaque quos expedita consequatur at corrupti natus perspiciatis, dolorem est! Dicta.</span><span>Beatae, nihil, nesciunt blanditiis pariatur provident laborum dignissimos possimus a! Eveniet, molestias. Deleniti necessitatibus tempora quis aut porro culpa at, voluptatem excepturi! Ea saepe eos similique ipsa, veritatis nesciunt rerum.</span>
+    <span>{{ $page->text }}</span>
   </p>
   </div>
 </section>
@@ -19,7 +19,7 @@
           <div class="card border-success mb-3">
             <div class="row no-gutters">
               <div class="col-md-4">
-                <img src="img/activity-4.jpg" class="card-img img-responsive" alt="...">
+                <img src="{{ asset($activity->path) }}" class="card-img img-responsive" alt="...">
               </div>
               <div class="col-md-8">
                 <div class="card-body">

@@ -29,8 +29,9 @@
 		<div class="row">
 			<div class="col">
 				<hr>
-				<a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>
-        <a href="#" class="btn btn-info btn-edit-page" data-toggle="modal" data-target="#edit-page">Editar Descripción de la página</a>
+				<a href="{{ route('dashboard') }}" class="btn btn-secondary  btn-sm">Regresar</a>
+        <a href="#" class="btn btn-warning btn-sm btn-edit-page" data-toggle="modal" data-target="#edit-page">Editar página</a>
+        <a href="/adoptar" class="btn btn-info btn-sm" target="_blank">Ver página</a>
 				<hr>
         <table id="petTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>

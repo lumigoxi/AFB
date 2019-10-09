@@ -26,8 +26,8 @@
                 <div class="row">
                   <div class="col">
                     <hr>
-                    <a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>
-                    <a href="{{ route('/') }}" class="btn btn-info" target="_blank">Ver Landing</a>
+                    <a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">Regresar</a>
+                    <a href="{{ route('/') }}" class="btn btn-info btn-sm" target="_blank">Ver Landing</a>
                     <hr>
                     <table id="memberTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
                       <thead>

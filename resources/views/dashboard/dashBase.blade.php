@@ -55,7 +55,7 @@
     <div class="sidebar">
 
       <!-- Sidebar Menu -->
-      @include('dashboard.sidebar');
+      @include('dashboard.sidebar')
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -112,15 +112,11 @@
 <script src="{{ URL::asset('bower_components/admin-lte/plugins/fastclick/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ URL::asset('bower_components/admin-lte/dist/js/adminlte.js') }}"></script>
-{{-- <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ URL::asset('bower_components/admin-lte/dist/js/pages/dashboard.js') }}"></script> --}}
-{{-- <!-- AdminLTE for demo purposes -->
-<script src="{{ URL::asset('bower_components/admin-lte/dist/js/demo.js') }}"></script>
-</body> --}}
+
 <script src="{{ URL::asset('bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.js') }}">
 </script>
 <script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
-@yield('scripts');
+@yield('scripts')
 
 </body>
 </html>

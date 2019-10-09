@@ -9,6 +9,7 @@
       </div>
       <div class="modal-body">
         <p id="seeDescription"></p>
+        
       </div>
     </div>
   </div>

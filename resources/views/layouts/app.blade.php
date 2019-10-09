@@ -12,10 +12,10 @@
 </head>
   <body>
       <div class="wrapper">
-          <nav class="navbar navbar-expand-lg navbar-light text-center bg-white">
+          <nav class="navbar fixed-top navbar-expand-lg navbar-light text-center bg-white">
           @include('layouts.navbar')
           </nav>
-          <main id="content">
+          <main id="content"  style="padding-top: 57px">
               @yield('content')
           </main>
           <footer id="footer">

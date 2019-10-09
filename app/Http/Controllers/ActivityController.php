@@ -5,6 +5,7 @@ namespace app\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use app\Activity;
+use app\ActivityPicture;
 
 
 
@@ -34,10 +35,16 @@ class ActivityController extends Controller
         
         foreach ($activities as $activity) {
              $activity->date =  date("d-m-Y h:i", strtotime($activity->date));
+             if ($activity->status == 0) {
+                 $activity->status = 'Sin Publicar';
+             }else{
+                $activity->status = 'Publicado';
+             }
         }
             return datatables()->of($activities)
             ->addColumn('btn', 'activity.actions')
-            ->rawColumns(['btn'])
+            ->addColumn('status', 'activity.status')
+            ->rawColumns(['btn', 'status'])
             ->toJson();
 
     }
@@ -98,13 +105,24 @@ class ActivityController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $Response = $request->validate([
+        if($request['type_update'] === 'app-picture'){
+            return 'asdnkasn';
+        }
+        if ($request['type_update'] === 'all') {
+            $Response = $request->validate([
             'activity' => 'required',
             'decription' => 'required',
             'date' => 'required|date|after:today'
         ]);
 
-        return Activity::whereId($id)->update($Response);
+        return Activity::whereId($id)->update($Response) ? 1:0;
+        }else if($request['type_update'] === 'status'){
+            $response = $request->validate([
+                'status' => 'required|integer|between:0,1'
+            ]);
+
+            return Activity::whereId($id)->update($response) ? 1:0;
+        }
     }
 
     /**
@@ -116,6 +134,6 @@ class ActivityController extends Controller
     public function destroy($id)
     {
         //
-        return Activity::find($id)->delete() ? 1 : 0;
+        return Activity::deleteActivity($id) ? 1 : 0;
     }
 }

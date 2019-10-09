@@ -21,6 +21,7 @@ Route::group(['prefix'=> '/'], function(){
 	Route::get('/historias', 'frontController@storyView');
 	Route::get('adoptar', 'frontController@adoptView');
 	Route::get('actividades', 'frontController@activityView');
+	Route::get('contactanos', 'frontController@contactView');
 });
 
 //Route type resource for CRUD 
@@ -28,6 +29,7 @@ Route::resource('/dashboard/landing', 'LandingController')->except(['create', 'e
 Route::resource('/dashboard/mision-vision', 'misionVisionController');
 Route::resource('/dashboard/historias', 'StoryController')->except(['create', 'edit', 'show']);
 Route::get('actividades/getAllActivitys', 'ActivityController@getAll');
+Route::resource('/dashboar/actividades/imagenes', 'ActivityPictureController')->except(['create', 'edit']);
 Route::resource('/dashboard/actividades', 'ActivityController')->except(['create', 'edit']);
 Route::get('rescue/getAllRescues', 'RescueController@getAll');
 Route::resource('/dashboard/rescates', 'RescueController')->except(['create']);

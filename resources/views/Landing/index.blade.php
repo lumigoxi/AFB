@@ -27,15 +27,15 @@
         <div class="row">
           <div class="container">
 		<div class="row">
-			<div class="col">
+			<div class="col-md-12 col-xs-12">
 				<hr>
-				<a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>                                            <a href="{{ route('/') }}" class="btn  btn-info" target="_blank">Ver Landing</a>
+				<a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">Regresar</a>                                            <a href="{{ route('/') }}" class="btn  btn-info btn-sm" target="_blank">Ver Landing</a>
 				<hr>
         {!! Form::open(['route'=>['landing.update', 1], 'method'=> 'POST']) !!}
               <div class="form-group">  
               {!! Form::textarea('call_to_action', null, ['id' => 'editor1', 'rows' => 10, 'cols' => 80, 'class' => 'ckeditor']) !!}
               </div>
-            <button type="submit" class="btn btn-success" id="submitLandig">Guardar</button>
+            <button type="submit" class="btn btn-success " id="submitLandig">Guardar</button>
         {!! form::close() !!} 
 			</div>
 		</div>

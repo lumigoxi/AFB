@@ -1,3 +1,20 @@
+#big-image div {
+    position: absolute;
+    bottom: 30%;
+    left: 15%;
+    color: white;
+}
+
+#big-image img {
+    background: rgba(0, 0, 0, 0.5);
+    height: 59vh;
+    width: 100%;
+    object-fit: cover;
+    filter: grayscale(57%);
+    padding-top: 20px;
+    position: relative;
+}
+
 #actividades img {
     height: 257px;
     object-fit: fill;
