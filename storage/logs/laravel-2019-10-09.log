@@ -178,3 +178,5 @@
 #55 C:\\xampp\\htdocs\\AFB\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
 #56 {main}
 "} 
+[2019-10-09 22:25:13] local.ERROR: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ (SQL: select * from `landings`)  

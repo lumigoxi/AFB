@@ -23,7 +23,7 @@ Route::group(['prefix'=> '/'], function(){
 	Route::get('actividades', 'frontController@activityView');
 	Route::get('contactanos', 'frontController@contactView');
 });
-
+Route::post('contactanos/formContact', 'InputMessageController@store');
 //Route type resource for CRUD 
 Route::resource('/dashboard/landing', 'LandingController')->except(['create', 'edit']);
 Route::resource('/dashboard/mision-vision', 'misionVisionController');

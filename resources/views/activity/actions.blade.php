@@ -12,5 +12,4 @@
 	<a href="#" class="btn-borrar btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 {!! Form::close() !!}	
 
-
 <a href="#" class="btn-see-picture btn btn-link btn-sm" data-toggle="modal" data-activity="{{ $id }}"data-target="#see-pictures" data-activity="{{ $id }}"><i class="fa fa-camera"></i></a>	
