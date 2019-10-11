@@ -25,8 +25,6 @@
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="container">
-		<div class="row">
 			<div class="col">
 				<hr>
 				<a href="{{ route('dashboard') }}" class="btn btn-secondary  btn-sm">Regresar</a>
@@ -49,9 +47,8 @@
     @include('pet.add-picture')
     @include('Landing.pet.edit')
     @include('Landing.pet.edit-page')
+    @include('pet.see-pictures')
 			</div>
-		</div>
-	</div>
         </div>
         <!-- /.row -->
       </div>
@@ -85,11 +82,11 @@
         if (data == 'Publicado') {
                 return `<div class="text-center">
                     <a href="#" class="badge badge-success btn-listar"  data-visible="1">`+data+`</a>
-                </div>`;
+                </div>`
             }else{
                 return `<div class="text-center">
                     <a href="#" class="badge badge-danger btn-listar" data-visible="0">`+data+`</a>
-                </div>`;
+                </div>`
             }
       }},
       {data: 'btn'}
@@ -98,7 +95,7 @@
         // agregar el attr date-rescue al td de la fila
         $( row ).find('td:eq(4)')
             .attr('data-pet', data.id)
-            .addClass('asset-context box');
+            .addClass('asset-context box')
     },
      'order': [[0, 'desc']]
      ,
@@ -128,15 +125,15 @@
         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
                 }
-                            });
+                            })
   }
 
   //CARGAMOS LA TABLA CUANDO LA PAGINA HAYA SIDO CARGADA
   $(document).ready(function() {
-    showTable();
-    $('[data-toggle="tooltip"]').tooltip(); 
+    showTable()
+    $('[data-toggle="tooltip"]').tooltip()
     
-} );
+} )
 
 
   $('body').on('click', '#petTable .seePet', function(e){
@@ -147,10 +144,10 @@
       type: 'get',
       data: form.serialize(),
       success: function(data){
-        let title = document.getElementById('see-name-pet');
-        let description = document.getElementById('see-description-pet');
-        title.innerHTML=data['name'];
-        description.innerHTML = data['description'];
+        let title = document.getElementById('see-name-pet')
+        let description = document.getElementById('see-description-pet')
+        title.innerHTML=data['name']
+        description.innerHTML = data['description']
       }
     })
   })
@@ -223,14 +220,14 @@
   if (willDelete) {
     swal("Se ha eliminado exitosamente", {
       icon: "success",
-    });
-      let form = $(this).parents('form');
-      let url = form.attr('action');
+    })
+      let form = $(this).parents('form')
+      let url = form.attr('action')
       $.post(url, form.serialize(), function(){
-          $ ('#petTable').DataTable().ajax.reload();
+          $ ('#petTable').DataTable().ajax.reload()
       })
   }
-});
+})
   })
 
 
@@ -368,5 +365,95 @@ $('.btn-edit-page').on('click', function(e){
           }
       })
   })
+
+
+ $('body').on('click', '#petTable .btn-see-picture', function(e){
+  e.preventDefault()
+  let idPet = $(this).attr('data-pet')
+  $('#see-pictures').attr('data-pet', idPet);
+  let url = '{{ route('Fotos-Mascota.show', ':idPet') }}'.replace(':idPet', idPet)
+  $.ajax({
+      url: url,
+      data: {
+        pet_id: idPet
+      },
+      type: 'get',
+      success: function(data){
+      let path = ''
+      $('.carousel-inner').empty()
+      $('.carousel-indicators').empty()
+       for(let j = 0; j < data.length; j++) {
+        path = '{{ asset('/') }}'+data[j]['path']
+         $('<div class="carousel-item" data-picture="'+data[j]['id']+'"><img class="d-block w-100" src="'+path+'"></div>').appendTo('.carousel-inner');
+          $('<li data-target="#carousel-example-1z" data-slide-to="'+(j)+'"></li>').appendTo('.carousel-indicators')
+
+          }
+          $('.carousel-inner > div ').first().addClass('active');
+          $('.carousel-indicators > li').first().addClass('active');
+          $('#carousel').carousel();
+      }
+       
+  })  
+})
+
+ $('#delete-image').on('click', function(e){
+  e.preventDefault()
+  let form = $(this).parent()
+  let image = $(this).parent().siblings('div').children('div .active')
+  let idImage = image.attr('data-picture')
+  let url = '{{ route('Fotos-Mascota.destroy', ':idImage') }}'.replace(':idImage', idImage)
+
+  $.ajax({
+    url: url,
+    type: 'post',
+    data: form.serialize(),
+    success: function(data){
+        if (data == 1) {
+          $('#see-pictures').modal('toggle')
+          swal({
+            text: 'Se ha eliminado con exito',
+            icon: 'success',
+            timer: 3000
+          })
+        }else{
+          swal({
+            text: 'Algo salio mal',
+            icon: 'error',
+            timer: 2500
+          })
+        }
+    }
+  })
+})
+
+$('.select-image').on('click', function(e){
+  e.preventDefault()
+    let image = $(this).siblings('div').children('div .active')
+    let idImage = image.attr('data-picture')
+    let idPet = $(this).parent().parent().parent().parent().attr('data-pet')
+    $.ajax({
+      type: 'put',
+      data: {
+        _token: '{{ csrf_token() }}',
+        pet_id: idPet
+      },
+      url: '{{ route('Fotos-Mascota.update', ':idImage') }}'.replace(':idImage', idImage),
+      success: function(data){
+        if (data==1) {
+          swal({
+            text: 'Se ha establecido como predeterminado',
+            icon: 'success',
+            timer: 3000
+          })
+        }else{
+          swal({
+            text: 'Algo ha salido mal',
+            icon: 'error',
+            timer: 2500
+          })
+        }
+      }
+    })
+})
 </script>
 @endsection

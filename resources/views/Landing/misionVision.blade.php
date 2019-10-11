@@ -23,35 +23,29 @@
           <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-              <div class="container">
-                <div class="row">
                   <div class="col-md-12">
                     <hr>
                     <a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>
                     <a href="{{ route('/') }}" class="btn  btn-info" target="_blank">Ver Landing</a>
                     <hr>
                   </div>
-                </div>
                 <div class="row">
-                  <div class="col-md-10">
                     <form class="pl-2" id="form-mission-vision">
                       <label for="mision">Misión</label>
-                      <div class="form-group">
+                      <div class="form-group col-md-12">
                         <textarea name="mission" cols="100" rows="5" id="text-mission">
                         
                         </textarea>
                       </div>
                       <label for="vision">Visión</label>
-                      <div class="form-group">
+                      <div class="form-group col-md-12">
                         <textarea name="vision" cols="100" rows="5" id="text-vision">
                         
                         </textarea>
                       </div>
                       <button type="submit" class="btn btn-success" id="submit-mission-vision">Actualizar</button>
                     </form>
-                  </div>
                 </div>
-              </div>
             </div>
             <!-- /.row -->
           </div>

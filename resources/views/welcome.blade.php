@@ -58,10 +58,10 @@
   <div class="container mt-5">
     <div class="row text-center titulo-colaboradores">
       <div class="col">
-        <span class="text-center text-uppercase h4">colaboradores</span>
+        <span class="text-center text-uppercase h4">{{ $member->title }}</span>
         <div class="row">
           <div class="col">
-            Los colaboradores son un grupo de personas interesadas por el probienestar de los animales, estas son personas quienes dia con dia trabajan para rescatar y velar por la recuperacion de los peluditos.
+            {{ $member->text }}
           </div>
         </div>
       </div>

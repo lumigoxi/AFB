@@ -8,6 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
+        <label for="see-member-description">Descripción: </label>
         <p id="see-member-description"></p>
       </div>
     </div>

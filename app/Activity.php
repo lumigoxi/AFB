@@ -13,7 +13,7 @@ class Activity extends Model
     //
 
  protected $fillable = [
-        'activity', 'decription', 'date', 'idUser',
+        'activity', 'decription', 'date', 'idUser', 'located_at'
     ];
 
     
@@ -41,7 +41,7 @@ class Activity extends Model
     public static function getForFront(){
 
     
-        return DB::table('activities as a')->select('a.activity', 'a.decription',  'a.date', 'p.path')
+        return DB::table('activities as a')->select('a.activity', 'a.decription',  'a.date', 'p.path', 'a.located_at', 'a.id')
                                     ->leftjoin('activity_pictures as p','a.id', '=', 'p.activity_id')
                                     ->where('p.defPicture', '=', 1)
                                     ->where('a.status', '=', "1")

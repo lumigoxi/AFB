@@ -14,8 +14,8 @@
     <div class="container mt-5">
       
       @foreach ($activities as $activity)
-        <div class="row">
-        <div class="col-md-12">
+        <div class="row mx-auto">
+        <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="card border-success mb-3">
             <div class="row no-gutters">
               <div class="col-md-4">
@@ -23,12 +23,11 @@
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{{ $activity->activity }}</h5>
+                  <h3 >{{ $activity->activity }}</h3>
                   <p class="card-text">{{ $activity->decription }}</p>
-                  <p class="card-text">Lugar: lugar x</p>
+                  <p class="card-text">Lugar: {{ $activity->located_at }}</p>
                   <p class="card-text">fecha: {{ $activity->date }}</p>
-                  <p class="card-text">Cactegoria: Categoria de la actividad </p>
-                  <a href="#" class="btn btn-success bt-donar">saber más...</a>
+                  <a href="#" class="btn btn-success bt-donar" data-activity={{ $activity->id }}>saber más...</a>
                 </div>
               </div>
             </div>

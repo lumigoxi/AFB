@@ -39,4 +39,12 @@ class Pet extends Model
                     ->select('pets.*')
                     ->get();
     }
+
+
+    public static function getForFront(){
+        return DB::table('pets as p')->select('p.name', 'p.description',  'p.breed', 'p.located_at', 'p.city', 'pi.path', 'p.id')
+                                    ->leftjoin('pet_pictures as pi','p.id', '=', 'pi.pet_id')
+                                    ->where('pi.defPicture', '=', 1)
+                                    ->get();
+    }
 }

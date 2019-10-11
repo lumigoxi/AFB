@@ -24,8 +24,6 @@
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="container">
-		<div class="row">
 			<div class="col">
 				<hr>
 				<a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">Regresar</a>
@@ -45,8 +43,7 @@
     </table>
         @include('member.create')
 			</div>
-		</div>
-	</div>
+		
         </div>
         <!-- /.row -->
       </div>

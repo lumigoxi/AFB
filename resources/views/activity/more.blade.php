@@ -8,8 +8,10 @@
         </button>
       </div>
       <div class="modal-body">
+        <label for="seeLocated_at">Lugar:</label>
+        <p id="seeLocated_at"></p>
+        <label for="seeDescription">Descripción: </label>
         <p id="seeDescription"></p>
-        
       </div>
     </div>
   </div>

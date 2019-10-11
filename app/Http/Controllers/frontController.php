@@ -15,9 +15,11 @@ class frontController extends Controller
     public function index(){
         $calls = Landing::all();
         $users = User::where('visible', 1)->get();
+        $member = AllPage::find(3); 
         return view('welcome',[
             'calls' => $calls,
-            'users' => $users
+            'users' => $users,
+            'member' => $member
         ]);
     }
 
@@ -26,7 +28,7 @@ class frontController extends Controller
     }
 
     public function adoptView(){
-        $pets = Pet::getAll();
+        $pets = Pet::getForFront();
         $page = AllPage::find(1);
     	return view('front.adopt')->with(['pets'=> $pets, 'page'=>$page]);
     }

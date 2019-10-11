@@ -22,11 +22,10 @@
           <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-              <div class="container">
-                <div class="row">
                   <div class="col">
                     <hr>
                     <a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">Regresar</a>
+                    <a href="#" class="btn btn-warning btn-sm btn-edit-page" data-toggle="modal" data-target="#edit-page">Editar página</a>
                     <a href="{{ route('/') }}" class="btn btn-info btn-sm" target="_blank">Ver Landing</a>
                     <hr>
                     <table id="memberTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
@@ -41,10 +40,9 @@
                     </table>
                     @include('member.create')
                     @include('landing.member.edit')
-                    @include('member.more')
+                    @include('Landing.member.more')
+                    @include('Landing.member.edit-page')
                   </div>
-                </div>
-              </div>
             </div>
             <!-- /.row -->
           </div>
@@ -205,6 +203,57 @@
             })
 
          })
+
+
+    $('.btn-edit-page').on('click', function(e){
+    e.preventDefault()
+    url = '{{ route('pages.show', ':idPage') }}'.replace(':idPage', 3)
+    $.ajax({
+        type: 'get',
+        url: url,
+        success: function(data){
+          let page = document.getElementById('see-name-page')
+          let description = document.getElementById('see-text-page')
+          $('#see-text-page').val(data['text'])
+          $('#see-title-page').val(data['title'])
+          page.innerHTML = data['page']
+          $('#form-edit-page').attr('data-page', data['id'])
+        }
+    })
+})
+
+
+    $('#form-edit-page').on('submit',function(e){
+      e.preventDefault()
+      let idPage = $(this).attr('data-page')
+      let url = '{{ route('pages.update', ':idPage') }}'.replace(':idPage', idPage)
+      let form = $(this).serialize()
+
+      $.ajax({
+          url: url,
+          data: form,
+          type: 'put',
+          success: function(data){
+            $('#edit-page').modal('toggle')
+            if (data == 1) {
+              swal({
+                title: 'Exitoso',
+                text: 'Se ha acutualizado al pagina',
+                icon: 'success',
+                timer: 3000
+              })
+            }else{
+              swal({
+                title: 'Error',
+                text: 'Algo salió mal',
+                icon: 'error',
+                timer: 2500
+              })
+            }
+          }
+      })
+  })
+
         </script>
         @endsection
 

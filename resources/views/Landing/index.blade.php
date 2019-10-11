@@ -25,8 +25,6 @@
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="container">
-		<div class="row">
 			<div class="col-md-12 col-xs-12">
 				<hr>
 				<a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">Regresar</a>                                            <a href="{{ route('/') }}" class="btn  btn-info btn-sm" target="_blank">Ver Landing</a>
@@ -38,8 +36,7 @@
             <button type="submit" class="btn btn-success " id="submitLandig">Guardar</button>
         {!! form::close() !!} 
 			</div>
-		</div>
-	</div>
+		
         </div>
         <!-- /.row -->
       </div>

@@ -33,22 +33,13 @@ Route::resource('/dashboar/actividades/imagenes', 'ActivityPictureController')->
 Route::resource('/dashboard/actividades', 'ActivityController')->except(['create', 'edit']);
 Route::get('rescue/getAllRescues', 'RescueController@getAll');
 Route::resource('/dashboard/rescates', 'RescueController')->except(['create']);
-Route::resource('dashboard/Patrocinadores', 'SponsorController')->except(['create']);
-Route::resource('dashboard/Pagos-Patrocinador', 'SponsorActivityController')->except(['create']);
-Route::resource('dashboard/Cobros', 'InputPayController')->except(['create']);
-Route::resource('dashboard/Caja', 'CashController')->except(['create']);
-Route::resource('dashboard/Donaciones', 'DonationController')->except(['create']);
-Route::resource('dashboard/Peticion-Adopcion', 'RequestRescueController')->except(['create']);
-Route::resource('dashboard/Pagos', 'OutputPayController')->except(['create']);
 Route::get('pet/getAllPet', 'PetController@getAll');
 Route::resource('dashboard/cms-mascotas', 'cmsPetController')->except(['create']);
 Route::resource('dashboard/Mascotas', 'PetController')->except(['create']);
 Route::resource('dashboard/Fotos-Mascota', 'PetPictureController')->except(['create']);
 Route::resource('dashboard/Solicitud-Adopcion', 'RequestRescueController')->except(['create']);
-Route::resource('dashboard/Amigos', 'PersonController')->except(['create']);
-Route::resource('dashboard/Hospedaje', 'LodgingController')->except(['create']);
 Route::resource('dashboard/Voluntarios', 'VoluntaryController')->except(['create']);
-Route::resource('dashboard/Tratamientos', 'TreatmentController')->except(['create']);
-Route::resource('dashboard/Veterinarios', 'vetController')->except(['create']);
 Route::resource('dahsboard/cms-miembros', 'cmsMemberController')->except(['create']);
+Route::resource('dashboard/Mensajes', 'MessageController')->except(['create', 'edit']);
+Route::get('Messages/getAllMessages', 'MessageController@getAll');
 

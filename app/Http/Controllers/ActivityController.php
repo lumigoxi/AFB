@@ -61,7 +61,8 @@ class ActivityController extends Controller
          $response = $request->validate([
             'activity' => 'required',
             'decription' => 'required',
-            'date' => 'required'
+            'date' => 'required',
+            'located_at' => 'required'
         ]);
         
          $id = array("idUser"=>Auth::id());
@@ -112,7 +113,8 @@ class ActivityController extends Controller
             $Response = $request->validate([
             'activity' => 'required',
             'decription' => 'required',
-            'date' => 'required|date|after:today'
+            'date' => 'required|date|after:today',
+            'located_at' => 'required'
         ]);
 
         return Activity::whereId($id)->update($Response) ? 1:0;

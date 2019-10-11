@@ -24,8 +24,6 @@
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="container">
-		<div class="row">
 			<div class="col">
 				<hr>
 				<a href="{{ route('dashboard') }}" class="btn btn-secondary  btn-sm">Regresar</a>
@@ -51,8 +49,6 @@
         @include('activity.add-picture')
         @include('activity.see-pictures')
 			</div>
-		</div>
-	</div>
         </div>
         <!-- /.row -->
       </div>
@@ -152,10 +148,12 @@ $('#form-store-activity').on('submit', function(e){
       let form = $(this).parents('form');
       let url = form.attr('action');
       $.get(url, form.serialize(), function(data){
-        let title = document.getElementById('seeTitle');
-        let description = document.getElementById('seeDescription');
-        title.innerHTML=data['activity'];
-        description.innerHTML = data['decription'];
+        let title = document.getElementById('seeTitle')
+        let description = document.getElementById('seeDescription')
+        let located_at = document.getElementById('seeLocated_at')
+        title.innerHTML=data['activity']
+        description.innerHTML = data['decription']
+        located_at.innerHTML = data['located_at']
       })
   });
 
@@ -172,6 +170,7 @@ $('body').on('click', '#activityTable .btn-editar', function(e){
     data: form.serialize,
     success: function(data){
       $('#activity').val(data.activity)
+      $('#located_at').val(data.located_at)
       $('#form-edit-activity #description').val(data.decription)
       document.querySelector("#form-edit-activity #date").value = data.date
       $('#form-edit-activity').attr('data-activity', data.id)
