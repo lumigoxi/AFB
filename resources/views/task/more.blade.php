@@ -2,7 +2,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 id="see-reason-rescue" class="modal-title"></h5>
+        <h5 class="modal-title font-weight-bold">Razón: &nbsp</h5>
+        <h5 id="see-reason-rescue" class="modal-title text-capitalize"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -11,12 +12,9 @@
         <label for="see-located_at-rescue">Lugar: </label>
         <p id="see-located_at-rescue"></p>
         <hr>
-        <label for="see-user-rescue">Encargado: </label>
-        <p id="see-user-rescue"></p>
-        <hr>
         <label for="see-description-srecue">Descripción:</label>
         <p id="see-description-rescue"></p>
-         <div class="container">
+        <div class="container">
             <div class="row">
               <div class="col-md-5">
                 <label for="see-more-pets">Mascotas: </label>

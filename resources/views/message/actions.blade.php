@@ -1,7 +1,7 @@
-{!! Form::open(['route'=>['Mensajes.show', $id], 'method'=> 'GET']) !!}
-<a href="#" class="btn btn-info btn-sm seePet" data-toggle="modal" data-toggle="tooltip" title="Ver" data-placement="top" data-target="#see-more-info" data-message="{{ $id }}"><i class="fa fa-eye"></i></a>
-{!! Form::close() !!}	
 
+{!! Form::open(['route'=>['Mensajes.show', $id], 'method'=> 'GET']) !!}
+<a href="#" class="btn btn-info btn-sm seeMessage" data-toggle="modal" data-toggle="tooltip" title="Ver" data-placement="top" data-target="#seeMessage" data-message="{{ $id }}"><i class="fa fa-eye"></i></a>
+{!! Form::close() !!}	
 
 
 {!! Form::open(['route'=>['Mensajes.destroy', $id], 'method'=> 'DELETE']) !!}

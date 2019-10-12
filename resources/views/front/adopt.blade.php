@@ -14,8 +14,8 @@
 	<div class="container mx-auto">
 		<div class="row">
 			@foreach($pets as $pet)
-			<div class="col-md-4 col-sm-6 col-xs-12">
-				<div class="card">
+			<div class="col-md-4 efect-card">
+				<div class="card card-adopt">
 					<img src="{{ asset($pet->path) }}" class="card-img-top img-adopt" alt="...">
 					<div class="card-body pt-1">
 						<span class="badge badge-pill badge-primary mb-2">{{ $pet->breed }}</span>
@@ -24,6 +24,7 @@
 						<p class="card-text text-secondary">{{ $pet->description }}</p>
 						<div class="text-center">
 							<button class="btn btn-success bt-donar mt-3" data-pet="{{ $pet->id }}">Quiero Adoptar!</button>
+							<button class="btn btn-outline-info mt-3" data-pet="{{ $pet->id }}">Saber mas...</button>
 						</div>
 					</div>
 				</div>

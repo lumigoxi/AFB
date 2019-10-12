@@ -95,5 +95,24 @@
         </li>
       </ul>
     </li>
+    <li class="nav-header">Interno</li>
+    <li class="nav-item has-treeview">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fa fa-tasks"></i>
+        <p>
+          Gestion de tareas
+          <i class="fas fa-angle-left right"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="{{ Route('Tareas.index') }}" class="nav-link">
+            <i class="nav-icon fa fa-list-ol"></i>
+            <p>Tareas</p>
+          </a>
+        </li>
+      </ul>
+    </li>
+    
   </ul>
 </nav>

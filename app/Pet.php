@@ -45,6 +45,8 @@ class Pet extends Model
         return DB::table('pets as p')->select('p.name', 'p.description',  'p.breed', 'p.located_at', 'p.city', 'pi.path', 'p.id')
                                     ->leftjoin('pet_pictures as pi','p.id', '=', 'pi.pet_id')
                                     ->where('pi.defPicture', '=', 1)
+                                    ->where('p.visible', '=', 1)
+                                    ->where('p.status', '=', 2)
                                     ->get();
     }
 }

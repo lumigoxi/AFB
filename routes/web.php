@@ -37,9 +37,10 @@ Route::get('pet/getAllPet', 'PetController@getAll');
 Route::resource('dashboard/cms-mascotas', 'cmsPetController')->except(['create']);
 Route::resource('dashboard/Mascotas', 'PetController')->except(['create']);
 Route::resource('dashboard/Fotos-Mascota', 'PetPictureController')->except(['create']);
-Route::resource('dashboard/Solicitud-Adopcion', 'RequestRescueController')->except(['create']);
 Route::resource('dashboard/Voluntarios', 'VoluntaryController')->except(['create']);
 Route::resource('dahsboard/cms-miembros', 'cmsMemberController')->except(['create']);
 Route::resource('dashboard/Mensajes', 'MessageController')->except(['create', 'edit']);
 Route::get('Messages/getAllMessages', 'MessageController@getAll');
+Route::get('dashboard/tasks/getMyTasks', 'TaskController@getMyTasks');
+Route::resource('dashboard/Tareas', 'TaskController')->only(['index', 'update', 'show']);
 

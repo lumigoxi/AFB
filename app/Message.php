@@ -12,6 +12,6 @@ class Message extends Model
 
 	public static function  getAllMessages(){
 		return DB::table('messages as m')->select('m.name', 'm.lastName', 'm.reason', 'm.message', 'm.email',
-											'm.telephone', 'm.created_at', 'm.id')->get();
+											'm.telephone', 'm.created_at', 'm.id', 'm.status')->get();
 	}
 }

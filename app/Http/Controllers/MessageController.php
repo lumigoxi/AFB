@@ -48,6 +48,7 @@ class MessageController extends Controller
     public function show($id)
     {
         //
+        return Message::findOrFail($id);
     }
 
     /**
@@ -71,6 +72,10 @@ class MessageController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $response = $request->validate([
+            'status' => 'required'
+        ]);
+        return Message::whereId($id)->update($response) ? 1 : 0;
     }
 
     /**
@@ -82,6 +87,7 @@ class MessageController extends Controller
     public function destroy($id)
     {
         //
+        return Message::findOrFail($id)->delete() ? 1 : 0;
     }
 
     public function getAll(){
@@ -94,12 +100,21 @@ class MessageController extends Controller
              }else{
                 $message->reason = 'Otros';
              }
+
+             if ($message->status ==  1) {
+                 $message->status = 'Atendido';
+             }else{
+                $message->status = 'Pendiente';
+             }
+             
             $message->fullName = $message->name.' '.$message->lastName;
         }
+        
         return datatables()->of($messages)
             ->addColumn('btn', 'message.actions')
+            ->addColumn('btn-status', 'message.status')
             ->addIndexColumn()
-            ->rawColumns(['btn'])
+            ->rawColumns(['btn', 'btn-status'])
             ->toJson();
     }
 }

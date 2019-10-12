@@ -21,7 +21,7 @@ class InputMessageController extends Controller
 		$reason = $request['reason'];
 		
 		if ($reason > 1 && $reason < 5) {
-			if ($request['email'] != null) {
+			if ($request['email'] != null && $request['g-recaptcha-response'] != null) {
 					$response = $request->validate([
 					'name' => 'required|string|min:3|max:25',
 					'lastName' => 'required|string|min:3|max:25',
@@ -31,10 +31,11 @@ class InputMessageController extends Controller
 					'message' => 'nullable|max:255',
 					'contactTel' => 'nullable|integer|between:0,1',
 					'contactEmail' => 'nullable|integer|between:0,1',
+					'g-recaptcha-response' => 'required',
 					'g-recaptcha-response' => new Captcha()
 				]);
 					return Message::create($response) ? 1 : 0;
-				}else if ($request['telephone'] != null) {
+				}else if ($request['telephone'] != null && $request['g-recaptcha-response'] != null) {
 					$response = $request->validate([
 					'name' => 'required|string|min:3|max:25',
 					'lastName' => 'required|string|min:3|max:25',
@@ -44,6 +45,7 @@ class InputMessageController extends Controller
 					'message' => 'nullable|max:255',
 					'contactTel' => 'nullable|integer|between:0,1',
 					'contactEmail' => 'nullable|integer|between:0,1',
+					'g-recaptcha-response' => 'required',
 					'g-recaptcha-response' => new Captcha()
 				]);
 					return Message::create($response) ? 1 : 0;

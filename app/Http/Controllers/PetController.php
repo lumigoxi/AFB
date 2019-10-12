@@ -131,6 +131,18 @@ class PetController extends Controller
             return Pet::create($Response) ? 1 : 0;
         }
 
+        if ($request['store_origin'] == 'tasks') {
+            $request->request->add(['id' => $request['rescue_id']]);
+            $Response = $request->validate([
+                'name' => 'required',
+                'breed' => 'nullable',
+                'id' => 'required|exists:rescues', 
+                'rescue_id' => 'required'
+            ]);
+
+            return Pet::create($Response) ? 1 : 0;
+        }
+
         // $Response = $request->validate([
         //     'name' => 'required',
         //     'located_at' => 'required',

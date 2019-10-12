@@ -19,5 +19,9 @@
   <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ URL::asset('css/utilidades.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('css/login.css') }}">

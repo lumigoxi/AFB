@@ -1,9 +1,16 @@
+.card-adopt:hover {
+    -webkit-box-shadow: -1px 9px 40px -12px rgba(40, 167, 69, 0.75);
+    -moz-box-shadow: -1px 9px 40px -12px rgba(40, 167, 69, 0.75);
+    -box-shadow: -1px 9px 40px -12px rgba(40, 167, 69, 0.75);
+}
+
 #ContactRecaptcha {
     padding-left: 18%;
 }
 
 
 .msgDanger-email,
+.msgDanger-tel,
 .msgDanger-reason,
 .msgDanger-msg,
 .msgDanger-name,

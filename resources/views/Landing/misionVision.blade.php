@@ -33,13 +33,13 @@
                     <form class="pl-2" id="form-mission-vision">
                       <label for="mision">Misión</label>
                       <div class="form-group col-md-12">
-                        <textarea name="mission" cols="100" rows="5" id="text-mission">
+                        <textarea name="mission" cols="200" rows="5" id="text-mission">
                         
                         </textarea>
                       </div>
                       <label for="vision">Visión</label>
                       <div class="form-group col-md-12">
-                        <textarea name="vision" cols="100" rows="5" id="text-vision">
+                        <textarea name="vision" cols="200" rows="5" id="text-vision">
                         
                         </textarea>
                       </div>

@@ -193,22 +193,19 @@
       type: 'get',
       data: form.serialize(),
       success: function(data){
-        let title = document.getElementById('see-reason-rescue');
-        let description = document.getElementById('see-description-rescue');
-        let located_at = document.getElementById('see-located_at-rescue');
-        title.innerHTML=data['reason'];
-        let user = document.getElementById('see-user-rescue')
-        description.innerHTML = data['description'];
-        located_at.innerHTML = data['located_at']
-        if (data['user']) {
-            user.innerHTML= data['user']['name']
-        }else{
-            user.innerHTML = '--Sin encargado--'
-        }
+        $('#see-reason-rescue').text(data['reason']);
+        $('#see-description-rescue').text(data['description'])
+        $('#see-located_at-rescue').text(data['located_at'])
+        $('#see-user-rescue').text(data['user']['name'])
+        $('#seeNote').text(data['note'])
+          if (data['pets'] != null) {
             $.each(data['pets'], function(key, value){
               $('#result-pets')
-              .append('<p class="ml-3">'+value.name+'</p>')
+              .append('<p><span class="ml-3">'+value.name+'</span></p>')
             })
+           }else{
+            resultPets.text('--Sin definir--')
+           }
       }
     })
   })
