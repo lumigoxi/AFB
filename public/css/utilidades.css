@@ -21,6 +21,8 @@
     font-size: 14px;
 }
 
+
+#modalAdopt div .modal-content,
 #modalContact div .modal-content {
     border-radius: 25px;
     padding-left: 7px;

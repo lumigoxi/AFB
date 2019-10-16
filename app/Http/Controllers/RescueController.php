@@ -4,6 +4,7 @@ namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use app\Pet;
 use app\Rescue;
 use app\User;
 
@@ -97,11 +98,19 @@ class RescueController extends Controller
           $Response = $request->validate([
                 'status' => 'required|digits_between:0,2'
             ]);  
-          return Rescue::whereId($id)->update($Response) ? 1 :0;
+
+
+          $pets = Pet::where('rescue_id', $id)->count();
+            if ($pets > 0) {
+                return 'No se puede cambiar de estado porque ya tiene mascotas asigandas';
+            }else{
+                return Rescue::whereId($id)->update($Response) ? 1:0;
+            }
+
         }else if($request['type_update']== 'all'){
             $Response = $request->validate([
                 'user_id' => 'required',
-                'description' => 'required',
+                'description' => 'nullable',
                 'reason' => 'required',
                 'located_at' => 'required'
             ]);
@@ -120,6 +129,8 @@ class RescueController extends Controller
     public function destroy($id)
     {
         //
+
+        
         return Rescue::deleteRescue($id) ? 1 : 0;
     }
 

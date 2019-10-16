@@ -93,6 +93,14 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('Solicitudes.index') }}" class="nav-link">
+            <i class="nav-icon fa fa-book"></i>
+            <p>
+              Solicitudes
+            </p>
+          </a>
+        </li>
       </ul>
     </li>
     <li class="nav-header">Interno</li>

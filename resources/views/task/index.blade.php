@@ -177,7 +177,7 @@
           }else{
              swal({
               title: 'Oops',
-              text: 'Intente de nuevo, si el problema perciste, notifique al administrador',
+              text: data,
               icon: 'info',
               timer: 2500
             })
@@ -218,9 +218,9 @@
               }else{
                   swal({
                     title: 'Error',
-                    text: 'Intente de nuevo, si el problema perciste, notifique al administrador',
+                    text: data,
                     icon: 'info',
-                    timer: 2500
+                    timer: 3000
                   })
               }
           }

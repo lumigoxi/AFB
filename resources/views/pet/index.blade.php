@@ -33,11 +33,11 @@
         <table id="petTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Mascota</th>
                 <th scope="col">Raza</th>
                 <th scope="col">Albergue</th>
                 <th scope="col">Estado</th>
+                <th scope="col">Disponible</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -73,11 +73,17 @@
             }
         },
       "columns": [
-      {data: 'DT_RowIndex', width: '5%'},
-      {data: 'name'},
-      {data: 'breed'},
+      {data: 'name', mRender: function(data){
+        return `<p class="text-capitalize">`+data+`</p>`
+      }},
+      {data: 'breed', mRender: function(data){
+        return `<p class="text-capitalize">`+(data)+`</p>`
+      }},
       {data: 'located_at'},
       {data: 'statusOption'},
+      {data: 'avaible', mRender: function(data){
+        return `<span class="badge badge-`+(data=='disponible' ? 'info' : 'secondary')+` text-capitalize">`+data+`</span>` 
+      }},
       {data: 'btn'}
       ],
       createdRow: function( row, data, dataIndex ) {
@@ -187,8 +193,8 @@
           }else{
             swal({
               title: 'Error',
-              text: 'Algo salió mal',
-              icon: 'error',
+              text: data,
+              icon: 'info',
               timer: 2500
             })
           }
@@ -209,13 +215,22 @@
 })
 .then((willDelete) => {
   if (willDelete) {
-    swal("Se ha eliminado exitosamente", {
-      icon: "success",
-    });
       let form = $(this).parents('form');
       let url = form.attr('action');
-      $.post(url, form.serialize(), function(){
-          $ ('#petTable').DataTable().ajax.reload();
+      $.post(url, form.serialize(), function(data){
+          $ ('#petTable').DataTable().ajax.reload()
+            if (data == 1) {
+              swal("Se ha eliminado exitosamente", {
+                icon: "success",
+                })
+            }else{
+              swal({
+                title: 'Error',
+                text: data,
+                icon: 'info',
+                timer: 2500
+              })
+            }
       })
   }
 });
@@ -281,6 +296,7 @@ $('#form-add-picture').on('submit', function(e){
             _token: '{{ csrf_token() }}'
           },
           success: function(data){
+            $ ('#petTable').DataTable().ajax.reload();
             if (data == 1) {
               swal({
                 title: 'Extiso',
@@ -288,11 +304,10 @@ $('#form-add-picture').on('submit', function(e){
                 icon: 'success',
                 timer: 3000
               })
-              $ ('#petTable').DataTable().ajax.reload();
             }else{
               swal({
                 title: 'Error',
-                text: 'Algo no ha salido bien',
+                text: data,
                 icon: 'error',
                 timer: 2500
               })

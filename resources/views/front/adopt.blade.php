@@ -23,8 +23,8 @@
 						<h5 class="card-title text-uppercase">{{ $pet->name }}</h5>
 						<p class="card-text text-secondary">{{ $pet->description }}</p>
 						<div class="text-center">
-							<button class="btn btn-success bt-donar mt-3" data-pet="{{ $pet->id }}">Quiero Adoptar!</button>
-							<button class="btn btn-outline-info mt-3" data-pet="{{ $pet->id }}">Saber mas...</button>
+							<button class="btn btn-success bt-donar mt-3 requestPet" data-pet="{{ $pet->id }}" data-toggle="modal" data-target="#modalAdopt">Quiero Adoptar!</button>
+							<button class="btn btn-outline-info mt-3 seeMore" data-pet="{{ $pet->id }}" data-toggle="modal">Saber mas...</button>
 						</div>
 					</div>
 				</div>
@@ -33,4 +33,5 @@
 		</div>
 	</div>
 </section>
+@include('front.modals.modal-adopt')
 @endsection

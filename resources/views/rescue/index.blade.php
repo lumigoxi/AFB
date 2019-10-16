@@ -196,12 +196,11 @@
         $('#see-reason-rescue').text(data['reason']);
         $('#see-description-rescue').text(data['description'])
         $('#see-located_at-rescue').text(data['located_at'])
-        $('#see-user-rescue').text(data['user']['name'])
+        $('#see-user-rescue').text((data['user'] != null ?  data['user']['name'] : ''))
         $('#seeNote').text(data['note'])
           if (data['pets'] != null) {
             $.each(data['pets'], function(key, value){
-              $('#result-pets')
-              .append('<p><span class="ml-3">'+value.name+'</span></p>')
+              $('#result-pets').append('<p><span class="ml-3">'+value.name+'</span></p>')
             })
            }else{
             resultPets.text('--Sin definir--')
@@ -275,8 +274,8 @@
           }else{
             swal({
                 title: 'Error',
-                text: 'Algo ha salido mal',
-                icon: 'error',
+                text: data,
+                icon: 'info',
                 timer: 2500
             })
           }
@@ -462,14 +461,14 @@
                     icon: 'success',
                     timer: 3000
                   })
-                $('#name').val('')
-                $('#breed').val('')
-                $ ('#rescueTable').DataTable().ajax.reload();
+                $('#modal-add-pet #name').val('')
+                $('#modal-add-pet #breed').val('')
+                $('##modal-add-pet #rescueTable').DataTable().ajax.reload();
               }else{
                   swal({
                     title: 'Error',
-                    text: 'Algo salio mal',
-                    icon: 'error',
+                    text: data,
+                    icon: 'info',
                     timer: 2500
                   })
               }

@@ -117,6 +117,11 @@
 } );
 
 
+  $('#form-add-member').on('submit', function(e){
+    e.preventDefault()
+    
+  })
+
 
     //ELIMINAR MIEMBRO | NO HACE FALTA CARGAR LA TABLA  
     $('body').on("click", "#memberTable .borrarMiembro",function(e){

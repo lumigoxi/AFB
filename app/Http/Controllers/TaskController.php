@@ -5,6 +5,7 @@ namespace app\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use app\Pet;
 use app\Rescue;
 
 class TaskController extends Controller
@@ -80,8 +81,12 @@ class TaskController extends Controller
             $response = $request->validate([
             'status' => 'required|numeric|between:0,2'
         ]);
-
-        return Rescue::whereId($id)->update($response) ? 1:0;
+            $pets = Pet::where('rescue_id', $id)->count();
+            if ($pets > 0) {
+                return 'No se puede cambiar de estado porque ya tiene mascotas asigandas';
+            }else{
+                return Rescue::whereId($id)->update($response) ? 1:0;
+            }
 
 
         }else if($request['type_update'] == 'note'){

@@ -14,21 +14,21 @@
                         <div class="form-group row">
                             <label for="reason" class="col-md-3 col-form-label text-md-right">Razon</label>
                             <div class="col-md-8">
-                                <input id="reason" type="text" class="form-control" requerid name="reason"   autofocus>
+                                <input id="reason" type="text" class="form-control" required="true" name="reason"   autofocus>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="description" class="col-md-3 col-form-label text-md-right">Descripción</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" name="description" id="description" cols="40" rows="5"></textarea>
+                                <textarea class="form-control" name="description" id="description" required="true" cols="40" rows="5"></textarea>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="located_at" class="col-md-3 col-form-label text-md-right">Lugar</label>
                             <div class="col-md-8">
-                                <input id="located_at" type="text" class="form-control" requerid name="located_at"   autofocus>
+                                <input id="located_at" type="text" class="form-control" required="true" name="located_at"   autofocus>
                             </div>
                         </div>
 

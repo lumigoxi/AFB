@@ -26,7 +26,53 @@ $('#reason').change(function(e) {
 })
 
 
+function sendRequest(field, id) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    })
+    if (field == 6) {
+        let data = $('#formAdopt').serialize()
+        let url = window.location.href
+        url = String(url) + '/formAdopt'
+        $.ajax({
+            type: 'post',
+            data: data + "&pet_id=" + id,
+            url: url,
+            success: function(data) {
+                if (data) {
+                    clearForm()
+                    Toast.fire({
+                        type: 'success',
+                        title: 'El mensaje fue enviado exitosamente'
+                    })
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        title: 'ALgo salío mal, intente de nuevo'
+                    })
+                }
+            },
+            error: function(errors) {
+                $.each(errors.responseJSON.errors, function(value, key) {
+                    $.each(key, function(value, key) {
+                        Toast.fire({
+                            type: 'error',
+                            title: key
+                        })
+                    })
+                })
+            }
+        })
+    }
+}
+
+
+
 let field
+
 $('#formContact').on('submit', function(e) {
     field = 0
     e.preventDefault()

@@ -10,8 +10,5 @@
 {!! Form::close() !!}	
 
 
-{!! Form::open(['route'=>['Mascotas.destroy', $id], 'method'=> 'DELETE']) !!}
-	<a href="#" class="btn-borrar btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-{!! Form::close() !!}	
 
 <a href="#" class="btn-see-picture btn btn-link btn-sm" data-toggle="modal" data-pet="{{ $id }}"data-target="#see-pictures" data-pet="{{ $id }}"><i class="fa fa-camera"></i></a>	

@@ -4,7 +4,10 @@ namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use app\Pet;
+use app\PetPicture;
 use app\Rescue;
 
 class PetController extends Controller
@@ -65,13 +68,16 @@ class PetController extends Controller
 
 
             if ($pet->status == 0) {
-                $pet->status = '--Sin definir--';
+                $pet->status = 'Sin definir';
             }else if($pet->status == 1){
                 $pet->status = 'En tratamiento';
             }else if($pet->status){
                 $pet->status = 'Recuperado';
             }
 
+            if ($pet->breed == null) {
+                $pet->breed = '--Sin definir--';
+            }
 
             if ($pet->located_at == null) {
                 $pet->located_at = '--No definido--';
@@ -85,10 +91,15 @@ class PetController extends Controller
             }
 
 
-            if ($pet->breed == null) {
-                $pet->breed = '--Sin definir--';
+            if ($pet->avaible == 0) {
+                $pet->avaible = 'disponible';
+            }else{
+                $pet->avaible = '--no disponible--';
             }
+
         }
+
+        
         return  datatables()->of($pets)
             ->addColumn('btn', 'pet.actions')
             ->addIndexColumn()
@@ -127,8 +138,13 @@ class PetController extends Controller
                 'id' => 'required|exists:rescues', 
                 'rescue_id' => 'required'
             ]);
-
-            return Pet::create($Response) ? 1 : 0;
+                $rescue = Rescue::find($Response['rescue_id']);
+                if ($rescue->status == 0 ) {
+                     return Pet::create($Response) ? 1 : 0;
+                }else{
+                    return 'Debe completar el rescate antes de agregar las mascotas';
+                }
+           
         }
 
         if ($request['store_origin'] == 'tasks') {
@@ -139,8 +155,13 @@ class PetController extends Controller
                 'id' => 'required|exists:rescues', 
                 'rescue_id' => 'required'
             ]);
-
-            return Pet::create($Response) ? 1 : 0;
+            $rescue = Rescue::find($Response['rescue_id']);
+            if ($rescue->status == 0) {
+                return Pet::create($Response) ? 1 : 0;    
+            }else{
+                return 'No se puede guardar los datos porque el rescate no se ha completado';
+            }
+            
         }
 
         // $Response = $request->validate([
@@ -206,12 +227,24 @@ class PetController extends Controller
             'city' => 'nullable',
             'located_at' => 'nullable'
         ]);
-        return Pet::whereId($id)->update($Response) ? 1:0;
+                $pet = Pet::find($id);
+
+                if ($pet->avaible == 0) {
+                    return Pet::whereId($id)->update($Response) ? 1:0;
+                }else{
+                    return 'No se puede actualizar porque esta mascota ya ha sido adoptada';
+                }
         }else if($request['type_update'] == 'status'){
             $respose = $request->validate([
                 'status' => 'required'
             ]);
-            return Pet::whereId($id)->update($respose) ? 1 : 0;
+            $pet = Pet::find($id);
+
+            if ($pet->avaible == 0) {
+                return Pet::whereId($id)->update($respose) ? 1 : 0;
+            }else{
+                return 'No se puede actualizar el estado porque ya ha sido aopdatado';
+            }
         }
     }
 
@@ -224,7 +257,20 @@ class PetController extends Controller
     public function destroy($id)
     {
         //
-        return Pet::whereId($id)->delete() ? 1 : 0;
+        $pet = Pet::find($id);
+            if ($pet->avaible == 'disponible') {
+                $pictures = DB::table('pet_pictures')->where('pet_id', '=', $id)->count();
+                if ($pictures > 0) {
+                    $paths = DB::table('pet_pictures')->select('path')->where('pet_id', '=', $id)->get();
+                    foreach ($paths as $path) {
+                            File::delete($path->path);
+                    }
+                    PetPicture::where('pet_id', $id)->delete();
+                }
+                return Pet::whereId($id)->delete() ? 1 : 0;
+            }else{
+                return 'No se puede eliminar esta mascota porque ya fue adoptada';
+            }
     }
 
     

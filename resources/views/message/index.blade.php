@@ -157,13 +157,20 @@
           date = moment(data['created_at'])
           date = date.format('LLL')
 
-          let telephone = (data['telephone']).toString()
-          telephone = telephone.slice(0, 4) + "-" +telephone.slice(4);
+
+          let telephone
+          if (data['telephone'] != null) {
+          telephone = (data['telephone']).toString()
+          telephone = telephone.slice(0, 4) + "-" +telephone.slice(4)
+          }else{
+            telephone = 'No Rgistrado'
+          }
+
 
           $('#header-message').text(data['name']+' '+data['lastName'])
           $('#reason-message').text('Asunto: '+data['reason'])
           $('#date-message').text('Fecha: '+ date)
-          $('#email').text(data['email'])
+          $('#email').text(data['email'] != null ? data['email'] : 'No Registrado')
           $('#telephone').text(telephone)
           $('#message').text(data['message'])
           $('#status').text(data['status'])

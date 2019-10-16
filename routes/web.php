@@ -43,4 +43,7 @@ Route::resource('dashboard/Mensajes', 'MessageController')->except(['create', 'e
 Route::get('Messages/getAllMessages', 'MessageController@getAll');
 Route::get('dashboard/tasks/getMyTasks', 'TaskController@getMyTasks');
 Route::resource('dashboard/Tareas', 'TaskController')->only(['index', 'update', 'show']);
+Route::post('adoptar/formAdopt', 'InputRequestPetController@store')->name('requestPetStore');
+Route::get('requestsPet', 'RequestPetController@getAll');
+Route::resource('dashboard/Solicitudes', 'RequestPetController');
 

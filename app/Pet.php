@@ -44,9 +44,10 @@ class Pet extends Model
     public static function getForFront(){
         return DB::table('pets as p')->select('p.name', 'p.description',  'p.breed', 'p.located_at', 'p.city', 'pi.path', 'p.id')
                                     ->leftjoin('pet_pictures as pi','p.id', '=', 'pi.pet_id')
-                                    ->where('pi.defPicture', '=', 1)
-                                    ->where('p.visible', '=', 1)
-                                    ->where('p.status', '=', 2)
+                                    ->where('pi.defPicture', '=', 1) //verefiva si tiene una foto asignada
+                                    ->where('p.visible', '=', 1)// verifica si esta publicado
+                                    ->where('p.status', '=', 2) // verifica si ya esta recuperado
+                                    ->where('p.avaible', '=', 0) // verifica si esta disponible
                                     ->get();
     }
 }
