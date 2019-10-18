@@ -43,10 +43,10 @@ function sendRequest(field, id) {
             url: url,
             success: function(data) {
                 if (data) {
-                    clearForm()
+                    clearFormAdopt()
                     Toast.fire({
                         type: 'success',
-                        title: 'El mensaje fue enviado exitosamente'
+                        title: 'La solicitud fue enviado exitosamente'
                     })
                 } else {
                     Toast.fire({

@@ -1,3 +1,6 @@
+@if($pets > 0)
+	<button class="btn btn-success btn-sm btn-block">Listo</button>
+@else
 <div class="dropdown">
 	<button class=" btn 
 	@if($status == 'Listo') 
@@ -13,3 +16,4 @@
 		<a class="dropdown-item btn-status" data-status="2" href="#">Pendiente</a>
 	</div>
 </div>
+@endif

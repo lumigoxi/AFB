@@ -13,5 +13,6 @@ return [
     */
 
     'failed'   => 'Estas credenciales no coinciden con nuestros registros.',
+    'status' => 'El usuario no esta activo.',
     'throttle' => 'Demasiados intentos de acceso. Por favor intente nuevamente en :seconds segundos.',
 ];

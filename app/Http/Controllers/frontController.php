@@ -28,9 +28,8 @@ class frontController extends Controller
     }
 
     public function adoptView(){
-        $pets = Pet::getForFront();
         $page = AllPage::find(1);
-    	return view('front.adopt')->with(['pets'=> $pets, 'page'=>$page]);
+    	return view('front.adopt')->with(['page'=>$page]);
     }
 
     public function activityView(){
@@ -44,6 +43,9 @@ class frontController extends Controller
     }
 
 
+    public function getAllPets(){
+         return Pet::getForFront();
+    }
     public function contactView(){
         return view('front.contact');
     }

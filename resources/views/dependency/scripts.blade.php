@@ -4,3 +4,4 @@
   <script src = ' https://www.google.com/recaptcha/api.js' > </script>
 <script src="{{ URL::asset('js/formContact.js') }}"></script>
 <script src="{{ URL::asset('js/logicValidate.js') }}"></script>
+<script src="{{ URL::asset('js/stories.js') }}"></script>

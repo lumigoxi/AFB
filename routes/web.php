@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Storage;
 
 
 
@@ -20,6 +19,7 @@ Route::delete('miembros/eliminar-miembro/{id}', 'memberController@deleteMember')
 Route::group(['prefix'=> '/'], function(){
 	Route::get('/historias', 'frontController@storyView');
 	Route::get('adoptar', 'frontController@adoptView');
+	Route::get('getAllPets', 'frontController@getAllPets');
 	Route::get('actividades', 'frontController@activityView');
 	Route::get('contactanos', 'frontController@contactView');
 });

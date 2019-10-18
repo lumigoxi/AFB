@@ -159,7 +159,7 @@ class RescueController extends Controller
              }else{
                 $rescue->status = 'Sin Estado';
              }
-
+             $rescue->pets = Pet::where('rescue_id', $rescue->id)->count();
              //$rescue->other = User::findOrFail($rescue->user_id);
          }
 

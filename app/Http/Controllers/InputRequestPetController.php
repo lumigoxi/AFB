@@ -19,7 +19,7 @@ class InputRequestPetController extends Controller
 		}
 
 		
-			if ($request['email'] != null && $request['g-recaptcha-response']=! null) {
+			if ($request['email'] != null && $request['g-recaptcha-response'] != null) {
 					$response = $request->validate([
 					'name' => 'required|string|min:3|max:25',
 					'pet_id' => 'required',
@@ -33,7 +33,7 @@ class InputRequestPetController extends Controller
 					'g-recaptcha-response' => new Captcha()
 				]);
 					return RequestPet::create($response) ? 1 : 0;
-				}else if ($request['telephone'] != null && $request['g-recaptcha-response']=! null) {
+				}else if ($request['telephone'] != null && $request['g-recaptcha-response'] != null) {
 					$response = $request->validate([
 					'name' => 'required|string|min:3|max:25',
 					'pet_id' => 'required',

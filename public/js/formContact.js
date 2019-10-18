@@ -25,6 +25,18 @@ function clearForm() {
     $('#check-email').prop('checked', false)
 }
 
+function clearFormAdopt() {
+    $('#modalAdopt').modal('toggle')
+    $('#name').val('')
+    $('#lastName').val('')
+    $('#email').val('')
+    $('#tel').val('')
+    $('#message').val('')
+    grecaptcha.reset();
+    $('#check-tel').prop('checked', false)
+    $('#check-email').prop('checked', false)
+}
+
 function sendForm(field) {
     const Toast = Swal.mixin({
         toast: true,
@@ -69,24 +81,8 @@ function sendForm(field) {
 }
 
 
-$(document).ready(function() {
 
-    $('.efect-card').hover(
-        // trigger when mouse hover
-        function() {
-            $(this).animate({
-                marginTop: "-=1%",
-            }, 200);
-        },
 
-        // trigger when mouse out
-        function() {
-            $(this).animate({
-                marginTop: "0%"
-            }, 200);
-        }
-    );
-});
 
 //set data-pet to farom requesst pet
 $('.requestPet').on('click', function(e) {

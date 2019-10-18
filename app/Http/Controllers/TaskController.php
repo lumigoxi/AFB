@@ -131,6 +131,8 @@ class TaskController extends Controller
              }else{
                 $rescue->status = 'Sin Estado';
              }
+
+             $rescue->pets = Pet::where('rescue_id', $rescue->id)->count();
          }
         return datatables()->of($rescues)
             ->addIndexColumn()

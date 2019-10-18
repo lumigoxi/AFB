@@ -119,7 +119,45 @@
 
   $('#form-add-member').on('submit', function(e){
     e.preventDefault()
-    
+    let url = $(this).attr('action')
+    let data = $(this).serialize()
+
+      $.ajax({
+        url: url,
+        data: data,
+        type: 'post',
+        success: function(data){
+          $('#create-user').modal('toggle')
+          if (data == 1) {
+            $('#name').val('')
+            $('#email').val('')
+            $('#password').val('')
+            $('#password-confirm').val('')
+            $('#memberTable').DataTable().ajax.reload()
+            swal({
+              title: 'Exitiso',
+              text: 'El usuario ha sido creado',
+              icon: 'success',
+              timer: 2500
+            })
+          }else{
+            swal({
+            title: 'Error',
+            text: data,
+            icon: 'info',
+            timer: 300
+          })
+          }
+        },
+        error: function(errors){
+          swal({
+            title: 'Error',
+            text: 'Correo electronico ya ha sido utilizado',
+            icon: 'info',
+            timer: 3000
+          })
+        }
+      })
   })
 
 

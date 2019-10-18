@@ -21,6 +21,7 @@
           </footer>
       </div>
 @include('dependency.scripts')
+@yield('scripts')
 </body>
 </html>
 

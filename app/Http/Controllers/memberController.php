@@ -64,17 +64,18 @@ class memberController extends Controller
     public function store(Request $request)
     {
         //
-       
-         $response = $request->validate([
+       $passwordEquals =  $request['password'] === $request['password_confirmation'];
+        if ($passwordEquals) {
+             $response = $request->validate([
             'name' => 'required|max:50|min:7',
             'email' => 'required|unique:users|max:50|min:7',
             'password' => 'required|min:7'
-        ]);
+             ]);
         $response['password'] = bcrypt($response['password']);
-         User::create($response);
-
-         return redirect('miembros');
-       
+         return User::create($response) ? 1 : 0;
+        }else{
+            return 'Las contraseñas no coinciden';
+        }
     }
 
     /**

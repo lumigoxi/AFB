@@ -144,7 +144,7 @@
             $('#seen').addClass('badge-warning')
           }else{
             data['seen'] = 'Revisado'
-            $('#seen').removeClass('badge-danger')
+            $('#seen').removeClass('badge-warning')
             $('#seen').addClass('badge-info')
           }
 

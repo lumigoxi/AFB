@@ -80,34 +80,48 @@
       {data: 'name'},
       {data: 'reason', width: '50%'},
       {data: 'priority', width: '5%', render: function(data, type, row){
-        if (data == 'Alta') {
+        if (data == 'Alta' && row.pets <= 0) {
           return `<div class="dropdown">
               <button class="btn btn-danger btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   `+data+`
               </button>
               `+option_priority
-        }else if(data == 'Media'){
+            }else if(data=='Alta'){
+              return `<button class=" btn btn-danger btn-sm btn-block" type="button" aria-haspopup="true" aria-expanded="false">`+data+`</button>`
+            }
+
+
+       if(data == 'Media' && row.pets <= 0){
           return `<div class="dropdown">
               <button class="btn btn-warning btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   `+data+`
               </button>
               `+option_priority
-        }else if(data ==  'Baja'){
+            }else if(data = 'Media'){
+              return `<button class=" btn btn-success btn-sm btn-block" type="button" aria-haspopup="true" aria-expanded="false">`+data+`</button>`
+            }
+
+        if(data ==  'Baja' && row.pets <= 0){
           return `<div class="dropdown">
               <button class="btn btn-secondary btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   `+data+`
               </button>
               `+option_priority
-        }else{
+            }else if(data == 'Baja'){
+              return `<button class=" btn btn-success btn-sm btn-block" type="button" aria-haspopup="true" aria-expanded="false">`+data+`</button>`
+            }
+     
            return `<div class="dropdown">
               <button class="btn btn-ligth btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   `+data+`
               </button>
               `+option_priority
-        }
+        
       }},
       {data: 'status', width: '5%', mRender: function(data, type, row){
-        if (data == 'Listo') {
+        if (data == 'Listo' && row.pets >= 1) {
+          return `<button class=" btn btn-success btn-sm btn-block" type="button" aria-haspopup="true" aria-expanded="false">`+data+`</button>`
+        }else if (data == 'Listo' && row.pets <= 0) {
           return `<div class="dropdown">
   <button class=" btn btn-success btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     `+data+`
