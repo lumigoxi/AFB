@@ -31,18 +31,20 @@
 				<a href="{{ route('dashboard') }}" class="btn btn-secondary ">Regresar</a>
 				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#create-story">Crear nueva Historia</a>
 				<hr>
-        <table id="memberTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
+        <table id="storyTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Correo</th>
+                <th scope="col">Creador</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Mascota</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Fecha de creación</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
     </table>
         @include('story.create')
+        @include('story.seeStory')
 			</div>
 		</div>
 	</div>
@@ -58,15 +60,22 @@
 <script>
   //FUNCIOON CARGAR TABLA
   function showTable(){
-    $('#memberTable').DataTable({
+    $('#storyTable').DataTable({
       "serverSide": true,
-      "ajax": "{{ url('miembros/getAllUser') }}",
+      "ajax": "{{ url('/dashbaord/getAllStories') }}",
       "columns": [
-      {data: 'id'},
-      {data: 'name'},
-      {data: 'email'},
+      {data: 'userName'},
+      {data: 'title'},
+      {data: 'petName'},
+      {data: 'status', mRender: function(data, type, row){
+          if (data == '--sin publicar--') {
+          return `<span class="center text-capitalize"><a href="#" class="badge badge-secondary btn-status" data-status="1" data-story="`+row.id+`">`+row.status+`</a></span>`
+        }else{
+          return `<span class="center text-capitalize"><a href="#" class="badge badge-success btn-status" data-status="0" data-story="`+row.id+`">`+row.status+`</a></span>`
+        }
+      }},
       {data: 'created_at'},
-      {data: 'btn'},
+      {data: 'btn'}
       ],
       "language":{
         "info": "Mostrando _START_ al _END_ de _TOTAL_ registros",
@@ -103,38 +112,147 @@
 } );
 
 
+  $('#form-add-story').on('submit', function(e){
+    e.preventDefault()
+    let url = $(this).attr('action')
+    let data = $(this).serialize()
 
-    //ELIMINAR MIEMBRO | NO HACE FALTA CARGAR LA TABLA  
-    $('body').on("click", "#memberTable .borrarMiembro",function(e){
-      e.preventDefault();
-      swal({
-  title: "¿Seguro de eliminar al miembro?",
-  text: "Una vez eliminado no se podra revertir el cambio",
-  icon: "warning",
-  buttons: true,
-  dangerMode: true,
-})
-.then((willDelete) => {
-  if (willDelete) {
-    swal("El miembro se ha eliminado exitosamente", {
-      icon: "success",
-    });
-       let row = $(this).parents('tr');
-      let form = $(this).parents('form');
-      let url = form.attr('action');
-      $.post(url, form.serialize(), function(){
-        row.fadeOut();
+      $.ajax({
+        url: url,
+        type: 'post',
+        data: data,
+        success: function(data){
+          if (data == 1) {
+            $('#create-story').modal('toggle')
+            $('#storyTable').DataTable().ajax.reload()
+            swal({
+              title: 'Exitoso',
+              text: 'Se ha agregado la historia',
+              icon: 'success',
+              timer: 2500
+            })
+          }else{
+            swal({
+              title: 'Oops',
+              text: 'Algo no salió bien',
+              icon: 'info',
+              timer: 25000
+            })
+          }
+        }
       })
-  } else {
-    swal("Sucedio un erro, revisar si el usuario tiene antecedentes");
+  })
+
+
+  $('body').on('click', '#storyTable .btn-borrar', function(e){
+    e.preventDefault()
+    swal({
+      title: '¿Seguro de eliminar esta historia?',
+      text: 'Una vez eliminado no se podra revertir el cambio',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete)=>{
+        if (willDelete) {
+          swal ("La hisotira fue eliminada", {
+            icon: 'success'
+          })
+          let url = $(this).parent().attr('action')
+          let form = $(this).parent()
+
+            $.post(url, form.serialize(), function(data){
+              if (data == 1) {
+                $('#storyTable').DataTable().ajax.reload()
+                swal({
+                  title: 'Exitoso',
+                  text: 'Se ha eliminado correctamente',
+                  icon: 'success',
+                  timer: 2500
+                })
+              }else{
+                swal({
+                  title: 'Oops',
+                  text: 'Algo no salió bien',
+                  icon: 'info',
+                  timer: 2500
+                })
+              }
+            })
+        }
+    })
+  })
+
+
+$('body').on('click', '#storyTable .seeStory', function(e){
+  e.preventDefault()
+  let idStory = $(this).attr('data-story')
+  let url = '{{ route('historias.show', ':idStory') }}'.replace(':idStory', idStory)
+
+    $.ajax({
+      url: url,
+      type: 'get',
+      success: function(story){
+        if (story != 0) {
+
+          if (story.status == 0) {
+              story.status = 'sin publicar'
+              $('#status').removeClass('badge-success')
+              $('#status').addClass('badge-secondary')
+          }else{
+            story.status = 'publicado'
+            $('#status').removeClass('badge-secondary')
+            $('#status').addClass('badge-success')
+          }
+
+          $('#storyTitle').text(story.title)
+          $('#status').text(story.status)
+          $('#userName').text('Creado por: '+story.user['name'])
+          $('#created_at').text('Fecha de creación :'+story.created_at)
+          $('#description').text(story.text)
+          $('#nameOwner').text(story.request_pet['name'])
+          $('#petName').text(story.request_pet.pet['name'])
+          $('#petBreed').text(story.request_pet.pet['breed'])
+          $('#dateAdopted').text(story.request_pet.updated_at)
+        }
+      }
+    }) 
+})
+
+
+$('body').on('click', '#storyTable .btn-status', function(e){
+  e.preventDefault()
+  let idStory = $(this).attr('data-story')
+  let url = '{{ route('historias.update', ':idStory') }}'.replace(':idStory', idStory)
+  let data = {
+    _token: '{{ csrf_token() }}',
+    status: $(this).attr('data-status'),
+    type_update: 'status'
   }
-});
-    });
 
-     $('body').on("click", "#memberTable .btn-editar",function(e){
-        e.preventDefault();
-        alert('dnkasnd');
-     });
+    $.ajax({
+      url: url,
+      type: 'put',
+      data: data,
+      success: function(result){
+        if (result == 1) {
+          $('#storyTable').DataTable().ajax.reload()
+          swal({
+            title: 'Exitoso',
+            text: 'Se ha actualizado la historia',
+            icon: 'success',
+            timer: 2500
+          })
+        }else{
+          swal({
+            title: 'Oops',
+            text: 'Algo ha salido mal',
+            icon: 'info',
+            timer: 2500
+          })
+        }
+      }
+    })
 
+})
 </script>
 @endsection

@@ -3,6 +3,8 @@
 namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use app\Story;
 
 class StoryController extends Controller
 {
@@ -31,6 +33,12 @@ class StoryController extends Controller
     public function store(Request $request)
     {
         //
+        $response = $request->validate([
+            'title' => 'required|string',
+            'text' => 'required|string'
+        ]);
+        $allData = array_merge($response, ['user_id'=>Auth::user()->id, 'request_pets_id' => 1]);
+        return Story::create($allData) ? 1 : 0;
     }
 
     /**
@@ -42,6 +50,11 @@ class StoryController extends Controller
     public function show($id)
     {
         //
+        $story = Story::find($id);
+        $story->user;
+        $requestPet = $story->requestPet;
+        $requestPet->pet;
+        return $story;
     }
 
 
@@ -55,6 +68,19 @@ class StoryController extends Controller
     public function update(Request $request, $id)
     {
         //
+        switch ($request['type_update']) {
+            case 'status':
+                $response = $request->validate([
+                    'status' => 'required|numeric|between:0,1',
+                ]);
+
+                    return Story::whereId($id)->update($response) ? 1 : 0;
+                break;
+            
+            default:
+                # code...
+                break;
+        }
     }
 
     /**
@@ -66,5 +92,20 @@ class StoryController extends Controller
     public function destroy($id)
     {
         //
+        return Story::findOrFail($id)->delete() ? 1 : 0;
+    }
+
+    public function getAll(){
+        $stories = Story::getAllStories();
+
+            foreach ($stories as $story) {
+                $story->status == 0 ? ($story->status = '--sin publicar--') : ($story->status = 'publicado');
+            }
+         return  datatables()->of($stories)
+             ->addColumn('btn', 'story.actions')
+             ->addIndexColumn()
+            //  ->addColumn('statusOption', 'pet.status')
+             ->rawColumns(['btn', 'statusOption'])
+            ->toJson();
     }
 }

@@ -27,7 +27,8 @@ Route::post('contactanos/formContact', 'InputMessageController@store');
 //Route type resource for CRUD 
 Route::resource('/dashboard/landing', 'LandingController')->except(['create', 'edit']);
 Route::resource('/dashboard/mision-vision', 'misionVisionController');
-Route::resource('/dashboard/historias', 'StoryController')->except(['create', 'edit', 'show']);
+Route::get('/dashbaord/getAllStories', 'StoryController@getAll');
+Route::resource('/dashboard/historias', 'StoryController')->except(['create', 'edit']);
 Route::get('actividades/getAllActivitys', 'ActivityController@getAll');
 Route::resource('/dashboar/actividades/imagenes', 'ActivityPictureController')->except(['create', 'edit']);
 Route::resource('/dashboard/actividades', 'ActivityController')->except(['create', 'edit']);

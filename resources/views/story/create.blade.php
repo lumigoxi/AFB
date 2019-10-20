@@ -9,20 +9,14 @@
         </button>
       </div>
       <div class="modal-body">
-          <form method="POST" action="{{ route('historias.store') }}">
+          <form method="POST" action="{{ route('historias.store') }}" id="form-add-story">
                         @csrf
 
                         <div class="form-group row">
                             <label for="titulo" class="col-md-3 col-form-label text-md-right">Titulo</label>
 
                             <div class="col-md-8">
-                                <input id="titulo" type="text" class="form-control @error('title') is-invalid @enderror" name="name" value="{{ old('title') }}" required autocomplete="titulo" autofocus>
-
-                                @error('title')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="titulo" type="text" class="form-control" name="title" required autocomplete="titulo" autofocus>
                             </div>
                         </div>
 
@@ -30,27 +24,7 @@
                             <label for="Descripcion" class="col-md-3 col-form-label text-md-right">Descripion</label>
 
                             <div class="col-md-8">
-                                <input id="Descripcion" type="email" class="form-control @error('description') is-invalid @enderror" name="text" value="{{ old('desciption') }}" required autocomplete="description">
-
-                                @error('desciption')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="img" class="col-md-3 col-form-label text-md-right">Imagen</label>
-
-                            <div class="col-md-8">
-                                <input id="img" type="password" class="form-control @error('img') is-invalid @enderror" name="img" required>
-
-                                @error('img')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <textarea name="text" id="Description" cols="30" rows="8" required="true"></textarea>
                             </div>
                         </div>
                             <div class="modal-footer d-flex">
