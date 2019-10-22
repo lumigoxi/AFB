@@ -9,6 +9,20 @@ use app\RequestPet;
 
 class RequestPetController extends Controller
 {
+
+
+     private static function changeStatus($idRequestPet, $idpet, $status, $response){
+        try {
+                DB::beginTransaction();
+                DB::table('request_pets')->whereId($idRequestPet)->update($response);
+                DB::table('pets')->whereId($idpet)->update(['avaible' => $status]);
+                DB::commit();
+                return 1;
+            } catch (Exception $e) {
+                DB::rollback();
+                return 0;
+            } 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -78,6 +92,10 @@ class RequestPetController extends Controller
         //
         switch ($request['type_update']) {
              case 'seen':
+
+                if (RequestPet::find($id)->status != 0) {
+                    return 'No se puede actualizar porque ya se ha aprobado la solicitud';
+                }
                  $response = $request->validate([
                     'seen' => 'required|between:0,1'
                  ]);
@@ -85,46 +103,27 @@ class RequestPetController extends Controller
                  break;
 
                  case 'status':
+
+                    if (RequestPet::find($id)->seen == 0) {
+                        return 'No se puede aprobar la solicitud porque no se ha leido';
+                    }
+
                  $response = $request->validate([
                     'status' => 'required|between:0,1',
                     'pet_id' => 'required'
                  ]);
-                 if ($response['status'] == 1) {
-                     $status = RequestPet::where('pet_id', $response['pet_id'])
-                                            ->where('status', $response['status'])
-                                                        ->count();
-                        $pet = Pet::find($response['pet_id']);
-                            //vereififcar si hay otra solicitud aprobada, si la mascota ya fue adoptada, si el estado no es recuperado
-                            if ($status > 0  || $pet->avaible == 1 ) {
-                                return 'Hay otra solicitud sobre esta mascota que ya fue aprovada';
-                            }elseif($pet->status != 2){
-                                    return 'Esta mascota no se ha recuperado aún, porfavor verificar su estado en el apartado de mascotas';
-                                }else{
-                               try {
-                                    DB::beginTransaction();
-                                        DB::table('request_pets')->whereId($id)->update($response);
-                                        DB::table('pets')->whereId($response['pet_id'])->update(['avaible' => 1]);
-                                    DB::commit();
-                                    return 1;
-                                } catch (Exception $e) {
-                                    DB::rollback();
-                                    return 0;
-                                } 
-                            }
-                 }else{
-                                         
-                            try {
-                                DB::beginTransaction();
-                                DB::table('request_pets')->whereId($id)->update($response);
-                                DB::table('pets')->whereId($response['pet_id'])->update(['avaible' => 0]);
-                                DB::commit();
-                                return 1;
-                            } catch (Exception $e) {
-                                DB::rollback();
-                                return 0;
-                            } 
-             
-         } 
+                 if ($response['status'] == 0) {
+                    return RequestPetController::changeStatus($id, $response['pet_id'], 0, $response) ? 1:0;
+                 }else{            
+                    $pet = Pet::find($response['pet_id']);
+                        if ($pet->avaible == 1 ) {
+                            return 'Hay otra solicitud sobre esta mascota que ya fue aprovada';
+                        }elseif($pet->status != 2){
+                            return 'Esta mascota no se ha recuperado aún, porfavor verificar su estado en el apartado de mascotas';
+                        }else{
+                            return RequestPetController::changeStatus($id, $response['pet_id'], 1, $response)?1:0; 
+                            }  
+                } 
                  break;
     }
 }
@@ -151,6 +150,7 @@ class RequestPetController extends Controller
 
          $requests = RequestPet::getAll();
         foreach ($requests as $request) { 
+            $request->infoPet = $request->petName.' => '.$request->breed;
             $request->fullName = $request->name.' '.$request->lastName;
             if ($request->seen == 0) {
                 $request->seen = 'sin revisar';
@@ -170,4 +170,22 @@ class RequestPetController extends Controller
             ->rawColumns(['btn'])
             ->toJson();
     }
+
+
+    public function getOnlyAdopted(Request $request){
+        $term = $request->term;
+        $owners = DB::table('request_pets as rp')->select('rp.name', 'rp.lastName', 'rp.id', 'rp.pet_id')
+                    ->Where('rp.name', 'like', '%'.$term.'%')
+                    ->where('rp.status', '=', 1)
+                    ->get();
+        $valid_pets = [];
+        foreach ($owners as $owner) {
+            $pet = Pet::find($owner->pet_id);
+        $text = 'Nombre: '.$owner->name.' '.$owner->lastName.'  |  Mascota: '.$pet->name.'('.$pet->breed.')';
+            $valid_pets[] = ['id' => $owner->id, 'text' => $text];
+        }
+        return \Response::json($valid_pets);
+  
+        }
 }
+

@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/utilidades.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css') }}">
-
+  <link href="{{ URL::asset('bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
   @yield('style')
 
 </head>
@@ -116,6 +116,7 @@
 <script src="{{ URL::asset('bower_components/admin-lte/plugins/sweetalert2/sweetalert2.min.js') }}">
 </script>
 <script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ URL::asset('bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 @yield('scripts')
 
 </body>

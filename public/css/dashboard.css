@@ -30,3 +30,26 @@ table form {
 a .carousel-option:hover {
     color: #0056b3;
 }
+
+
+@media screen and (max-width: 425px) {
+
+    #storyTable_info,
+    #membertable_info,
+    #taskTable_info,
+    #requestTable_info,
+    #messageTable_info,
+    #petTable_info,
+    #rescueTable_info,
+    #activityTable_info {
+        white-space: pre-wrap;
+        /* CSS3 */
+        white-space: -moz-pre-wrap;
+        /* Firefox */
+        white-space: -o-pre-wrap;
+        /* Opera 7 */
+        word-wrap: break-word;
+        /* IE */
+
+    }
+}

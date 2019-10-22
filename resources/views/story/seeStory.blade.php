@@ -16,7 +16,7 @@
           <div class="row">
             <div class="col-md-8">
               <label for="description">Decripción: </label><br>
-              <span id="description"></span>
+              <p id="description" style="word-break: break-all; white-space: normal;"></p>
             </div>
             <div class="col-md-4">
               <div class="row">

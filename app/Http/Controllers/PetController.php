@@ -271,7 +271,5 @@ class PetController extends Controller
             }else{
                 return 'No se puede eliminar esta mascota porque ya fue adoptada';
             }
-    }
-
-    
+    }    
 }

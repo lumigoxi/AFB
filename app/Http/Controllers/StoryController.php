@@ -34,10 +34,11 @@ class StoryController extends Controller
     {
         //
         $response = $request->validate([
+            'request_pets_id' => 'required',
             'title' => 'required|string',
             'text' => 'required|string'
         ]);
-        $allData = array_merge($response, ['user_id'=>Auth::user()->id, 'request_pets_id' => 1]);
+        $allData = array_merge($response, ['user_id'=>Auth::user()->id]);
         return Story::create($allData) ? 1 : 0;
     }
 
@@ -77,6 +78,17 @@ class StoryController extends Controller
                     return Story::whereId($id)->update($response) ? 1 : 0;
                 break;
             
+
+            case 'all':
+                if ($request->request_pets_id == null) {
+                    $response = $request->validate([
+                        'title' => 'required',
+                        'text' => 'required',
+                    ]);
+
+                    return Story::find($id)->update($response) ? 1 : 0;
+                }
+            break;
             default:
                 # code...
                 break;

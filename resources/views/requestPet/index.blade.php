@@ -79,8 +79,8 @@
           return `<span class="center text-capitalize"><a href="#" data-pet="`+row.pet_id+`" class="badge badge-secondary btn-status" data-status="1" data-request="`+row.id+`">`+data+`</a></span>`
         }
       }},
-      {data: 'petName', width: '15%', mRender: function(data, type, row){
-          return `<p class="text-capitalize">`+data+(row.breed == null ? '' : `   =>   `+row.breed)+`</p>`
+      {data: 'infoPet', width: '15%', mRender: function(data){
+          return `<p class="text-capitalize">`+data+`</p>`
       }},
       {data: 'created_at', width: '20%', mRender: function(data){
         return moment(data).format('LLL')
@@ -251,8 +251,8 @@
           }else{
             swal({
               title: 'Oops',
-              text: 'Algo salió mal',
-              icon: 'error',
+              text: data,
+              icon: 'info',
               timer: 2500
             })
           }

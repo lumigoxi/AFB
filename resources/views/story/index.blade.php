@@ -1,5 +1,7 @@
 @extends('dashboard.dashBase')
-
+@section('style')
+<link rel="stylesheet" href="{{ URL::asset('bower_components/select2-bootstrap-theme/dist/select2-bootstrap.min.css') }}">
+@endsection
 @section('content')
 	 <!-- Content Header (Page header) -->
     <div class="content-header py-0 pt-2">
@@ -45,6 +47,7 @@
     </table>
         @include('story.create')
         @include('story.seeStory')
+        @include('story.edit')
 			</div>
 		</div>
 	</div>
@@ -57,6 +60,8 @@
 @endsection
 
 @section('scripts')
+<script src="{{ URL::asset('js/moment.min.js') }}"></script>
+<script src="{{ URL::asset('js/select2-lenguage.js') }}"></script>
 <script>
   //FUNCIOON CARGAR TABLA
   function showTable(){
@@ -74,7 +79,9 @@
           return `<span class="center text-capitalize"><a href="#" class="badge badge-success btn-status" data-status="0" data-story="`+row.id+`">`+row.status+`</a></span>`
         }
       }},
-      {data: 'created_at'},
+      {data: 'created_at', mRender: function(data){
+         return '<p class="text-capitalize">'+moment(data).format('llll')+'</p>'
+      }},
       {data: 'btn'}
       ],
       "language":{
@@ -103,13 +110,40 @@
         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
                 }
-                            });
+                            })
   }
 
   //CARGAMOS LA TABLA CUANDO LA PAGINA HAYA SIDO CARGADA
   $(document).ready(function() {
-    showTable();
-} );
+    showTable()
+    moment.locale('es')
+    $.fn.select2.defaults.set('language', 'es')
+$('#adopted').select2({
+            // Activamos la opcion "Tags" del plugin
+            placeholder: "Selecione una mascota",
+            theme: "bootstrap",
+            allowClear: true,
+            ajax: {
+                dataType: 'json',
+                url: '{{ url("getPetStory") }}',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        term: params.term
+                    }
+                },
+                processResults: function (data, page) {
+                  return {
+                    results: data
+                  }
+                },
+            }
+        })
+
+
+
+
+    })
 
 
   $('#form-add-story').on('submit', function(e){
@@ -181,9 +215,9 @@
         }
     })
   })
-
-
-$('body').on('click', '#storyTable .seeStory', function(e){
+</script>
+<script>
+  $('body').on('click', '#storyTable .seeStory', function(e){
   e.preventDefault()
   let idStory = $(this).attr('data-story')
   let url = '{{ route('historias.show', ':idStory') }}'.replace(':idStory', idStory)
@@ -204,15 +238,17 @@ $('body').on('click', '#storyTable .seeStory', function(e){
             $('#status').addClass('badge-success')
           }
 
+          let created_at =  moment(story.created_at).format('llll')
+          let updated_at = moment(story.request_pet.updated_at).format('ll')
           $('#storyTitle').text(story.title)
           $('#status').text(story.status)
           $('#userName').text('Creado por: '+story.user['name'])
-          $('#created_at').text('Fecha de creación :'+story.created_at)
+          $('#created_at').text('Fecha de creación: '+created_at)
           $('#description').text(story.text)
           $('#nameOwner').text(story.request_pet['name'])
           $('#petName').text(story.request_pet.pet['name'])
           $('#petBreed').text(story.request_pet.pet['breed'])
-          $('#dateAdopted').text(story.request_pet.updated_at)
+          $('#dateAdopted').text(updated_at)
         }
       }
     }) 
@@ -252,7 +288,62 @@ $('body').on('click', '#storyTable .btn-status', function(e){
         }
       }
     })
+})
 
+
+
+$('body').on('click', '#storyTable .btn-editar', function(e){
+  e.preventDefault()
+  let idStory =  $(this).attr('data-story')
+  let url = '{{ route('historias.show', ':idStory') }}'.replace(':idStory', idStory)
+
+    $.ajax({
+      url: url,
+      type: 'get',
+      success: function(data){
+        $('#edit-story #titulo').val(data['title'])
+        $('#edit-story #Description').val(data['text'])
+        $('#edit-story #edit-adopt').val(data['request_pets_id'])
+        $('#form-edit-story').attr('data-story', idStory)
+      }
+    })
+  $('#edit-adopt').select2({
+            placeholder: "Selecione una mascota",
+            theme: "bootstrap",
+            allowClear: true,
+            data: {id: 0, title: 'a ver'},
+            ajax: {
+                dataType: 'json',
+                url: '{{ url("getPetStory") }}',
+                delay: 250,
+                data: function(params) {
+                      return {
+                        term: params.term
+                      }                    
+                },
+                processResults: function (data, page) {
+                  return {
+                    results: data
+                  }
+                },
+            },
+
+        })
+})
+
+  $('#form-edit-story').on('submit', function(e){
+  e.preventDefault()
+  let idStory = $(this).attr('data-story')
+  let url = '{{ route('historias.update', ':idStory') }}'.replace(':idStory', idStory)
+  let data = $(this).serialize()
+    $.ajax({
+      url: url,
+      type: 'put',
+      data: data+'&type_update=all',
+      success: function(data){
+        console.log(data)
+      }
+    })
 })
 </script>
 @endsection

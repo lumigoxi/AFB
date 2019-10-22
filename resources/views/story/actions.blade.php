@@ -5,7 +5,7 @@
 <a href="#" class="btn-add-picture btn btn-dark btn-sm" data-toggle="modal" data-target="#modal-add-picture" data-story="{{ $id }}"><i class="fa fa-camera"></i></a>	
 
 {!! Form::open(['route'=>['historias.update', $id], 'method'=> 'GET']) !!}
-	<a href="#" class="btn-editar btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
+	<a href="#" class="btn-editar btn btn-warning btn-sm" data-toggle="modal" data-target="#edit-story" data-story="{{ $id }}"><i class="fas fa-edit"></i></a>
 {!! Form::close() !!}	
 
 {!! Form::open(['route'=>['historias.destroy', $id], 'method'=> 'DELETE']) !!}

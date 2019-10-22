@@ -34,6 +34,7 @@ Route::resource('/dashboar/actividades/imagenes', 'ActivityPictureController')->
 Route::resource('/dashboard/actividades', 'ActivityController')->except(['create', 'edit']);
 Route::get('rescue/getAllRescues', 'RescueController@getAll');
 Route::resource('/dashboard/rescates', 'RescueController')->except(['create']);
+Route::get('getPetStory', 'RequestPetController@getOnlyAdopted');
 Route::get('pet/getAllPet', 'PetController@getAll');
 Route::resource('dashboard/cms-mascotas', 'cmsPetController')->except(['create']);
 Route::resource('dashboard/Mascotas', 'PetController')->except(['create']);

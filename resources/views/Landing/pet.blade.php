@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Mascotas</h1>
+            <h1 class="m-0 text-dark">Adopciones</h1>
           </div><!-- /.col -->
           <div class="col-sm-6 py-auto">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-              <li class="breadcrumb-item active">Mascotas</li>
+              <li class="breadcrumb-item active">Adopciones</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->

@@ -27,6 +27,7 @@ class Story extends Model
 						->leftjoin('users as u','s.user_id', '=',  'u.id')
 						->leftjoin('request_pets as rp','s.request_pets_id', '=', 'rp.id')
 						->leftjoin('pets as p', 'rp.pet_id', '=', 'p.id')
+						->where('rp.status', '=', 1)
 						->get();
 
 			return $stories;
