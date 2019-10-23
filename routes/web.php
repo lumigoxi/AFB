@@ -20,6 +20,7 @@ Route::group(['prefix'=> '/'], function(){
 	Route::get('/historias', 'frontController@storyView');
 	Route::get('adoptar', 'frontController@adoptView');
 	Route::get('getAllPets', 'frontController@getAllPets');
+	Route::get('getAllStory', 'frontController@getAllStory');
 	Route::get('actividades', 'frontController@activityView');
 	Route::get('contactanos', 'frontController@contactView');
 });
@@ -48,4 +49,7 @@ Route::resource('dashboard/Tareas', 'TaskController')->only(['index', 'update', 
 Route::post('adoptar/formAdopt', 'InputRequestPetController@store')->name('requestPetStore');
 Route::get('requestsPet', 'RequestPetController@getAll');
 Route::resource('dashboard/Solicitudes', 'RequestPetController');
+Route::resource('dashboard/historiass/historia-imagen', 'StoryPictureController')
+			->except(['index', 'edit', 'create']);
+Route::get('getOneStory', 'frontController@getOneStory');
 

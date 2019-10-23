@@ -16,7 +16,7 @@ var options = new Options({
   selectOnClose: true
 });
 
-test('will not trigger if no results were given', function (assert) {
+test('will not trigger if no results were given', function(assert) {
   assert.expect(0);
 
   var $element = $('<select></select>');
@@ -27,14 +27,14 @@ test('will not trigger if no results were given', function (assert) {
   var container = new MockContainer();
   select.bind(container, $('<div></div>'));
 
-  select.on('select', function () {
+  select.on('select', function() {
     assert.ok(false, 'The select event should not have been triggered');
   });
 
   container.trigger('close');
 });
 
-test('will not trigger if the results list is empty', function (assert) {
+test('will not trigger if the results list is empty', function(assert) {
   assert.expect(1);
 
   var $element = $('<select></select>');
@@ -45,7 +45,7 @@ test('will not trigger if the results list is empty', function (assert) {
   var container = new MockContainer();
   select.bind(container, $('<div></div>'));
 
-  select.on('select', function () {
+  select.on('select', function() {
     assert.ok(false, 'The select event should not have been triggered');
   });
 
@@ -62,7 +62,7 @@ test('will not trigger if the results list is empty', function (assert) {
   container.trigger('close');
 });
 
-test('will not trigger if no results here highlighted', function (assert) {
+test('will not trigger if no results here highlighted', function(assert) {
   assert.expect(2);
 
   var $element = $('<select></select>');
@@ -73,17 +73,15 @@ test('will not trigger if no results here highlighted', function (assert) {
   var container = new MockContainer();
   select.bind(container, $('<div></div>'));
 
-  select.on('select', function () {
+  select.on('select', function() {
     assert.ok(false, 'The select event should not have been triggered');
   });
 
   select.append({
-    results: [
-      {
-        id: '1',
-        text: 'Test'
-      }
-    ]
+    results: [{
+      id: '1',
+      text: 'Test'
+    }]
   });
 
   assert.equal(
@@ -101,7 +99,7 @@ test('will not trigger if no results here highlighted', function (assert) {
   container.trigger('close');
 });
 
-test('will trigger if there is a highlighted result', function (assert) {
+test('will trigger if there is a highlighted result', function(assert) {
   assert.expect(2);
 
   var $element = $('<select></select>');
@@ -112,17 +110,15 @@ test('will trigger if there is a highlighted result', function (assert) {
   var container = new MockContainer();
   select.bind(container, $('<div></div>'));
 
-  select.on('select', function () {
+  select.on('select', function() {
     assert.ok(true, 'The select event should have been triggered');
   });
 
   select.append({
-    results: [
-      {
-        id: '1',
-        text: 'Test'
-      }
-    ]
+    results: [{
+      id: '1',
+      text: 'Test'
+    }]
   });
 
   assert.equal(

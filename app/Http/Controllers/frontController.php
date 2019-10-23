@@ -3,10 +3,13 @@
 namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use app\Activity;
 use app\AllPage;
 use app\Landing;
 use app\Pet;
+use app\Story;
+use app\StoryPicture;
 use app\User;
 
 class frontController extends Controller
@@ -24,7 +27,8 @@ class frontController extends Controller
     }
 
     public function storyView(){
-    	return view('front.storys');
+        $page = AllPage::find(4);
+    	return view('front.storys')->with('page', $page);
     }
 
     public function adoptView(){
@@ -48,5 +52,24 @@ class frontController extends Controller
     }
     public function contactView(){
         return view('front.contact');
+    }
+
+    public function getAllStory(){
+        $stories = Story::getForFront();
+        return $stories;
+    }
+
+    public function getOneStory(Request $request){
+        $request->validate([
+            'story_id' => 'integer'
+        ]);
+        $story = DB::table('stories as s')->select('s.title', 's.text', 's.created_at')
+                                            ->where('s.id', '=', $request['story_id'])
+                                            ->get();
+
+                $pictures = StoryPicture::where('story_id', $request['story_id'])->get();
+                $story->put('pictures', $pictures);
+            
+            return $story;
     }
 }

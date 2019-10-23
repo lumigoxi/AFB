@@ -4,7 +4,10 @@ namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use app\Story;
+use app\StoryPicture;
 
 class StoryController extends Controller
 {
@@ -87,6 +90,13 @@ class StoryController extends Controller
                     ]);
 
                     return Story::find($id)->update($response) ? 1 : 0;
+                }else{
+                    $response = $request->validate([
+                        'title' => 'required',
+                        'text' => 'required',
+                        'request_pets_id' => 'required'
+                    ]);
+                    return Story::find($id)->update($response) ? 1 : 0;
                 }
             break;
             default:
@@ -104,7 +114,19 @@ class StoryController extends Controller
     public function destroy($id)
     {
         //
-        return Story::findOrFail($id)->delete() ? 1 : 0;
+       // return Story::findOrFail($id)->delete() ? 1 : 0;
+
+        $pet = Story::find($id);
+                $pictures = DB::table('story_pictures')->where('story_id', '=', $id)->count();
+                if ($pictures > 0) {
+                    $paths = DB::table('story_pictures')->select('path')->where('story_id', '=', $id)->get();
+                    foreach ($paths as $path) {
+                            File::delete($path->path);
+                    }
+                    StoryPicture::where('story_id', $id)->delete();
+                }
+                return Story::whereId($id)->delete() ? 1 : 0;
+            
     }
 
     public function getAll(){
