@@ -52,4 +52,6 @@ Route::resource('dashboard/Solicitudes', 'RequestPetController');
 Route::resource('dashboard/historiass/historia-imagen', 'StoryPictureController')
 			->except(['index', 'edit', 'create']);
 Route::get('getOneStory', 'frontController@getOneStory');
-
+Route::get('getOnePet', 'frontController@getOnePet');
+Route::get('getAllActivities', 'frontController@getAllActivities');
+Route::get('getOneActivity', 'frontController@getOneActivity');

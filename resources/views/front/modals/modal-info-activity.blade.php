@@ -1,4 +1,4 @@
-<div class="modal fade" id="info-story" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="info-activity" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content row" style="border-radius: 25px;">
       <button type="button" id="close-modal" class="close" data-dismiss="modal" aria-label="Close" 

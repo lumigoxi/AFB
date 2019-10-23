@@ -17,6 +17,7 @@
 	</div>
 </section>
 @include('front.modals.modal-adopt')
+@include('front.modals.modal-info-pet')
 @section('scripts')
 	<script>
 		$(document).ready(function(){
@@ -40,7 +41,7 @@
 						<p class="card-text text-secondary">`+(value.description).slice(0,300)+`...`+`</p>
 						<div class="text-center">
 							<button class="btn btn-success bt-donar mt-3 requestPet" data-pet="`+value.id+`" data-toggle="modal" data-target="#modalAdopt">Quiero Adoptar!</button>
-							<button class="btn btn-outline-info mt-3 seeMore" data-pet="`+value.id+`" data-toggle="modal">Saber mas...</button>
+							<button class="btn btn-outline-info mt-3 seeMore" data-pet="`+value.id+`" data-toggle="modal" data-target="#info-pet">Saber mas...</button>
 						</div>
 					</div>
 				</div>
@@ -70,5 +71,37 @@ $('body').on('click', '.requestPet', function(){
 	$('#formAdopt').attr('data-pet', $(this).attr('data-pet'))
 })
 	</script>
+
+<script>
+	$('body').on('click', '.seeMore', function(e){
+    e.preventDefault()
+    let idPet = $(this).attr('data-pet')
+     $.ajax({
+            url: '{{ url('getOnePet') }}',
+            type:'get',
+            data: {
+              pet_id: idPet
+            },
+            success: function(data){
+              if (data != null) {                  
+                    let path = ''
+                    $('#pet-name').text(data[0]['name'])
+                    $('#pet-description').text(data[0]['description'])
+                    $('.carousel-inner').empty()
+                    $('.carousel-indicators').empty()
+                    let pictures = data['pictures'];
+                     for(let j = 0; j < pictures.length; j++) {
+                      path = '{{ asset('/') }}'+pictures[j]['path']
+                       $('<div class="carousel-item" data-picture="'+pictures[j]['id']+'"><img class="d-block w-100" src="'+path+'"></div>').appendTo('.carousel-inner');
+                        $('<li data-target="#carousel-story" data-slide-to="'+(j)+'"></li>').appendTo('.carousel-indicators')
+                        }
+                        $('.carousel-inner > div ').first().addClass('active');
+                        $('#carousel-story .carousel-indicators > li').first().addClass('active');
+                        $('#carousel-story').carousel();
+              }
+            }
+          })
+  })	
+</script>
 @endsection
 @endsection

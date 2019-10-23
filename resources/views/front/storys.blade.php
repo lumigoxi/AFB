@@ -2,7 +2,7 @@
 
 @section('content')
 <section id="text-info">
-  <div class="container px-0">
+  <div class="container container-info">
     <h2 class="mt-4">
       <span>{{ $page->title }}</span>
     </h2>
@@ -12,7 +12,7 @@
   </div>
 </section>
   <section id="historias">
-    <div class="container px-5" id="story-list">
+    <div class="container container-story" id="story-list">
       
 
     </div>

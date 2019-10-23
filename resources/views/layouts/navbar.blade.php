@@ -19,25 +19,27 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         {{-- @guest --}}
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Principal <span class="sr-only">(current)</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link
+                            {{ Request::path() ==  '/' ? 'active' : ''  }}" 
+                            href="/">Principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/historias">Historias</a>
+                            <a class="nav-link {{ Request::path() ==  'historias' ? 'active' : ''  }}" href="/historias">Historias</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/adoptar">Adoptar</a>
+                            <a class="nav-link {{ Request::path() ==  'adoptar' ? 'active' : ''  }}" href="/adoptar">Adoptar</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ Request::path() ==  'actividades' ? 'active' : ''  }}">
                             <a class="nav-link" href="/actividades">Actividades</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ Request::path() ==  'contactanos' ? 'active' : ''  }}">
                             <a class="nav-link" href="/contactanos">Contactanos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link donar" href="#">Donar</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ Request::path() ==  'login' ? 'active' : ''  }}">
                             <a class="nav-link" 
                            @if(Auth::check())
                             href="{{ route('dashboard') }}" 

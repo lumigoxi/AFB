@@ -1,6 +1,6 @@
-<div class="modal fade" id="info-story" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="info-pet" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content row" style="border-radius: 25px;">
+    <div class="modal-content row">
       <button type="button" id="close-modal" class="close" data-dismiss="modal" aria-label="Close" 
     style="position: absolute; top: 2%; z-index: 2; right: 5%;">
           <span aria-hidden="true">&times;</span>
@@ -11,8 +11,8 @@
           </div>
         </div>
         <div class="col-sm-7 info-story">
-        <h3 id="story-title" class="text-uppercase"></h3>
-        <p id="story-text"></p>
+        <h3 id="pet-name" class="text-uppercase"></h3>
+        <p id="pet-description"></p>
       </div>
     </div>
   </div>

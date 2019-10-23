@@ -1,3 +1,18 @@
+#text-info {
+    padding: 0% 3%;
+    padding-top: 1%;
+}
+
+.container-info {
+    padding: 0% 3%;
+    padding-top: 1%;
+}
+
+.container-story {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
 .info-date {
     margin-top: -2%;
 }
@@ -23,11 +38,15 @@
     padding-right: 0px;
 }
 
-#info-story .modal-content {
+#info-story .modal-content,
+#info-activity .modal-content,
+#info-pet .modal-content {
     border-radius: 25px
 }
 
-#info-story img {
+#info-story img,
+#info-activity img,
+#info-pet img {
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
     height: 70vh;
@@ -221,14 +240,20 @@ footer a {
 }
 
 @media screen and(max-width: 1599px) {
-    #info-story img {
+
+    #info-story img,
+    #info-activity img,
+    #info-pet img {
         height: 70vh;
     }
 }
 
 
 @media screen and (max-width: 1199px) {
-    #info-story img {
+
+    #info-story img,
+    #info-activity img,
+    #info-pet img {
         height: 70vh;
     }
 
@@ -287,6 +312,19 @@ footer a {
 
 @media screen and (max-width: 575px) {
 
+    .container-info {
+        padding: 0% 5%;
+    }
+
+    .container-story {
+        padding-left: 7%;
+        padding-right: 7%;
+    }
+
+    #close-modal {
+        color: white;
+    }
+
     #story-list>div:nth-child(1)>div.col-md-9.col-sm-7.my-4 {
         margin-top: 0px !important;
         margin-bottom: 0px !important;
@@ -310,7 +348,9 @@ footer a {
         object-fit: contain;
     }
 
-    #info-story img {
+    #info-story img,
+    #info-activity img,
+    #info-pet img {
         border-top-right-radius: 25px;
         border-bottom-right-radius: 0px;
         border-bottom-left-radius: 0px;
@@ -328,6 +368,10 @@ footer a {
 }
 
 @media screen and (max-width: 479px) {
+
+    #close-modal {
+        color: white;
+    }
 
     .more-info {
         margin-bottom: 2%;
@@ -349,7 +393,9 @@ footer a {
         margin-top: 10%;
     }
 
-    #info-story img {
+    #info-story img,
+    #info-activity img,
+    #infp-pet img {
         border-top-right-radius: 25px;
         border-bottom-right-radius: 0px;
         border-bottom-left-radius: 0px;
