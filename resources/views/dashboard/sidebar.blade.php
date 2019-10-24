@@ -48,6 +48,12 @@
             <p>Actividades</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('cms-contactanos.index') }}" class="nav-link">
+            <i class="nav-icon fas fa-bookmark"></i>
+            <p>Contáctanos</p>
+          </a>
+        </li>
       </ul>
     </li>
     

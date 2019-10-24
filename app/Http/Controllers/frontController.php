@@ -9,6 +9,7 @@ use app\Activity;
 use app\ActivityPicture;
 use app\AllPage;
 use app\Landing;
+use app\PageImage;
 use app\Pet;
 use app\PetPicture;
 use app\Story;
@@ -22,10 +23,12 @@ class frontController extends Controller
         $calls = Landing::all();
         $users = User::where('visible', 1)->get();
         $member = AllPage::find(3); 
+        $pictures = PageImage::select('path')->where('page_id', 3)->get();
         return view('welcome',[
             'calls' => $calls,
             'users' => $users,
-            'member' => $member
+            'member' => $member,
+            'pictures' => $pictures
         ]);
     }
 
@@ -49,7 +52,12 @@ class frontController extends Controller
          return Pet::getForFront();
     }
     public function contactView(){
-        return view('front.contact');
+        $pictures = PageImage::select('path')->where('page_id', 5)->get();
+        $page = AllPage::find(5); 
+        return view('front.contact')->with([
+            'pictures' => $pictures,
+            'page' => $page
+        ]);
     }
 
     public function getAllStory(){

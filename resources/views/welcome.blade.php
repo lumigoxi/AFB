@@ -4,15 +4,11 @@
 <main class="carrusel">
   <div id="carousel" class="carousel slide carousel-fade" data-ride="carousel" data-pause="false">
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="d-block w-100" src="img\carrusel-1.jpg" alt="un perro xd">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="img\carrusel-2.jpg" alt="otro perro xd">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="img\carrusel-3.jpg" alt="mas perros xdxdxd">
-      </div>
+      @foreach($pictures as $index => $picture)
+        <div class="carousel-item @if($index ==0) active @endif">
+          <img class="d-block w-100" src="{{ asset($picture->path) }}" alt="mas perros xdxdxd">
+        </div>
+      @endforeach
       <div class="overlay">
         <div class="container">
           <div class="row align-items-center">

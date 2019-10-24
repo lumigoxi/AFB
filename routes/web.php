@@ -55,3 +55,5 @@ Route::get('getOneStory', 'frontController@getOneStory');
 Route::get('getOnePet', 'frontController@getOnePet');
 Route::get('getAllActivities', 'frontController@getAllActivities');
 Route::get('getOneActivity', 'frontController@getOneActivity');
+Route::resource('addPageImage', 'PageImageController')->only(['store', 'update', 'show', 'destroy']);
+Route::resource('cms-contactanos', 'ContactUsController')->except(['edit', 'create', 'store']);

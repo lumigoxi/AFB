@@ -34,7 +34,7 @@
                             <a class="nav-link" href="/actividades">Actividades</a>
                         </li>
                         <li class="nav-item {{ Request::path() ==  'contactanos' ? 'active' : ''  }}">
-                            <a class="nav-link" href="/contactanos">Contactanos</a>
+                            <a class="nav-link" href="/contactanos">Contáctanos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link donar" href="#">Donar</a>

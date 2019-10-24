@@ -5,7 +5,7 @@ namespace app\Http\Controllers;
 use Illuminate\Http\Request;
 use app\AllPage;
 
-class AllPageController extends Controller
+class ContactUsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class AllPageController extends Controller
      */
     public function index()
     {
-        //
+    return view('Landing.contact-us');
     }
 
     /**
@@ -44,10 +44,10 @@ class AllPageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
         //
-        return AllPage::findOrFail($id);
+        return AllPage::find(5);
     }
 
     /**
@@ -56,7 +56,7 @@ class AllPageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
         //
     }
@@ -71,22 +71,11 @@ class AllPageController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-        if ($request['text_large'] != null) {
-            $Response = $request->validate([
-            'text_large' => 'required',
-        ]);
-
-        return AllPage::whereId($id)->update($Response);
-        }
-    
-
-        $Response = $request->validate([
+        $response = $request->validate([
             'title' => 'required',
             'text' => 'required'
         ]);
-
-        return AllPage::whereId($id)->update($Response);
+        return AllPage::whereId(5)->update($response) ? 1 : 0;
     }
 
     /**

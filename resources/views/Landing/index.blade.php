@@ -27,7 +27,12 @@
         <div class="row">
 			<div class="col-md-12 col-xs-12">
 				<hr>
-				<a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">Regresar</a>                                            <a href="{{ route('/') }}" class="btn  btn-info btn-sm" target="_blank">Ver Landing</a>
+				<a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">Regresar</a>                    
+        <a href="{{ route('/') }}" class="btn  btn-info btn-sm" target="_blank">Ver Landing</a>
+        <a href="#" class="btn btn-dark btn-sm" id="btn-add-picture" data-toggle="modal"
+          data-target="#modal-add-picture">Agregar Fotografía</a>
+          <a href="#" class="btn btn-link btn-sm btn-pictures" data-toggle="modal"
+          data-target="#delete-pictures">Eliminar Fotografía</a>
 				<hr>
         {!! Form::open(['route'=>['landing.update', 1], 'method'=> 'POST']) !!}
               <div class="form-group">  
@@ -43,12 +48,13 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    @include('Landing.add-picture-landing')
+    @include('Landing.delete-pictures')
 @endsection
 
 @section('scripts')
 
 <script>
-        CKEDITOR.replace( 'editor1' );
         CKEDITOR.config.allowedContent = true;
 </script>
 <script>
@@ -88,5 +94,98 @@
 
         });
   });
+</script>
+<script>
+  $('#form-add-picture').on('submit', function(e){
+      e.preventDefault()
+          let idPet = $(this).attr('data-pet')
+          let data = new FormData($("#form-add-picture")[0])
+          data.append('page_id', 3)
+          data.append('_token', '{{ csrf_token() }}')
+            $.ajax( {
+                url: '{{ route('addPageImage.store') }}',
+                type: 'POST',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function(data){
+                   $('#modal-add-picture').modal('toggle')
+                if (data == 1) {
+                  swal({
+                    title: 'Exitiso',
+                    text: 'La imagen fue subida exitosamente',
+                    icon: 'success',
+                    timer: 3000
+                  })
+                  $('#file-picture').val(null)
+                }else{
+                  swal({
+                    title: 'Error',
+                    text: 'No se pudo subir la imagen',
+                    icon: 'error',
+                    timer: 2500
+                  })
+                }
+                }
+            })
+  })
+
+
+
+  $('body').on('click', '.btn-pictures', function(e){
+  e.preventDefault()
+  let url = '{{ route('addPageImage.show', 3) }}'
+  $.ajax({
+      url: url,
+      type: 'get',
+      success: function(data){
+      let path = ''
+      $('.carousel-inner').empty()
+      $('.carousel-indicators').empty()
+       for(let j = 0; j < data.length; j++) {
+        path = '{{ asset('/') }}'+data[j]['path']
+         $('<div class="carousel-item" data-picture="'+data[j]['id']+'"><img class="d-block w-100" src="'+path+'"></div>').appendTo('.carousel-inner');
+          $('<li data-target="#carousel-example-1z" data-slide-to="'+(j)+'"></li>').appendTo('.carousel-indicators')
+
+          }
+          $('.carousel-inner > div ').first().addClass('active');
+          $('.carousel-indicators > li').first().addClass('active');
+          $('#carousel').carousel();
+      }
+       
+  })  
+})
+</script>
+<script>
+  $('#delete-image').on('click', function(e){
+  e.preventDefault()
+  let form = $(this).parent()
+  let image = $(this).parent().siblings('div').children('div .active')
+  let idImage = image.attr('data-picture')
+  let url = '{{ route('addPageImage.destroy', ':idImage') }}'.replace(':idImage', idImage)
+
+  $.ajax({
+    url: url,
+    type: 'post',
+    data: form.serialize(),
+    success: function(data){
+      $('#delete-pictures').modal('toggle')
+        if (data == 1) {
+          $('#see-pictures').modal('toggle')
+          swal({
+            text: 'Se ha eliminado con exito',
+            icon: 'success',
+            timer: 3000
+          })
+        }else{
+          swal({
+            text: 'Algo salio mal',
+            icon: 'error',
+            timer: 2500
+          })
+        }
+    }
+  })
+})
 </script>
 @endsection

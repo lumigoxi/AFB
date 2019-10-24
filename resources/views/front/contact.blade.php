@@ -3,16 +3,18 @@
 <main class="carrusel">
 	<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel" data-pause="false">
 		<div class="carousel-inner">
-			<div class="carousel-item-active">
-				<img class="d-block w-100" src="img\carrusel-3.jpg" alt="mas perros xdxdxd">
+			@foreach($pictures as $index => $picture)
+			<div class="carousel-item @if($index ==0) active @endif">
+				<img class="d-block w-100" src="{{ asset($picture->path) }}" alt="mas perros xdxdxd">
 			</div>
+			@endforeach
 			<div class="overlay">
 				<div class="container">
 					<div class="row align-items-center">
 						<div class="col-md-8 offset-md-2 text-center text-md-center">
-							<h1>Tu ayuda es muy importante</h1>
-							<h4>Ayudanos a ayudar</h4>
-							<button class="btn btn-success" type="button" data-toggle="modal" data-target="#modalContact">Contactanos</button>
+							<h1>{{ $page->title }}</h1>
+							<h4>{{ $page->text }}</h4>
+							<button class="btn btn-success" type="button" data-toggle="modal" data-target="#modalContact">Contáctanos</button>
 						</div>
 					</div>
 				</div>
@@ -121,8 +123,8 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<div class = "g-recaptcha" id="ContactRecaptcha" 
-           						data-sitekey = "{{env ('GOOGLE_RECAPTCHA_KEY')}}"> 
+							<div class = "g-recaptcha" id="ContactRecaptcha"
+								data-sitekey = "{{env ('GOOGLE_RECAPTCHA_KEY')}}">
 							</div>
 						</div>
 					</div>
