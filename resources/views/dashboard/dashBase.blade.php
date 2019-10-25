@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <link rel="icon" href="{{ asset('img/amigo-fiel-logo.jpg') }}" style="border-radius: 50%;">
+
   <title>AMIGO FIEL</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,8 +25,8 @@
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
-  <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.css') }}">
-  <!-- Google Font: Source Sans Pro -->
+{{--   <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.css') }}">
+ --}}  <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/datatables/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('bower_components/admin-lte/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css') }}">
@@ -91,25 +93,21 @@
 <!-- Bootstrap 4 -->
 <script src="{{ URL::asset('bower_components/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- ChartJS -->
-<script src="{{ URL::asset('bower_components/admin-lte/plugins/chart.js/Chart.min.js') }}"></script>
+
 <!-- Sparkline -->
 {{-- <script src="{{ URL::asset('bower_components/admin-lte/plugins/sparklines/sparkline.js') }}"></script> --}}
 <!-- JQVMap -->
 {{-- <script src="{{ URL::asset('bower_components/admin-lte/plugins/jqvmap/jquery.vmap.min.js') }}"></script> --}}
 {{-- <script src="{{ URL::asset('bower_components/admin-lte/plugins/jqvmap/maps/jquery.vmap.world.js') }}"></script> --}}
 <!-- jQuery Knob Chart -->
-<script src="{{ URL::asset('bower_components/admin-lte/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
 <!-- daterangepicker -->
 <script src="{{ URL::asset('bower_components/admin-lte/plugins/moment/moment.min.js') }}"></script>
 <script src="{{ URL::asset('bower_components/admin-lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="{{ URL::asset('bower_components/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <!-- Summernote -->
-<script src="{{ URL::asset('bower_components/admin-lte/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ URL::asset('bower_components/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- FastClick -->
-<script src="{{ URL::asset('bower_components/admin-lte/plugins/fastclick/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ URL::asset('bower_components/admin-lte/dist/js/adminlte.js') }}"></script>
 

@@ -14,7 +14,6 @@ Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 //Rputes for dashboard
 Route::get('miembros/getAllUser', 'memberController@getAll');
 Route::resource('miembros', 'memberController')->except(['create', 'edit']);
-Route::delete('miembros/eliminar-miembro/{id}', 'memberController@deleteMember')->name('deleteMember');
 //Routes for web site. 
 Route::group(['prefix'=> '/'], function(){
 	Route::get('/historias', 'frontController@storyView');
@@ -40,7 +39,6 @@ Route::get('pet/getAllPet', 'PetController@getAll');
 Route::resource('dashboard/cms-mascotas', 'cmsPetController')->except(['create']);
 Route::resource('dashboard/Mascotas', 'PetController')->except(['create']);
 Route::resource('dashboard/Fotos-Mascota', 'PetPictureController')->except(['create']);
-Route::resource('dashboard/Voluntarios', 'VoluntaryController')->except(['create']);
 Route::resource('dahsboard/cms-miembros', 'cmsMemberController')->except(['create']);
 Route::resource('dashboard/Mensajes', 'MessageController')->except(['create', 'edit']);
 Route::get('Messages/getAllMessages', 'MessageController@getAll');
@@ -57,3 +55,4 @@ Route::get('getAllActivities', 'frontController@getAllActivities');
 Route::get('getOneActivity', 'frontController@getOneActivity');
 Route::resource('addPageImage', 'PageImageController')->only(['store', 'update', 'show', 'destroy']);
 Route::resource('cms-contactanos', 'ContactUsController')->except(['edit', 'create', 'store']);
+Route::get('/control', 'HomeController@control');

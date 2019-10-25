@@ -2,14 +2,16 @@
 
 namespace app\Http\Controllers;
 
-use app\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use app\User;
 
 class memberController extends Controller
 {
 
-    public function __construct(){
-        $this->middleware('auth');
+   public function __construct(){
+        $this->middleware('IsActive');
+        $this->middleware('SuperAdmin');
     }
     /**
      * Display a listing of the resource.
@@ -46,6 +48,14 @@ class memberController extends Controller
                     $member->status = 'Activo';
                 }else{
                     $member->status = 'Inactivo';
+                }
+
+                if ($member->role == 1) {
+                    $member->role="Admin";
+                }else if($member->role == 2){
+                    $member->role = "Super Admin";
+                }else{
+                     $member->role="Miembro";
                 }
             }
             return datatables()->of($members)
@@ -110,15 +120,30 @@ class memberController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if ($request['origin'] == 'role') {
+            $user = User::find($id);
+            if ($user['role'] == 2) {
+                return 'No puedes cacmbiar de rol';
+            }
+
+            $Response = $request->validate([
+                'role' => 'required|digits_between:0,1'
+            ]);
+                return User::whereId($id)->update($Response) ? 1 : 0; 
+            
+        }
         if ($request['request_url']=='tps') {
+
+            $user = User::find($id);
+                if (User::find($id)['role'] == 2) {
+                    return 'No se puede inactivar porque es super administrador';
+                }
+
             $Response = $request->validate([
                 'status' => 'required|digits_between:0,1'
             ]);
-            if ($Response['status'] == 0) {
-                return User::whereId($id)->update(['status' => 1] ) ? 1 : 0;
-            }else{
-                return User::whereId($id)->update(['status' => 0]) ? 1 : 0;
-            }
+                return User::whereId($id)->update($Response) ? 1 : 0;            
         }
     }
 
@@ -128,18 +153,13 @@ class memberController extends Controller
      * @param  \app\member  $member
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+   
+
+   public function destroy($id)
     {
-        //
-
-        return;
-    }
-
-    public function deleteMember(Request $request, $id){
-        if ($request->ajax()) {
-            $user = User::find($id);
-        $user->delete();
-        return; 
+        if (User::find($id)['role'] == 2) {
+            return 'No se puede eliminar porque es Super Administrador';
         }
+        return User::findOrFail($id)->delete() ? 1 : 0;
     }
 }

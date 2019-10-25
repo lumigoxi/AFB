@@ -24,4 +24,10 @@ class HomeController extends Controller
         return view('dashboard.dashBase');
     }
 
+    public function control(){
+        if (Auth::user()->role == 1) {
+            return redirect('/dashboard');
+        }
+        return view('dashboard.control');
+    }
 }

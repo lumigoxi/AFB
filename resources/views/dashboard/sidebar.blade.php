@@ -2,6 +2,7 @@
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     <!-- Add icons to the links using the .nav-icon class
     with font-awesome or any other icon font library -->
+    @if(Auth::user()->role == 1 || Auth::user()->role == 2)
     <li class="nav-header">CMS</li>
     <li class="nav-item has-treeview">
       <a href="#" class="nav-link">
@@ -67,6 +68,7 @@
         </p>
       </a>
       <ul class="nav nav-treeview">
+        @if(Auth::user()->role == 2)
         <li class="nav-item">
           <a href="{{ route('miembros.index') }}" class="nav-link">
             <i class="nav-icon far fa-calendar-alt"></i>
@@ -75,6 +77,7 @@
             </p>
           </a>
         </li>
+        @endif
         <li class="nav-item">
           <a href="{{ route('rescates.index') }}" class="nav-link">
             <i class="nav-icon fa fa-ambulance "></i>
@@ -109,6 +112,8 @@
         </li>
       </ul>
     </li>
+
+    @endif
     <li class="nav-header">Interno</li>
     <li class="nav-item has-treeview">
       <a href="#" class="nav-link">

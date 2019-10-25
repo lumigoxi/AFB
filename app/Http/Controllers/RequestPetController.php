@@ -10,6 +10,9 @@ use app\RequestPet;
 class RequestPetController extends Controller
 {
 
+public function __construct(){
+        $this->middleware(['IsActive', 'IsAdmin']);
+    }
 
      private static function changeStatus($idRequestPet, $idpet, $status, $response){
         try {

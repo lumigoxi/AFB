@@ -28,14 +28,14 @@
                 <hr>
                 <a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">Regresar</a>
                 <a href="/contactanos" class="btn  btn-info btn-sm" target="_blank">Ver Pagina</a>
-                <a href="#" class="btn btn-warning btn-sm btn-edit-page" data-toggle="modal" data-target="#edit-page">Editar página</a>
                 <a href="#" class="btn btn-dark btn-sm" id="btn-add-picture" data-toggle="modal"
                 data-target="#modal-add-picture">Agregar Fotografía</a>
                 <a href="#" class="btn btn-link btn-sm btn-pictures" data-toggle="modal"
                 data-target="#delete-pictures">Eliminar Fotografía</a>
                 <hr>
                                <div class="row">
-                    <form class="pl-2" id="form-mission-vision">
+                    <form class="pl-2" id="form-text">
+                      @csrf
                       <label for="h1">Título</label>
                       <div class="form-group col-md-12">
                         <textarea name="title" cols="150" rows="5" id="h1">
@@ -44,15 +44,14 @@
                       </div>
                       <label for="h4">Descripción</label>
                       <div class="form-group col-md-12">
-                        <textarea name="h4" cols="150" rows="5" id="h4n">
+                        <textarea name="text" cols="150" rows="5" id="h4">
                         
                         </textarea>
                       </div>
-                      <button type="submit" class="btn btn-success" id="submit-mission-vision">Actualizar</button>
+                      <button type="submit" class="btn btn-success" id="submit-text">Actualizar</button>
                     </form>
                 </div>
               
-                @include('Landing.pet.edit-page')
                 @include('Landing.add-picture-landing')
                 @include('Landing.delete-pictures')
               </div>
@@ -241,5 +240,45 @@ $('#form-add-picture').on('submit', function(e){
 
         })
   })
+
+
+ $(document).ready(function(){
+       $.ajax({
+        url: '{{ route('pages.show', 5) }}',
+        type: 'get',
+        success: function(data){
+          $('#h1').val(data.title)
+          $('#h4').val(data.text)
+        }
+       })
+ })
+
+ $('#form-text').on('submit', function(e){
+  e.preventDefault();
+  let url = '{{ route('pages.update', 5) }}'
+let form = $('#form-text').serialize()
+$.ajax({
+    url: url,
+    data: form,
+    type: 'put',
+    success: function(data) {
+        if (data == 1) {
+            swal({
+                title: 'Exitoso',
+                text: 'Se ha acutualizado al pagina',
+                icon: 'success',
+                timer: 3000
+            })
+        } else {
+            swal({
+                title: 'Error',
+                text: 'Algo salió mal',
+                icon: 'error',
+                timer: 2500
+            })
+        }
+    }
+})
+ })
 </script>
         @endsection

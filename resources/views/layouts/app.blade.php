@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('img/amigo-fiel-logo.jpg') }}" style="border-radius: 50%;">
 
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Amigo Fiel</title>
     @include('dependency.style')
 </head>
   <body>

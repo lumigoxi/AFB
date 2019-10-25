@@ -10,6 +10,9 @@ use app\PageImage;
 
 class PageImageController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['IsActive', 'IsAdmin']);
+    }
     /**
      * Display a listing of the resource.
      *

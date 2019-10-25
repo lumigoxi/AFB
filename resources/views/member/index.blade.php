@@ -32,10 +32,10 @@
         <table id="memberTable" class="table table-striped table-bordered display responsive nowrap" style="width:100%">
         <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Estado</th>
+                <th scope="col">Role</th>
                 <th scope="col">Fecha de creación</th>
                 <th scope="col">Acciones</th>
             </tr>
@@ -53,6 +53,7 @@
 @endsection
 
 @section('scripts')
+<script src="{{ URL::asset('js/moment.min.js') }}"></script>
 <script>
   //FUNCIOON CARGAR TABLA
   function showTable(){
@@ -65,21 +66,38 @@
         }
         },
       "columns": [
-      {data: 'id'},
       {data: 'name'},
       {data: 'email'},
-      {data: 'status', mRender: function(data){
+      {data: 'status', mRender: function(data, display, row){
         if (data == 'Activo') {
                 return `<div class="text-center">
-                    <a href="#" class="badge badge-success btn-status"  data-status="1">`+data+`</a>
+                    <a href="#" class="badge badge-success btn-status" data-member="`+row.id+`" data-status="0">`+data+`</a>
                 </div>`;
             }else{
                 return `<div class="text-center">
-                    <a href="#" class="badge badge-danger btn-status" data-status="0">`+data+`</a>
+                    <a href="#" class="badge badge-danger btn-status" data-member="`+row.id+`" data-status="1">`+data+`</a>
                 </div>`;
             }
       }},
-      {data: 'created_at'},
+      {data: 'role', mRender: function(data, display, row){
+        if (data == 'Super Admin') {
+          return `<div class="text-center">
+                    <a href="#" class="badge badge-success btn-role" data-role="10" data-member="`+row.id+`">`+data+`</a>
+                </div>`
+        }
+        if (data == 'Admin') {
+          return `<div class="text-center">
+                    <a href="#" class="badge badge-info btn-role" data-role="0" data-member="`+row.id+`">`+data+`</a>
+                </div>`;
+        }else{
+          return `<div class="text-center">
+                    <a href="#" class="badge badge-secondary btn-role" data-role="1" data-member="`+row.id+`">`+data+`</a>
+                </div>`;
+        }
+      }},
+      {data: 'created_at', mRender: function(data){
+        return moment(data).format('lll');
+      }},
       {data: 'btn'},
       ],
       "language":{
@@ -114,6 +132,7 @@
   //CARGAMOS LA TABLA CUANDO LA PAGINA HAYA SIDO CARGADA
   $(document).ready(function() {
     showTable();
+    moment.locale('es')
 } );
 
 
@@ -143,9 +162,9 @@
           }else{
             swal({
             title: 'Error',
-            text: data,
+            text: 'Algo salio mal',
             icon: 'info',
-            timer: 300
+            timer: 3000
           })
           }
         },
@@ -173,54 +192,92 @@
 })
 .then((willDelete) => {
   if (willDelete) {
-    swal("El miembro se ha eliminado exitosamente", {
-      icon: "success",
-    });
-       let row = $(this).parents('tr');
-      let form = $(this).parents('form');
-      let url = form.attr('action');
-      $.post(url, form.serialize(), function(){
-        row.fadeOut();
+       let idMember = $(this).attr('data-member')
+       let form = $(this).parent('form').serialize()
+      let url = '{{ route('miembros.destroy', ':idMember') }}'.replace(':idMember', idMember)
+      $.post(url, form, function(data){
+           if (data == 1) {
+          $ ('#memberTable').DataTable().ajax.reload()
+            swal({
+            title: 'Exitiso',
+            text: 'Se ha eliminado correctamente',
+            icon: 'success',
+            timer: 3000
+          })
+          }else if(data == 0){
+            swal({
+            title: 'Oops',
+            text: 'Algo salio mal',
+            icon: 'info',
+            timer: 3000
+          })
+          }else{
+            swal('Error', data, 'error')
+          }
       })
   }
-});
-    });
+})
+    })
 
 
      $('body').on('click' ,'#memberTable .btn-status', function(e){
         e.preventDefault();
         let tag_currently = $(this)
-        const idMember = $(this).parent().parent().siblings('td').children('form').children('a').attr('data-member');
+        const idMember = $(this).attr('data-member')
         let url = '{{ route('miembros.update', ':idMember') }}'
         url = url.replace(':idMember', idMember)
         let status = $(this).attr('data-status')
         let data = {
           status: status,
           request_url: 'tps',
-          _token: '{{ csrf_token() }}'  
+          _token: '{{ csrf_token() }}'
         }
+
         $.ajax({
         type: 'put',
         url: url,
         data: data,
         success: function(data){
-           if (data) {
-                        if (status == 0) {
-                            tag_currently.attr('data-status', 1)
-                            tag_currently.removeClass('badge-danger')
-                            tag_currently.addClass('badge-success')
-                            tag_currently.text('Activo')
-                            swal("Actualizado!", "EL usuario ha sido activado", "success")
-                        }else if(status == 1){
-                            tag_currently.attr('data-status', 0)
-                            tag_currently.removeClass('badge-success')
-                            tag_currently.addClass('badge-danger')
-                            tag_currently.text('Inactivo')
-                            swal("Actualizado!", "EL usuario no ha sido inactivado", "success")
+           if (data == 1) {
+                  $('#memberTable').DataTable().ajax.reload()
+                  swal('Exitoso', 'Se actualizo correctamente', 'success')
+                    }else if(data == 0){
+                      swal("Error", 'Algo salio mal', "error")
+                    } else{
+                        swal("Error", data, "error")
+                    }
 
-                        }
-                    }else{
-                        swal("Error", "Algo ha salido mal", "error")
+        }
+        })
+     })
+</script>
+<script>
+   $('body').on('click' ,'#memberTable .btn-role', function(e){
+        e.preventDefault();
+        const idMember = $(this).attr('data-member')
+        let url = '{{ route('miembros.update', ':idMember') }}'
+        url = url.replace(':idMember', idMember)
+        let role = $(this).attr('data-role')
+        let data = {
+          role: role,
+          request_url: 'tps',
+          _token: '{{ csrf_token() }}',
+          origin: 'role'
+        }
+                
+
+        $.ajax({
+        type: 'put',
+        url: url,
+        data: data,
+        success: function(data){
+           if (data == 1) {
+                  $('#memberTable').DataTable().ajax.reload()
+                  swal('Exitoso', 'Se actualizo correctamente', 'success')
+                    }else if(data == 0){
+                      swal("Error", 'Algo salio mal', "error")
+                    } else{
+                        swal("Error", data, "error")
                     }
 
         }

@@ -12,6 +12,10 @@ use app\Rescue;
 
 class PetController extends Controller
 {
+    public function __construct(){
+        $this->middleware('IsActive');
+        $this->middleware('IsAdmin', ['except'=>'store']);
+    }
     /**
      * Display a listing of the resource.
      *

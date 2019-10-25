@@ -7,6 +7,10 @@ use app\Pet;
 
 class cmsPetController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware(['IsActive', 'IsAdmin']);
+    }
     /**
      * Display a listing of the resource.
      *
