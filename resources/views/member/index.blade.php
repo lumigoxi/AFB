@@ -253,6 +253,12 @@
 </script>
 <script>
    $('body').on('click' ,'#memberTable .btn-role', function(e){
+        if ($(this).text() == 'Super Admin' || $(this).attr('data-role') == 10) {
+            swal('oops', 'No se puede cmodificar el Role de Super Administrador', 'info',{
+              timer: 2500
+            })
+            return 
+        }
         e.preventDefault();
         const idMember = $(this).attr('data-member')
         let url = '{{ route('miembros.update', ':idMember') }}'

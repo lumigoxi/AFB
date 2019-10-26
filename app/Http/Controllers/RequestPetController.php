@@ -11,7 +11,7 @@ class RequestPetController extends Controller
 {
 
 public function __construct(){
-        $this->middleware(['IsActive', 'IsAdmin']);
+        $this->middleware(['auth','IsActive', 'IsAdmin']);
     }
 
      private static function changeStatus($idRequestPet, $idpet, $status, $response){

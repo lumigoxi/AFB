@@ -32,7 +32,7 @@ Route::resource('/dashboard/historias', 'StoryController')->except(['create', 'e
 Route::get('actividades/getAllActivitys', 'ActivityController@getAll');
 Route::resource('/dashboar/actividades/imagenes', 'ActivityPictureController')->except(['create', 'edit']);
 Route::resource('/dashboard/actividades', 'ActivityController')->except(['create', 'edit']);
-Route::get('rescue/getAllRescues', 'RescueController@getAll');
+Route::get('rescue/getAllRescues', 'RescueController@getAll')->middleware('IsActive');
 Route::resource('/dashboard/rescates', 'RescueController')->except(['create']);
 Route::get('getPetStory', 'RequestPetController@getOnlyAdopted');
 Route::get('pet/getAllPet', 'PetController@getAll');

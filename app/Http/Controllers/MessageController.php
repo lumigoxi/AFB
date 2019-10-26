@@ -8,7 +8,7 @@ use app\Message;
 class MessageController extends Controller
 {
     public function __construct(){
-        $this->middleware(['IsActive', 'IsAdmin']);
+        $this->middleware(['auth','IsActive', 'IsAdmin']);
     }
     /**
      * Display a listing of the resource.

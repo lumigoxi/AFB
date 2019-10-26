@@ -11,7 +11,7 @@ use app\Rescue;
 class TaskController extends Controller
 {
      public function __construct(){
-        $this->middleware(['IsActive']);
+        $this->middleware(['auth','IsActive']);
     }
     /**
      * Display a listing of the resource.

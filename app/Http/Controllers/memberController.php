@@ -10,6 +10,7 @@ class memberController extends Controller
 {
 
    public function __construct(){
+        $this->middleware('auth');
         $this->middleware('IsActive');
         $this->middleware('SuperAdmin');
     }

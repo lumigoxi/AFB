@@ -13,6 +13,7 @@ use app\Rescue;
 class PetController extends Controller
 {
     public function __construct(){
+        $this->middlere('auth');
         $this->middleware('IsActive');
         $this->middleware('IsAdmin', ['except'=>'store']);
     }
