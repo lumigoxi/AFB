@@ -51,7 +51,7 @@
         </li>
         <li class="nav-item">
           <a href="{{ route('cms-contactanos.index') }}" class="nav-link">
-            <i class="nav-icon fas fa-bookmark"></i>
+            <i class="nav-icon fas fa-handshake"></i>
             <p>Contáctanos</p>
           </a>
         </li>
@@ -71,7 +71,7 @@
         @if(Auth::user()->role == 2)
         <li class="nav-item">
           <a href="{{ route('miembros.index') }}" class="nav-link">
-            <i class="nav-icon far fa-calendar-alt"></i>
+            <i class="nav-icon fa fa-users"></i>
             <p>
               Miembros
             </p>
@@ -96,7 +96,7 @@
         </li>
         <li class="nav-item">
           <a href="{{ route('Mensajes.index') }}" class="nav-link">
-            <i class="nav-icon fa fa-book"></i>
+            <i class="nav-icon fa fa-envelope"></i>
             <p>
               Mensajes
             </p>
@@ -104,7 +104,7 @@
         </li>
         <li class="nav-item">
           <a href="{{ route('Solicitudes.index') }}" class="nav-link">
-            <i class="nav-icon fa fa-book"></i>
+            <i class="nav-icon fa fa-paw"></i>
             <p>
               Solicitudes
             </p>

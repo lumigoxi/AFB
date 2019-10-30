@@ -8,7 +8,13 @@ Route::get('/', 'frontController@index')->name('/');
 Route::resource('pages', 'AllPageController')->only(['update', 'show']);
 
 //register route disabled because can't a person register own  
-Auth::routes(['register'=>false]);
+Auth::routes(['register'=>false, 
+			'email' => false, 
+			'reset'=>false,
+			'verity' => false]);
+
+Route::post('actualizar-contraseña', 'PasswordController@resetPassword')->name('ownResetPassword');
+Route::post('restablecer-contraseña', 'Auth\ForgotPasswordController@sendResetLink')->name('password.email');
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 //Rputes for dashboard
@@ -56,3 +62,5 @@ Route::get('getOneActivity', 'frontController@getOneActivity');
 Route::resource('addPageImage', 'PageImageController')->only(['store', 'update', 'show', 'destroy']);
 Route::resource('cms-contactanos', 'ContactUsController')->except(['edit', 'create', 'store']);
 Route::get('/control', 'HomeController@control');
+Route::get('infoDashboard', 'DashboardController@getInfoDashboard');
+Route::get('getInfoDiagram', 'DashboardController@getInfoDiagram');

@@ -18,7 +18,7 @@ class IsAdmin
     {
         $response = $next($request);
         //If the status is not approved redirect to login 
-        if(Auth::check() && Auth::user()->role != 1){
+        if(Auth::check() && Auth::user()->role == 0){
             return redirect('/control')->with('admin', 'Tu usuario no tiene los permisos necesarios');
         }
         return $response;    
