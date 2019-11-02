@@ -30,7 +30,7 @@
 				La importancia de ayudar
 				</h5>
 				<p class="text-secondary">
-					Ayuda es un acto de bondad y humildad, Amigo Fiel tiene la idea de que si todos nos unimos y aportamos, podemos	cambiar la vida de muchos animalitos.
+					Ayudar es un acto de bondad y humildad, Amigo Fiel tiene la idea de que si todos nos unimos y aportamos, podemos	cambiar la vida de muchos animalitos.
 					
 				</p>
 			</div>

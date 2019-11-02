@@ -31,8 +31,7 @@ class InputMessageController extends Controller
 					'message' => 'nullable|max:255',
 					'contactTel' => 'nullable|integer|between:0,1',
 					'contactEmail' => 'nullable|integer|between:0,1',
-					'g-recaptcha-response' => 'required',
-					'g-recaptcha-response' => new Captcha()
+					'g-recaptcha-response' => ['required', new Captcha]
 				]);
 					return Message::create($response) ? 1 : 0;
 				}else if ($request['telephone'] != null && $request['g-recaptcha-response'] != null) {
@@ -45,8 +44,8 @@ class InputMessageController extends Controller
 					'message' => 'nullable|max:255',
 					'contactTel' => 'nullable|integer|between:0,1',
 					'contactEmail' => 'nullable|integer|between:0,1',
-					'g-recaptcha-response' => 'required',
-					'g-recaptcha-response' => new Captcha()
+					 'g-recaptcha-response' => ['required', new Captcha]
+
 				]);
 					return Message::create($response) ? 1 : 0;
 				}else{

@@ -29,11 +29,13 @@ class InputRequestPetController extends Controller
 					'message' => 'nullable|max:255',
 					'contactTel' => 'nullable|integer|between:0,1',
 					'contactEmail' => 'nullable|integer|between:0,1',
-					'g-recaptcha-response' => 'required',
-					'g-recaptcha-response' => new Captcha()
+					 'g-recaptcha-response' => ['required', new Captcha]
+
 				]);
 					return RequestPet::create($response) ? 1 : 0;
 				}else if ($request['telephone'] != null && $request['g-recaptcha-response'] != null) {
+					
+
 					$response = $request->validate([
 					'name' => 'required|string|min:3|max:25',
 					'pet_id' => 'required',
@@ -43,9 +45,10 @@ class InputRequestPetController extends Controller
 					'message' => 'nullable|max:255',
 					'contactTel' => 'nullable|integer|between:0,1',
 					'contactEmail' => 'nullable|integer|between:0,1',
-					'g-recaptcha-response' => 'required',
-					'g-recaptcha-response' => new Captcha()
+			          'g-recaptcha-response' => ['required', new Captcha]
 				]);
+
+					
 					return RequestPet::create($response) ? 1 : 0;
 				}else{
 					return 0;

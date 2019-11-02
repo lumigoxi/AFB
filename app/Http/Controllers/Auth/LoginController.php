@@ -2,8 +2,10 @@
 
 namespace app\Http\Controllers\Auth;
 
-use app\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use app\Http\Controllers\Controller;
+use app\Rules\Captcha;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,14 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('IsActive')->only('logout');
+    }
+
+      protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|alpha_dash',
+            'g-recaptcha-response' => ['required', new Captcha]
+        ]);
     }
 }

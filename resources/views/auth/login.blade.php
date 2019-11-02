@@ -10,7 +10,7 @@
                     <div class="alert alert-danger">{{ session('status') }}</div>
                 @endif
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login') }}" id="formLogin">
                         @csrf
 
                         <div class="form-group row">
@@ -23,9 +23,6 @@
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
-                                @error('status')
-                                    <div>jnsdfjndsjfj</div>
                                 @enderror
                             </div>
                         </div>
@@ -43,10 +40,18 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="row mb-1">
+                        <div class="col text-center">
+                            <div class = "g-recaptcha" id="LoginRecaptcha" 
+                                data-sitekey = "{{env ('GOOGLE_RECAPTCHA_KEY')}}"> 
+                            </div>
+                            <div id="g-recaptcha-error" class="my-3"></div>
+                        </div>
+                    </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-success">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-success btn-block">
                                     Iniciar
                                 </button>
 
@@ -63,4 +68,16 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+    $('#formLogin').on('submit', function(e){
+        let captcha = grecaptcha.getResponse()
+        if (captcha.length == 0) {
+            e.preventDefault()
+            document.getElementById('g-recaptcha-error').innerHTML = '<span class="alert alert-danger">Debes completar el reCaptcha</span>';
+            $("#g-recaptcha-error span").delay(1000).fadeOut(2000, function() { $(this).remove(); })
+        }
+    })
+</script>
 @endsection
